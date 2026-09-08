@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Inter');
+
 :root {
     --primary-color: #FFDE59;
     --secondary-color: #DBC07B;
@@ -14,6 +16,7 @@ body, html {
     width: 100dvw;
     background-color: var(--secondary-color);
     margin: 0;
+    font-family: 'Inter';
 }
 
 .flex-container {
@@ -30,37 +33,16 @@ body, html {
     background-color: var(--tertiary-color);
 }
 
-.header {
-    width: 100%;
-    min-height: 207px;
-    background-color: var(--header-color);
-    display: flex;
-    flex-direction: column;
-    color: white;
-    font-size: 24px;
-}
 
-.header-top {
-    padding: 20px;
-    flex-grow: 1;
-}
+@media (max-width: 1280px) {
+    :root {
+        --primary-color: black;
+        --secondary-color: #9BA4FD; 
+        --tertiary-color: #DEE3F6;
+        --header-color: #565D87;
+    }
 
-.header-user {
-    gap: 20px;
-}
-
-.header-bottom {
-    padding: 10px 20px;
-    width: 100%;
-    min-height: 60px;
-    background-color: black;
-    justify-content: space-between;
-}
-
-.icon-container {
-    padding: 10px;
-    background-color: var(--primary-color);
-    border-radius: 10px;
-    display: grid;
-    place-items: center;
+    .icon {
+        filter: invert(100%);
+    }
 }
