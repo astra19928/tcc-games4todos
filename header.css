@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Jaro:opsz@6..72&display=swap');
 
 .header {
     width: 100%;
@@ -13,20 +14,25 @@
     position: relative;
     padding: 20px;
     flex-grow: 1;
+    justify-content: space-between;
 }
 
 .header-user {
     gap: 20px;
 }
 
+.hidden {
+    visibility: hidden;
+}
+
 .logo {
-    position: absolute;
+    position: relative;
+    display: grid;
+    place-items: center;
     background-color: var(--primary-color);
-    width: 224px;
-    height: 92px;
-    top: 50%;
-    left: 50%;
-    transform: translate(calc(-50% - 10px), calc(-50% - 10px));
+    min-width: 224px;
+    min-height: 92px;
+    transform: translate(-10px, -10px);
 }
 
 .logo::before, .logo::after {
@@ -45,6 +51,14 @@
 .logo::after {
     top: 20px;
     left: 20px;
+}
+
+.logo t{
+    z-index: 2;
+    font-family: 'Jaro';
+    font-size: 28px;
+    font-weight: 700;
+    color: black;
 }
 
 .header-bottom {
@@ -91,10 +105,6 @@
     font-size: 34px;
 }
 
-.logo {
-    order: 1;
-}
-
 @media (max-width: 640px) {
     .header-bottom {
         flex-direction: column;
@@ -103,4 +113,5 @@
     .header-action {
         justify-content: flex-start;
     }
+
 }

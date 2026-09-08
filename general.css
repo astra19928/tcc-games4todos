@@ -45,4 +45,8 @@ body, html {
     .icon {
         filter: invert(100%);
     }
+
+    .logo t {
+        color: white;
+    }
 }
