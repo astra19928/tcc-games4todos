@@ -5,6 +5,7 @@
     --secondary-color: #DBC07B;
     --tertiary-color: #DECC9E;
     --header-color: #877956;
+    --logo-text-color: black;
 }
 
 *{
@@ -40,13 +41,10 @@ body, html {
         --secondary-color: #9BA4FD; 
         --tertiary-color: #DEE3F6;
         --header-color: #565D87;
+        --logo-text-color: white;
     }
 
     .icon {
         filter: invert(100%);
-    }
-
-    .logo t {
-        color: white;
     }
 }

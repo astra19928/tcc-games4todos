@@ -15,6 +15,7 @@
     padding: 20px;
     flex-grow: 1;
     justify-content: space-between;
+    gap: 20px;
 }
 
 .header-user {
@@ -58,7 +59,7 @@
     font-family: 'Jaro';
     font-size: 28px;
     font-weight: 700;
-    color: black;
+    color: var(--logo-text-color);
 }
 
 .header-bottom {
@@ -86,32 +87,68 @@
     justify-content: center;
 }
 
+.search-icon {
+    display: grid;
+    place-items: center;
+}
+
 .search-bar {
     background-color: #DADADA;
     border-radius: 2px;
     padding: 5px 10px;
-    font-size: 24px;
     color: rgba(0, 0, 0, 0.5);
     justify-content: flex-start ;
 }
 
 .material-symbols-outlined {
+    --fill: 0;
+    --weight: 400;
+    --grad: 0;
+    --opsz: 24;
+
     font-variation-settings:
-    'FILL' 0,
-    'wght' 400,
-    'GRAD' 0,
-    'opsz' 24;
+    'FILL' var(--fill),
+    'wght' var(--weight),
+    'GRAD' var(--grad),
+    'opsz' var(--opsz);
 
     font-size: 34px;
+}
+
+.material-symbols-outlined:hover {
+    cursor: pointer;
+    --fill: 1;
+    --weight: 700;
+}
+
+.search-bar-input {
+    text-decoration: none;
+    border: none;
+    font-size: 24px;
+    font-family: 'Inter';
+    background-color: transparent;
 }
 
 @media (max-width: 640px) {
     .header-bottom {
         flex-direction: column;
+        align-items: stretch;
     }
 
     .header-action {
         justify-content: flex-start;
+    }
+
+    .header-top {
+        flex-wrap: wrap;
+    }
+
+    .logo-padding {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex: 0 0 100%;
+        order: -1;
     }
 
 }
