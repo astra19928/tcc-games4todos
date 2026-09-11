@@ -115,8 +115,12 @@
     font-size: 34px;
 }
 
-.material-symbols-outlined:hover {
+
+.header-action:hover {
     cursor: pointer;
+}
+
+.header-action:hover label .material-symbols-outlined, .header-action:hover .material-symbols-outlined {
     --fill: 1;
     --weight: 700;
 }

@@ -9,73 +9,15 @@
     <link rel="stylesheet" href="header.css">
 </head>
 <body>
-    <main class="site-container flex-container">
-        
-        <section class="header">
+    <main class="site-container flex-container">  
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+        <script type="text/javascript">
+        $('.site-container').load('header.html');
+        </script> 
 
-            <div class="header-top flex-container">
-
-                <div class="header-user flex-container">
-                
-                    <div class="icon-container">
-                        <img class="icon" src="Vector.svg">
-                    </div>
-
-                    <t>Login</t>
-                </div>
-
-                <div class="logo-padding">
-                    <div class="logo">
-                        <t>Games4Todos</t>
-                    </div>
-                </div>
-
-                <div class="header-user flex-container hidden">
-                
-                    <div class="icon-container">
-                        <img class="icon" src="Vector.svg">
-                    </div>
-
-                    <t>Login</t>
-                </div>
-            </div>
-
-            <div class="header-bottom flex-container">
-                <div class="header-action flex-container">
-                    <span class="material-symbols-outlined">star</span>
-
-                    <t>Favoritos</t>
-                </div>
-
-                <div class="header-action flex-container">
-                    <span class="material-symbols-outlined">comment</span>
-
-                    <t>Respostas</t>
-                </div>
-
-                <div class="header-action search-bar flex-container">
-                    <label for="search-submit" class="search-icon">
-                        <span class="material-symbols-outlined">search</span>
-                    </label>
-                    
-
-                    <form action="/search" method="GET" role="search">
-                        <input 
-                            type="search" 
-                            id="site-search" 
-                            class="search-bar-input"
-                            name="q" 
-                            placeholder="Pesquisar" 
-                            aria-label="Pesquisepor um mod"
-                        />
-                        <button type="submit" id="search-submit" style="display: none;"></button>
-                    </form>
-
-                </div>
-            </div>
-
+        <section site-body>
+            
         </section>
-
     </main>
 
 </body>
