@@ -20,6 +20,14 @@
 
 .header-user {
     gap: 20px;
+    padding: 10px;
+    background-color: var(--primary-color);
+    border-radius: 10px;
+}
+
+.header-user t {
+    color: var(--logo-text-color);
+    font-weight: bold;
 }
 
 .hidden {
@@ -74,9 +82,6 @@
 }
 
 .icon-container {
-    padding: 10px;
-    background-color: var(--primary-color);
-    border-radius: 10px;
     display: grid;
     place-items: center;
 }
@@ -116,11 +121,11 @@
 }
 
 
-.header-action:hover {
+.header-action:hover:not(.search-bar), .search-icon:hover {
     cursor: pointer;
 }
 
-.header-action:hover label .material-symbols-outlined, .header-action:hover .material-symbols-outlined {
+.header-action:hover:not(.search-bar) .material-symbols-outlined, .search-icon:hover .material-symbols-outlined{
     --fill: 1;
     --weight: 700;
 }
@@ -153,6 +158,10 @@
         justify-content: center;
         flex: 0 0 100%;
         order: -1;
+    }
+
+    .hidden {
+        display: none;
     }
 
 }
