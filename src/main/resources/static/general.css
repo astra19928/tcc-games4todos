@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css?family=Inter');
+
+:root {
+    --primary-color: #FFDE59;
+    --secondary-color: #DBC07B;
+    --tertiary-color: #DECC9E;
+    --header-color: #877956;
+    --logo-text-color: black;
+}
+
+*{
+    box-sizing: border-box;
+}
+
+body, html {
+    min-height: 100dvh;
+    width: 100dvw;
+    background-color: var(--secondary-color);
+    margin: 0;
+    font-family: 'Inter';
+}
+
+.flex-container {
+    display: flex;
+    align-items: center;
+}
+
+.site-container {
+    margin: 0 auto;
+    width: 1080px;
+    max-width: 100%;
+    min-height: inherit;
+    flex-direction: column;
+    background-color: var(--tertiary-color);
+}
+
+
+@media (max-width: 1280px) {
+    :root {
+        --primary-color: black;
+        --secondary-color: #9BA4FD; 
+        --tertiary-color: #DEE3F6;
+        --header-color: #565D87;
+        --logo-text-color: white;
+    }
+
+    .icon {
+        filter: invert(100%);
+    }
+}
