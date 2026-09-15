@@ -98,7 +98,7 @@
 }
 
 .search-bar {
-    background-color: #DADADA;
+    background-color: var(--text-input-background);
     border-radius: 2px;
     padding: 5px 10px;
     color: rgba(0, 0, 0, 0.5);

@@ -1,0 +1,14 @@
+.form-container {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+}
+
+.cadastro-text-input {
+    width: 460px;
+    max-width: 100%;
+    height: 40px;
+    padding: 6px 30px;
+    background-color: var(--text-input-background);
+    box-shadow: 0 6px 8px 0 rgba(0, 0, 0, 0.25);
+}

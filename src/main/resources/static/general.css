@@ -5,6 +5,7 @@
     --secondary-color: #DBC07B;
     --tertiary-color: #DECC9E;
     --header-color: #877956;
+    --text-input-background: #DADADA;
     --logo-text-color: black;
 }
 
@@ -42,6 +43,12 @@ body, html {
 .site-body {
     width: 100%;
     padding: 20px;
+}
+
+input {
+    outline: none;
+    text-decoration: none;
+    border: 0;
 }
 
 @media (max-width: 1280px) {

@@ -7,6 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:FILL,wght@0..1,100..700&icon_names=search,comment,star&display=block" rel="stylesheet" />
     <link rel="stylesheet" href="general.css">
     <link rel="stylesheet" href="header.css">
+    <link rel="stylesheet" href="css/cadastro.css">
 </head>
 <body>
 <main class="site-container flex-container">
@@ -22,56 +23,74 @@
     <section class="site-body">
 
         <h2>Criar Conta</h2>
+
         <form action="/cadastro" method="POST" role="form">
-            <input
-                    type="text"
-                    id="name-create"
-                    class="cadastro-text=input"
-                    name="username"
-                    aria-label="Criar nome de usuário"
-                    placeholder="Nome"
-            />
 
-            <input
-                    type="text"
-                    id="email-create"
-                    class="cadastro-text=input"
-                    name="email"
-                    aria-label="Criar email de usuário"
-                    placeholder="E-mail"
-            />
+            <div class="form-container flex-container">
+                <input
+                        type="text"
+                        id="name-create"
+                        class="cadastro-text-input"
+                        name="username"
+                        aria-label="Criar nome de usuário"
+                        placeholder="Nome"
+                />
 
-            <input
-                    type="text"
-                    id="password-create"
-                    class="cadastro-text=input"
-                    name="password"
-                    aria-label="Criar senha de usuário"
-                    placeholder="Senha"
-            />
+                <input
+                        type="text"
+                        id="email-create"
+                        class="cadastro-text-input"
+                        name="email"
+                        aria-label="Criar email de usuário"
+                        placeholder="E-mail"
+                />
 
-            <input
-                    type="checkbox"
-                    id="thingo"
-                    class="cadastro-input"
-                    name="q"
-                    aria-label="vc possui bagulho"
-            />
-            <label for="thingo">vc term bgaguhlo?</label>
+                <input
+                        type="text"
+                        id="password-create"
+                        class="cadastro-text-input"
+                        name="password"
+                        aria-label="Criar senha de usuário"
+                        placeholder="Senha"
+                />
 
-            <input
-                    type="checkbox"
-                    id="thingoB"
-                    class="cadastro-input"
-                    name="q"
-                    aria-label="vc possui bagulho B"
-            />
-            <label for="thingoB">vc term bgaguhlo B?</label>
+                <div class="im mean not nice">
+                    <input
+                            type="checkbox"
+                            id="thingo"
+                            class="cadastro-input"
+                            name="q"
+                            aria-label="vc possui bagulho"
+                    />
+                    <label for="thingo">vc term bgaguhlo?</label>
+                </div>
+
+                <div class="im mean not nice">
+                    <input
+                            type="checkbox"
+                            id="thingoB"
+                            class="cadastro-input"
+                            name="q"
+                            aria-label="vc possui bagulho B"
+                    />
+                    <label for="thingoB">vc term bgaguhlo B?</label>
+                </div>
+
+                <div class="im mean not nice">
+                    <input
+                            type="checkbox"
+                            id="thingoC"
+                            class="cadastro-input"
+                            name="q"
+                            aria-label="vc possui bagulho C"
+                    />
+                    <label for="thingoC">vc term bgaguhlo C?</label>
+                </div>
+
+                <button type="submit" id="user-submit">Submit the flesh</button>
+            </div>
 
 
-
-
-            <button type="submit" id="user-submit" style="display: none;"></button>
         </form>
 
     </section>
