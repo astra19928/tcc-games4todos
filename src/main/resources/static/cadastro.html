@@ -10,12 +10,69 @@
 </head>
 <body>
 <main class="site-container flex-container">
+
+    <header class="header">
+
+    </header>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script type="text/javascript">
-        $('.site-container').load('header.html');
+        $('.header').load('header.html');
     </script>
 
     <section class="site-body">
+
+        <h2>Criar Conta</h2>
+        <form action="/cadastro" method="POST" role="form">
+            <input
+                    type="text"
+                    id="name-create"
+                    class="cadastro-text=input"
+                    name="username"
+                    aria-label="Criar nome de usuário"
+                    placeholder="Nome"
+            />
+
+            <input
+                    type="text"
+                    id="email-create"
+                    class="cadastro-text=input"
+                    name="email"
+                    aria-label="Criar email de usuário"
+                    placeholder="E-mail"
+            />
+
+            <input
+                    type="text"
+                    id="password-create"
+                    class="cadastro-text=input"
+                    name="password"
+                    aria-label="Criar senha de usuário"
+                    placeholder="Senha"
+            />
+
+            <input
+                    type="checkbox"
+                    id="thingo"
+                    class="cadastro-input"
+                    name="q"
+                    aria-label="vc possui bagulho"
+            />
+            <label for="thingo">vc term bgaguhlo?</label>
+
+            <input
+                    type="checkbox"
+                    id="thingoB"
+                    class="cadastro-input"
+                    name="q"
+                    aria-label="vc possui bagulho B"
+            />
+            <label for="thingoB">vc term bgaguhlo B?</label>
+
+
+
+
+            <button type="submit" id="user-submit" style="display: none;"></button>
+        </form>
 
     </section>
 </main>
