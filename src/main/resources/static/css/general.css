@@ -6,11 +6,14 @@
     --tertiary-color: #DECC9E;
     --header-color: #877956;
     --text-input-background: #DADADA;
-    --logo-text-color: black;
+    --text-input-dark: #DADADA;
+    --text-color-dark: black;
+    --placeholder-text-color: rgba(0, 0, 0, 0.5);
 }
 
 *{
     box-sizing: border-box;
+    margin: 0;
 }
 
 a:hover, a:visited, a:link, a:active {
@@ -31,18 +34,24 @@ body, html {
     align-items: center;
 }
 
+.flex-container-column {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
 .site-container {
     margin: 0 auto;
     width: 1080px;
     max-width: 100%;
     min-height: inherit;
-    flex-direction: column;
     background-color: var(--tertiary-color);
 }
 
 .site-body {
     width: 100%;
     padding: 20px;
+    gap: 40px;
 }
 
 input {
@@ -57,10 +66,14 @@ input {
         --secondary-color: #9BA4FD; 
         --tertiary-color: #DEE3F6;
         --header-color: #565D87;
-        --logo-text-color: white;
+        --text-color-dark: white;
     }
 
     .icon {
         filter: invert(100%);
+    }
+
+    .cadastro-text-input {
+        border: 2px black solid;
     }
 }

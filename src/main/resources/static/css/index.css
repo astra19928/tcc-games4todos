@@ -1,0 +1,22 @@
+.main-page-section {
+    width: 100%;
+    border: 3px solid var(--header-color);
+    border-radius: 5px;
+    gap: 10px;
+    padding: 10px;
+    text-align: justify;
+    align-items: stretch;
+    font-size: 18px;
+}
+
+.section-title {
+    width: 100%;
+    display: grid;
+    place-items: center;
+    padding: 2px;
+    background-color: var(--text-input-dark);
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    font-size: 24px;
+    color: var(--text-color-dark);
+}

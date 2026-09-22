@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ahahaha</title>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:FILL,wght@0..1,100..700&icon_names=search,comment,star&display=block" rel="stylesheet" />
-    <link rel="stylesheet" href="general.css">
-    <link rel="stylesheet" href="header.css">
+    <link rel="stylesheet" href="css/general.css">
+    <link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="css/cadastro.css">
 </head>
 <body>
-<main class="site-container flex-container">
+<main class="site-container flex-container-column">
 
     <header class="header">
 
@@ -20,13 +20,13 @@
         $('.header').load('header.html');
     </script>
 
-    <section class="site-body">
+    <div class="site-body">
 
         <h2>Criar Conta</h2>
 
         <form id="userForm">
 
-            <div class="form-container flex-container">
+            <div class="form-container flex-container-column">
                 <input
                         type="text"
                         id="name-create"
@@ -37,7 +37,7 @@
                 />
 
                 <input
-                        type="text"
+                        type="email"
                         id="email-create"
                         class="cadastro-text-input"
                         name="email"
@@ -95,7 +95,7 @@
 
         <script src="scripts/cadastro.js"></script>
 
-    </section>
+    </div>
 </main>
 
 </body>

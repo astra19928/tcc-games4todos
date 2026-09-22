@@ -26,7 +26,7 @@
 }
 
 .header-user t {
-    color: var(--logo-text-color);
+    color: var(--text-color-dark);
     font-weight: bold;
 }
 
@@ -67,7 +67,7 @@
     font-family: 'Jaro';
     font-size: 28px;
     font-weight: 700;
-    color: var(--logo-text-color);
+    color: var(--text-color-dark);
 }
 
 .header-bottom {
@@ -101,7 +101,7 @@
     background-color: var(--text-input-background);
     border-radius: 2px;
     padding: 5px 10px;
-    color: rgba(0, 0, 0, 0.5);
+    color: black;
     justify-content: flex-start ;
 }
 
