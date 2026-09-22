@@ -20,3 +20,13 @@
     font-size: 24px;
     color: var(--text-color-dark);
 }
+
+.recommended {
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.recommendation {
+    gap: 5px;
+}

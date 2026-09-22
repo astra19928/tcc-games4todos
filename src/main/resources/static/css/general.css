@@ -54,6 +54,12 @@ body, html {
     gap: 40px;
 }
 
+.card-image {
+    max-width: 160px;
+    max-height: 250px;
+    object-fit: cover;
+}
+
 input {
     outline: none;
     text-decoration: none;
@@ -67,13 +73,18 @@ input {
         --tertiary-color: #DEE3F6;
         --header-color: #565D87;
         --text-color-dark: white;
+        --text-input-dark: black;
     }
 
     .icon {
         filter: invert(100%);
     }
+}
 
-    .cadastro-text-input {
-        border: 2px black solid;
+@media (max-width: 640px){
+
+    .card-image {
+        max-width: 144px;
+        max-height: 225px;
     }
 }

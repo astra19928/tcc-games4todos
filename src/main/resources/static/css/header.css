@@ -34,12 +34,19 @@
     visibility: hidden;
 }
 
+.logo-padding {
+    max-width: 100%;
+}
+
 .logo {
     position: relative;
     display: grid;
     place-items: center;
     background-color: var(--primary-color);
-    min-width: 224px;
+    min-width: fit-content;
+    padding: 20px;
+    width: 224px;
+    max-width: 100%;
     min-height: 92px;
     transform: translate(-10px, -10px);
 }
@@ -103,6 +110,10 @@
     padding: 5px 10px;
     color: black;
     justify-content: flex-start ;
+}
+
+.search-form::placeholder {
+    color: var(--placeholder-text-color);
 }
 
 .material-symbols-outlined {

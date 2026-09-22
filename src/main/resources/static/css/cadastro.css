@@ -8,10 +8,17 @@
     max-width: 100%;
     height: 40px;
     padding: 6px 30px;
-    background-color: var(--text-input-dark);
+    background-color: var(--text-input-background);
+    border: 2px solid transparent;
     box-shadow: 0 6px 8px 0 rgba(0, 0, 0, 0.25);
 }
 
 .cadastro-text-input::placeholder {
     color: var(--placeholder-text-color);
+}
+
+@media (max-width: 1280px) {
+    .cadastro-text-input {
+        border: 2px black solid;
+    }
 }
