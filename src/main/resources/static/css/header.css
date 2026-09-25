@@ -141,12 +141,17 @@
     --weight: 700;
 }
 
+.search-form {
+    flex-grow: 1;
+}
+
 .search-bar-input {
     text-decoration: none;
     border: none;
     font-size: 24px;
     font-family: 'Inter';
     background-color: transparent;
+    width: 100%;
 }
 
 @media (max-width: 640px) {
