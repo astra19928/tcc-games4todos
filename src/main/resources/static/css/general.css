@@ -9,6 +9,7 @@
     --text-input-dark: #DADADA;
     --text-color-dark: black;
     --placeholder-text-color: rgba(0, 0, 0, 0.5);
+    --site-padding: 20px;
 }
 
 *{
@@ -50,7 +51,7 @@ body, html {
 
 .site-body {
     width: 100%;
-    padding: 20px;
+    padding: var(--site-padding);
     gap: 40px;
 }
 

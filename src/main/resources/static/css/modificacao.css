@@ -1,5 +1,5 @@
 :root {
-    --info-background-color: color-mix(in srgb, var(--tertiary-color), black 10%);
+    --info-background-color: #C7B27B;
 }
 
 .favorite-icon {
@@ -13,6 +13,7 @@
 
 .info-container {
     width: 100%;
+    align-items: stretch;
 }
 
 .game-info {
@@ -20,6 +21,7 @@
     padding: 15px;
     gap: 15px;
     background-color: var(--info-background-color);
+    justify-content: center;
 }
 
 .game-title {
@@ -50,8 +52,34 @@
 
 .mod-info {
     flex-grow: 1;
+    gap: 15px;
+    padding: 15px;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .mod-info-box {
+    max-width: 456px;
+    width: 100%;
     background-color: var(--info-background-color);
+    padding: 10px 15px;
+    box-shadow: 0 6px 8px 0 rgba(0, 0, 0, 0.25);
+    font-weight: bolder;
+    font-size: 18px;
+}
+
+.description {
+    align-items: flex-start;
+    background-color: var(--secondary-color);
+    width: 100%;
+    padding: 10px var(--site-padding);
+    font-weight: bold;
+    font-size: 24px;
+}
+
+@media (max-width: 1280px){
+    :root {
+        --info-background-color: #AFB4E9;
+        
+    }
 }
