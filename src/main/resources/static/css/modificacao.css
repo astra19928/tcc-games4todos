@@ -68,8 +68,7 @@
     font-size: 18px;
 }
 
-.description {
-    align-items: flex-start;
+.section-divider {
     background-color: var(--secondary-color);
     width: 100%;
     padding: 10px var(--site-padding);
