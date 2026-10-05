@@ -7,8 +7,8 @@ document.getElementById('loginForm').addEventListener('submit', async (event) =>
     };
 
     try{
-        const response = await fetch('/users/login', {
-            method: 'GET',
+        const response = await fetch('/login', {
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -22,7 +22,7 @@ document.getElementById('loginForm').addEventListener('submit', async (event) =>
         const data = await response.text();
 
         document.getElementById('responseMessage').innerText = "Succeso: " + data;
-        document.getElementById('userForm').reset();
+        document.getElementById('loginForm').reset();
 
         window.location.replace("index.html");
     } catch (error) {

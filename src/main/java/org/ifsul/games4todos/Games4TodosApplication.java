@@ -8,7 +8,8 @@ scanBasePackages = {
 		"org.ifsul.games4todos.repository",
 		"org.ifsul.games4todos.controller",
 		"org.ifsul.games4todos.service",
-		"org.ifsul.games4todos.model"
+		"org.ifsul.games4todos.model",
+        "org.ifsul.games4todos.security"
 })
 public class Games4TodosApplication {
 

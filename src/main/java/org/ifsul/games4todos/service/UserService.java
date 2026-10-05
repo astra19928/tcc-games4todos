@@ -2,6 +2,7 @@ package org.ifsul.games4todos.service;
 
 import org.ifsul.games4todos.model.User;
 import org.ifsul.games4todos.repository.UserRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,24 +11,27 @@ import java.util.List;
 public class UserService {
 
     private final UserRepository UserRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository UserRepository) {
-        this.UserRepository = UserRepository;
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+        UserRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
-    public User salvar(User User){
-        return this.UserRepository.save(User);
+    public User save(User user){
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        return this.UserRepository.save(user);
     }
 
-    public void excluir(User User){
+    public void delete(User User){
         this.UserRepository.delete(User);
     }
 
-    public List<User> buscarTodos() {
+    public List<User> findAll() {
         return this.UserRepository.findAll();
     }
 
-    public User buscarPorId(Long id){
+    public User findById(Integer id){
         return this.UserRepository.findById(id).orElse(null);
     }
 }

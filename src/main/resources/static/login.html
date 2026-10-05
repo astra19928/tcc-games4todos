@@ -15,18 +15,12 @@
 
 <body>
 <main class="site-container flex-container-column">
-    <header class="header">
-
-    </header>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <script type="text/javascript">
-        $('.header').load('header.html');
-    </script>
-
+    <header id="header" class="header"></header>
+    <script src="js/loadHeader.js"></script>
 
     <div class="site-body">
 
-        <h2>Criar Conta</h2>
+        <h2>Realizar Login</h2>
 
         <form id="loginForm">
 
@@ -54,7 +48,8 @@
             <t id="responseMessage"></t>
         </form>
 
-        <script src="scripts/cadastro.js"></script>
+        <a href="cadastro.html">Não tenho uma conta</a>
+        <script src="js/login.js"></script>
 
     </div>
 </main>

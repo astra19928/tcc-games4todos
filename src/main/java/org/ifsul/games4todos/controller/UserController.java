@@ -17,7 +17,7 @@ public class UserController {
 
     @PostMapping
     public User cadastrar(@RequestBody User user){
-        return userService.salvar(user);
+        return userService.save(user);
     }
 
 
