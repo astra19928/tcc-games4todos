@@ -8,10 +8,7 @@ import lombok.ToString;
 @Setter
 @ToString
 public class UserDTO {
-    private String username;
+    private String nickname;
     private String email;
     private String password;
-    private boolean thingo;
-    private boolean thingoB;
-    private boolean thingoC;
 }

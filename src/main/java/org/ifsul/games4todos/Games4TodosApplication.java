@@ -2,10 +2,14 @@ package org.ifsul.games4todos;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.jdbc.autoconfigure.DataSourceAutoConfiguration;
 
-
-@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
+@SpringBootApplication(
+scanBasePackages = {
+		"org.ifsul.games4todos.repository",
+		"org.ifsul.games4todos.controller",
+		"org.ifsul.games4todos.service",
+		"org.ifsul.games4todos.model"
+})
 public class Games4TodosApplication {
 
 	public static void main(String[] args) {
