@@ -3,10 +3,7 @@ package org.ifsul.games4todos.controller;
 
 import org.ifsul.games4todos.model.User;
 import org.ifsul.games4todos.service.UserService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/users")
@@ -22,5 +19,6 @@ public class UserController {
     public User cadastrar(@RequestBody User user){
         return userService.salvar(user);
     }
+
 
 }

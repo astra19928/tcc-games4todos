@@ -1,15 +1,14 @@
-document.getElementById('userForm').addEventListener('submit', async (event) => {
-    event.preventDefault(); 
+document.getElementById('loginForm').addEventListener('submit', async (event) => {
+    event.preventDefault();
 
     const formData = {
-        nickname: document.getElementById('name-create').value,
-        email: document.getElementById('email-create').value,
-        password: document.getElementById('password-create').value
+        email: document.getElementById('email-login').value,
+        password: document.getElementById('password-login').value
     };
 
     try{
-        const response = await fetch('/users', {
-            method: 'POST',
+        const response = await fetch('/users/login', {
+            method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -20,12 +19,15 @@ document.getElementById('userForm').addEventListener('submit', async (event) => 
             throw new Error('Houve um problema com a requisição!');
         }
 
-        const data = await response.text(); 
+        const data = await response.text();
 
         document.getElementById('responseMessage').innerText = "Succeso: " + data;
-        document.getElementById('userForm').reset(); 
+        document.getElementById('userForm').reset();
+
+        window.location.replace("index.html");
     } catch (error) {
         document.getElementById('responseMessage').innerText = "Erro enviando formulário: " + error.message;
         console.error('Error:', error);
     }
+
 });
