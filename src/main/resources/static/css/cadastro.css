@@ -17,6 +17,11 @@
     color: var(--placeholder-text-color);
 }
 
+.no-account-text {
+    color: black;
+    text-decoration: underline;
+}
+
 @media (max-width: 1280px) {
     .cadastro-text-input {
         border: 2px black solid;

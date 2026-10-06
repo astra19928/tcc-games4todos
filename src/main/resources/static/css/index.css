@@ -11,9 +11,9 @@
 
 .section-title {
     width: 100%;
-    display: grid;
-    place-items: center;
     padding: 2px;
+    justify-content: center;
+    word-break: break-word;
     background-color: var(--text-input-dark);
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
@@ -29,4 +29,5 @@
 
 .recommendation {
     gap: 5px;
+
 }

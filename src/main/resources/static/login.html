@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Principal</title>
+    <title>Login</title>
     <link
-            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:FILL,wght@0..1,100..700&icon_names=search,comment,star&display=block"
+            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:FILL,wght@0..1,100..700&icon_names=search,comment,star,settings,account_circle&display=block"
             rel="stylesheet" />
     <link rel="stylesheet" href="css/general.css">
     <link rel="stylesheet" href="css/header.css">
@@ -20,11 +20,12 @@
 
     <div class="site-body">
 
-        <h2>Realizar Login</h2>
 
         <form id="loginForm">
 
             <div class="form-container flex-container-column">
+                <h2>Realizar Login</h2>
+
                 <input
                         type="email"
                         id="email-login"
@@ -42,13 +43,17 @@
                         aria-label="Inserir senha"
                         placeholder="Senha"
                 />
+
+                <a class="no-account-text" href="cadastro.html">Não tenho uma conta</a>
+
                 <button type="submit" id="user-submit">Submit the flesh</button>
+
             </div>
 
             <t id="responseMessage"></t>
+
         </form>
 
-        <a href="cadastro.html">Não tenho uma conta</a>
         <script src="js/login.js"></script>
 
     </div>

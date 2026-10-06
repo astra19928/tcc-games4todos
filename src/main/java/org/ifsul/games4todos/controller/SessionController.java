@@ -29,7 +29,6 @@ public class SessionController {
 
     @PostMapping
     public ResponseEntity<?> login(@RequestBody LoginDTO dto, HttpServletRequest request) {
-
         Authentication auth = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(dto.email(), dto.password())
         );
@@ -70,6 +69,6 @@ public class SessionController {
         }
         G4TUserDetails details = (G4TUserDetails) auth.getPrincipal();
         User user = details.getUser();
-        return ResponseEntity.ok(Map.of("nome", user.getNickname()));
+        return ResponseEntity.ok(Map.of("name", user.getNickname()));
     }
 }

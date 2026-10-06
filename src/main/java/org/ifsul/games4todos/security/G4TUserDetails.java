@@ -20,7 +20,7 @@ public class G4TUserDetails implements UserDetails {
 
     @Override
     public String getUsername() {
-        return user.getEmail(); // username é o proprio email para identificação de cliente e trabalhador
+        return user.getEmail();
     }
 
     @Override

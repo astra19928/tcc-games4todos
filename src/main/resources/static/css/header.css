@@ -1,5 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Jaro:opsz@6..72&display=swap');
 
+:root {
+    --icon-size: 60px;
+}
 .header {
     width: 100%;
     min-height: 207px;
@@ -20,14 +23,31 @@
 
 .header-user {
     gap: 20px;
-    padding: 10px;
+    padding: 5px 10px;
     background-color: var(--primary-color);
     border-radius: 10px;
-}
-
-.header-user t {
     color: var(--text-color-dark);
     font-weight: bold;
+}
+
+.icon-container {
+    width: var(--icon-size);
+    height: var(--icon-size);
+    justify-content: center;
+}
+
+.icon-container .material-symbols-outlined {
+    font-size: var(--icon-size);
+    color: var(--text-color-dark);
+}
+
+.icon {
+    display: none;
+    width: var(--icon-size);
+    height: var(--icon-size);
+    object-fit: cover;
+    object-position: center;
+    border-radius: 10000px;
 }
 
 .hidden {
@@ -69,7 +89,8 @@
     left: 20px;
 }
 
-.logo t{
+.logo p{
+    max-width: 100%;
     z-index: 2;
     font-family: 'Jaro';
     font-size: 28px;
@@ -153,6 +174,7 @@
     background-color: transparent;
     width: 100%;
 }
+
 
 @media (max-width: 640px) {
     .header-bottom {
