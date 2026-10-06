@@ -23,23 +23,15 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/",
-                                "/login",
-                                "/login/logout",
-                                "/users",
-                                "/index.html",
-                                "/login.html",
-                                "/header.html",
-                                "/modificacao.html",
-                                "/cadastro.html")
-                        .permitAll()
-                        .requestMatchers(PathRequest.toStaticResources().atCommonLocations())
-                        .permitAll()
-                        .requestMatchers("/config", "/download").hasRole("USER")
-                        .anyRequest()
-                        .authenticated())
+                        .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
+                        .requestMatchers(AuthorityPermissions.GUEST.getUrls()).permitAll()
+                        .requestMatchers(AuthorityPermissions.USER.getUrls()).hasAuthority("USER")
+                        .anyRequest().authenticated())
                 .csrf(csrf -> csrf.disable())
-                .formLogin(form -> form.disable())
+                .formLogin(form -> form
+                        .loginPage("/login.html")
+                        .loginProcessingUrl("/login")
+                        .permitAll())
                 .logout(logout -> logout.disable());
 
         return http.build();
