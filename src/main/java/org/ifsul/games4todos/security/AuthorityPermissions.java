@@ -20,7 +20,7 @@ public enum AuthorityPermissions {
             "/api/login/logout",
             "/api/login/me",
             "/api/upload",
-            "/upload.html",
+            "/user/upload.html",
             "/api/download"
     });
 

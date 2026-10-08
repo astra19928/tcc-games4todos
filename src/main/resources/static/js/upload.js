@@ -1,9 +1,14 @@
-document.getElementById('login-form').addEventListener('submit', async (event) => {
+document.getElementById('upload-form').addEventListener('submit', async (event) => {
     event.preventDefault();
 
     const formData = {
-        email: document.getElementById('email-login').value,
-        password: document.getElementById('password-login').value
+        gameName: document.getElementById('email-login').value,
+        modName: document.getElementById('password-login').value,
+        developers: document.getElementById('').value,
+        developers: document.getElementById('').value,
+        developers: document.getElementById('').value,
+        developers: document.getElementById('').value,
+        developers: document.getElementById('').value,
     };
 
     try{
