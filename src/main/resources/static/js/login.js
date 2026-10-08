@@ -7,7 +7,7 @@ document.getElementById('loginForm').addEventListener('submit', async (event) =>
     };
 
     try{
-        const response = await fetch('/login', {
+        const response = await fetch('/api/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -24,7 +24,6 @@ document.getElementById('loginForm').addEventListener('submit', async (event) =>
         document.getElementById('responseMessage').innerText = "Succeso: " + data;
         document.getElementById('loginForm').reset();
 
-        window.location.replace("index.html");
     } catch (error) {
         document.getElementById('responseMessage').innerText = "Erro enviando formulário: " + error.message;
         console.error('Error:', error);

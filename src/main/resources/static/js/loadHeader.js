@@ -1,7 +1,13 @@
 
 const loadUser = async () => {
     try{
-        const response = await fetch('/login/me');
+        const response = await fetch('/api/login/me', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+        });
         if(!response.ok)
             return;
 

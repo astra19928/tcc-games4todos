@@ -1,3 +1,4 @@
+
 document.getElementById('userForm').addEventListener('submit', async (event) => {
     event.preventDefault(); 
 
@@ -8,7 +9,7 @@ document.getElementById('userForm').addEventListener('submit', async (event) => 
     };
 
     try{
-        const response = await fetch('/users', {
+        const response = await fetch('/api/users', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

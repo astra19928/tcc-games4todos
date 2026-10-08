@@ -7,8 +7,8 @@ public enum AuthorityPermissions {
 
     GUEST(new String[]{
             "/",
-            "/login",
-            "/users",
+            "/api/login",
+            "/api/users",
             "/index.html",
             "/login.html",
             "/header.html",
@@ -16,12 +16,12 @@ public enum AuthorityPermissions {
             "/cadastro.html"
     }),
     USER(new String[]{
-            "/config",
-            "/login/logout",
-            "/login/me",
-            "/upload",
+            "/api/config",
+            "/api/login/logout",
+            "/api/login/me",
+            "/api/upload",
             "/upload.html",
-            "/download"
+            "/api/download"
     });
 
     private final String[] urls;

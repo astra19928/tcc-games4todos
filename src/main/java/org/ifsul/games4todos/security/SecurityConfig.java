@@ -28,10 +28,7 @@ public class SecurityConfig {
                         .requestMatchers(AuthorityPermissions.USER.getUrls()).hasAuthority("USER")
                         .anyRequest().authenticated())
                 .csrf(csrf -> csrf.disable())
-                .formLogin(form -> form
-                        .loginPage("/login.html")
-                        .loginProcessingUrl("/login")
-                        .permitAll())
+                .formLogin(form -> form.disable())
                 .logout(logout -> logout.disable());
 
         return http.build();
