@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="/css/general.css">
     <link rel="stylesheet" href="/css/header.css">
     <link rel="stylesheet" href="/css/forms.css">
+    <link rel="stylesheet" href="/css/upload.css">
 </head>
 
 <body>
@@ -20,25 +21,24 @@
 
     <div class="site-body">
 
-        <form id="upload-form">
-
-            <div class="upload- flex-container">
+        <form id="upload-form" class="flex-container-column" enctype="multipart/form-data">
+            <h2>Realizar upload de um mod</h2>
+            
+            <div class="upload-container flex-container">
 
                 <div class="form-container flex-container-column">
-                    <h2>Realizar upload de um mod</h2>
 
                     <input
-                            type="email"
+                            type="text"
                             id="game-name"
                             class="cadastro-text-input"
                             aria-label="Inserir o nome do jogo"
                             placeholder="Nome do jogo"
                     />
                     <input
-                            type="email"
+                            type="text"
                             id="mod-name"
                             class="cadastro-text-input"
-                            name="nome mod"
                             aria-label="Inserir o titulo do Mod"
                             placeholder="Titulo do mod"
                     />
@@ -59,16 +59,37 @@
                             placeholder="Data de lançamento"
                     />
 
+                    <div class="label-input-container flex-container-column">
+                        <label for="mod-file">Insira o arquivo do mod</label>
+                        <input
+                                type="file"
+                                id="mod-file"
+                                aria-label="Inserir o arquivo do mod"
+                                placeholder="Arquivo do mod"
+                        >
+                    </div>
+                    
                     <button type="submit" id="user-submit">Submit the flesh</button>
 
                 </div>
 
+                <div class="form-container flex-container-column">
+                    <img src="#" class="uploaded-mod-image" id="uploaded-mod-image" alt="Pré-visualização da capa do mod">
 
+                    <div class="label-input-container flex-container-column">
+                        <label for="mod-image-submit">Insira a capa do mod</label>
+                        <input
+                                type="file"
+                                id="mod-image-submit"
+                                accept="image/png, image/jpeg, image/jpg"
+                        >
+                    </div>
+                    
+                </div>
 
             </div>
 
-
-            <t id="responseMessage"></t>
+            <p id="responseMessage"></p>
 
         </form>
 

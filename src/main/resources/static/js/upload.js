@@ -1,23 +1,20 @@
-document.getElementById('upload-form').addEventListener('submit', async (event) => {
+const form = document.getElementById('upload-form');
+form.addEventListener('submit', async (event) => {
     event.preventDefault();
 
-    const formData = {
-        gameName: document.getElementById('email-login').value,
-        modName: document.getElementById('password-login').value,
-        developers: document.getElementById('').value,
-        developers: document.getElementById('').value,
-        developers: document.getElementById('').value,
-        developers: document.getElementById('').value,
-        developers: document.getElementById('').value,
-    };
+    const formData = new FormData(form);
+    formData.append('gameName', document.getElementById('game-name').value);
+    formData.append('modName', document.getElementById('mod-name').value);
+    formData.append('developers', document.getElementById('mod-developers').value);
+    formData.append('releaseDate', document.getElementById('mod-release-date').value);
+    formData.append('image', document.getElementById('mod-image-submit').files[0]);
+    formData.append('file', document.getElementById('mod-file').files[0]);
+    
 
     try{
-        const response = await fetch('/api/login', {
+        const response = await fetch('/api/mod', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(formData)
+            body: formData
         });
 
         if (!response.ok) {
@@ -27,7 +24,7 @@ document.getElementById('upload-form').addEventListener('submit', async (event) 
         const data = await response.text();
 
         document.getElementById('responseMessage').innerText = "Succeso: " + data;
-        document.getElementById('login-form').reset();
+        document.getElementById('upload-form').reset();
 
     } catch (error) {
         document.getElementById('responseMessage').innerText = "Erro enviando formulário: " + error.message;
@@ -35,3 +32,21 @@ document.getElementById('upload-form').addEventListener('submit', async (event) 
     }
 
 });
+
+const input = document.getElementById('mod-image-submit');
+
+const displayImage = () =>{
+    const file = input.files;
+    if (file) {
+        const fileReader = new FileReader();
+        const preview = document.getElementById('uploaded-mod-image');
+
+        fileReader.onload = event => {
+            preview.setAttribute('src', event.target.result);
+        }
+
+        fileReader.readAsDataURL(file[0]);
+    }
+}
+
+input.addEventListener("change", displayImage);

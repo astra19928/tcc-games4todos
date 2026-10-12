@@ -1,0 +1,24 @@
+.upload-container {
+    gap: 20px;
+    align-items: stretch;
+    flex-wrap: wrap-reverse;
+}
+
+.label-input-container {
+    gap: 5px;
+    align-items: flex-start;
+}
+
+.uploaded-mod-image {
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+    image-rendering: pixelated;
+    border: 2px solid black;
+}
+
+.uploaded-mod-image::before {
+    display: block;
+    width: 100%;
+    text-align: center; 
+}
