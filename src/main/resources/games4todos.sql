@@ -12,13 +12,13 @@ CREATE TABLE user(
 CREATE TABLE modification(
     id_modification INT PRIMARY KEY AUTO_INCREMENT,
     id_uploader INT NOT NULL,
-    id_creator INT,
     name_creator VARCHAR(50),
+    game_name VARCHAR(100) NOT NULL,
+    mod_name VARCHAR(100) NOT NULL,
     downloads INT NOT NULL,
     release_date DATE,
     file_size FLOAT NOT NULL,
-    FOREIGN KEY(id_uploader) REFERENCES user(id_user),
-    FOREIGN KEY(id_creator) REFERENCES user(id_user)
+    FOREIGN KEY(id_uploader) REFERENCES user(id_user)
 );
 
 CREATE TABLE comment(

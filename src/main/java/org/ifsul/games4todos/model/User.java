@@ -15,7 +15,6 @@ import lombok.Setter;
 
 // JPA
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "user")
 
 // LOMBOK
