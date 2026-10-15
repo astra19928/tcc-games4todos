@@ -43,4 +43,7 @@ public class Mod {
 
     @Column(nullable = false, name="file_size")
     private Float fileSize;
+
+    @Column(nullable = false, name="verified")
+    private Boolean verified;
 }

@@ -13,6 +13,8 @@ public class ModController {
     public ResponseEntity<?> gehehehaThankYou(
             @ModelAttribute ModDTO mod
     ){
+
+
         return ResponseEntity.ok("hehehee you did sooo well im so proud of you <3");
     }
 }
