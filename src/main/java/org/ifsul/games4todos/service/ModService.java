@@ -36,7 +36,13 @@ public class ModService {
         return mod;
     }
 
-    public Mod save(Mod mod){return this.modRepository.save(mod);}
+    public Mod save(Mod mod){
+        return this.modRepository.save(mod);
+    }
+
+    public void delete(Mod mod){
+        this.modRepository.delete(mod);
+    }
 
     @Async
     public Mod processMod(Mod mod){

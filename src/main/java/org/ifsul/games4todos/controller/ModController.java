@@ -6,6 +6,7 @@ import org.ifsul.games4todos.model.Mod;
 import org.ifsul.games4todos.model.User;
 import org.ifsul.games4todos.security.G4TUserDetails;
 import org.ifsul.games4todos.service.ModService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -35,6 +36,13 @@ public class ModController {
         modService.save(convertedMod);
 
         //store image and mod file somewhere around here
+
+        // if BADBADNOTGOOD HAPPENS
+        if(false){
+            modService.delete(convertedMod);
+            return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
+        }
+        
         return ResponseEntity.ok("O mod foi enviado com sucesso e está sendo verificado e processado");
     }
 }
