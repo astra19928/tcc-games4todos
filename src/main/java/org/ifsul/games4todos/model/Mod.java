@@ -23,14 +23,14 @@ public class Mod {
     @Column(name = "id_modification")
     private Integer id;
 
-    @Column(nullable = false, length = 100, name="id_uploader")
-    private String idUploader;
+    @Column(nullable = false, name="id_uploader")
+    private Integer idUploader;
 
     @Column(nullable = false, length = 100, name="game_name")
     private String gameName;
 
-    @Column(nullable = false, length = 50, name="name_creator")
-    private String nameCreator;
+    @Column(nullable = false, length = 50, name="name_developers")
+    private String nameDevelopers;
 
     @Column(nullable = false, length = 100, name="mod_name")
     private String modName;
