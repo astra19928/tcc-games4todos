@@ -1,5 +1,6 @@
+const form = document.getElementById('user-form');
 
-document.getElementById('user-form').addEventListener('submit', async (event) => {
+form.addEventListener('submit', async (event) => {
     event.preventDefault(); 
 
     const formData = {
@@ -24,7 +25,7 @@ document.getElementById('user-form').addEventListener('submit', async (event) =>
         const data = await response.text(); 
 
         document.getElementById('responseMessage').innerText = "Succeso: " + data;
-        document.getElementById('userForm').reset(); 
+        form.reset();
     } catch (error) {
         document.getElementById('responseMessage').innerText = "Erro enviando formulário: " + error.message;
         console.error('Error:', error);

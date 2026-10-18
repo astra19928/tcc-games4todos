@@ -12,7 +12,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Setter
 public class StorageProperties {
 
-    private String location = "mod";
+    private String location = "uploads";
 
 
 }

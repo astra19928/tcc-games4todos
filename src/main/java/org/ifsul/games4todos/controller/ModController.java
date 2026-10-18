@@ -6,6 +6,7 @@ import org.ifsul.games4todos.model.Mod;
 import org.ifsul.games4todos.model.User;
 import org.ifsul.games4todos.security.G4TUserDetails;
 import org.ifsul.games4todos.service.ModService;
+import org.ifsul.games4todos.storage.FileSystemStorageService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -13,14 +14,18 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpServerErrorException;
 
+import java.io.File;
+
 @RestController
 @RequestMapping("/mod")
 public class ModController {
 
     private final ModService modService;
+    private final FileSystemStorageService fileService;
 
-    public ModController(ModService modService) {
+    public ModController(ModService modService, FileSystemStorageService fileService) {
         this.modService = modService;
+        this.fileService = fileService;
     }
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -33,9 +38,13 @@ public class ModController {
         Integer userID = user.getId();
 
         Mod convertedMod = modService.convertUnverified(mod, userID);
-        modService.save(convertedMod);
+        Mod newMod = modService.save(convertedMod);
 
         //store image and mod file somewhere around here
+        String fileDir = String.valueOf(newMod.getId());
+        fileService.store(mod.getFile(), fileDir);
+        fileService.store(mod.getImage(), fileDir);
+        //fileService.store(mod.getPermissionImage(), fileDir);
 
         // if BADBADNOTGOOD HAPPENS
         if(false){

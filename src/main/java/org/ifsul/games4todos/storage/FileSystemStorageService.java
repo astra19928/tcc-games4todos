@@ -33,17 +33,33 @@ public class FileSystemStorageService implements StorageService {
 
     @Override
     public void store(MultipartFile file) {
+        store(file, null);
+    }
+
+    @Override
+    public void store(MultipartFile file, String subdirectory) {
         try {
             if (file.isEmpty()) {
                 throw new StorageException("Failed to store empty file.");
             }
-            Path destinationFile = this.rootLocation.resolve(
-                            Paths.get(file.getOriginalFilename()))
-                    .normalize().toAbsolutePath();
-            if (!destinationFile.getParent().equals(this.rootLocation.toAbsolutePath())) {
+
+            Path root = this.rootLocation.toAbsolutePath().normalize();
+
+            Path targetDir = (subdirectory == null || subdirectory.isBlank())
+                    ? root
+                    : root.resolve(subdirectory).normalize();
+
+            String filename = Paths.get(file.getOriginalFilename()).getFileName().toString();
+            Path destinationFile = targetDir.resolve(filename).normalize();
+
+            // cannot store files outside storage root
+            if (!destinationFile.startsWith(root)) {
                 throw new StorageException(
-                        "Cannot store file outside current directory.");
+                        "Cannot store file outside storage directory.");
             }
+
+            Files.createDirectories(targetDir);
+
             try (InputStream inputStream = file.getInputStream()) {
                 Files.copy(inputStream, destinationFile,
                         StandardCopyOption.REPLACE_EXISTING);
@@ -57,19 +73,23 @@ public class FileSystemStorageService implements StorageService {
     @Override
     public Stream<Path> loadAll() {
         try {
-            return Files.walk(this.rootLocation, 1)
-                    .filter(path -> !path.equals(this.rootLocation))
+            return Files.walk(this.rootLocation)
+                    .filter(Files::isRegularFile)
                     .map(this.rootLocation::relativize);
         }
         catch (IOException e) {
             throw new StorageException("Failed to read stored files", e);
         }
-
     }
 
     @Override
     public Path load(String filename) {
-        return rootLocation.resolve(filename);
+        Path root = rootLocation.toAbsolutePath().normalize();
+        Path file = root.resolve(filename).normalize();
+        if (!file.startsWith(root)) {
+            throw new StorageException("Invalid path: " + filename);
+        }
+        return file;
     }
 
     @Override
@@ -97,7 +117,12 @@ public class FileSystemStorageService implements StorageService {
     }
 
     public void createDirectory(String directoryName){
-        Path subdirectory = rootLocation.resolve(directoryName);
+        Path root = rootLocation.toAbsolutePath().normalize();
+        Path subdirectory = root.resolve(directoryName).normalize();
+
+        if (!subdirectory.startsWith(root)) {
+            throw new StorageException("Cannot create directory outside storage root.");
+        }
 
         try {
             Files.createDirectories(subdirectory);

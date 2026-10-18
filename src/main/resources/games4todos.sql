@@ -18,6 +18,7 @@ CREATE TABLE modification(
     downloads INT NOT NULL,
     release_date DATE,
     file_size FLOAT NOT NULL,
+    verified BOOLEAN NOT NULL,
     FOREIGN KEY(id_uploader) REFERENCES user(id_user)
 );
 
