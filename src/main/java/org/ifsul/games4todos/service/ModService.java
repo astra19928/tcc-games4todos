@@ -9,6 +9,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Arrays;
+import java.util.Optional;
 
 @Service
 public class ModService {
@@ -64,6 +65,8 @@ public class ModService {
         return null;
     }
 
-
+    public Optional<Mod> findById(Integer id){
+        return this.modRepository.findById(id);
+    }
 
 }

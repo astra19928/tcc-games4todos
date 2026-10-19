@@ -1,20 +1,21 @@
 package org.ifsul.games4todos.controller;
 
-import jakarta.servlet.http.HttpServletRequest;
 import org.ifsul.games4todos.dto.ModDTO;
 import org.ifsul.games4todos.model.Mod;
 import org.ifsul.games4todos.model.User;
 import org.ifsul.games4todos.security.G4TUserDetails;
 import org.ifsul.games4todos.service.ModService;
 import org.ifsul.games4todos.storage.FileSystemStorageService;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.HttpServerErrorException;
 
 import java.io.File;
+import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/mod")
@@ -61,4 +62,33 @@ public class ModController {
 
         return ResponseEntity.ok("O mod foi enviado com sucesso e está sendo verificado e processado");
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> viewModById(@PathVariable("id") String modId){
+        Integer id;
+        try{
+            id = Integer.parseInt(modId);
+        }catch(NumberFormatException e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        Optional<Mod> foundMod = modService.findById(id);
+        if(foundMod.isEmpty())
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        Mod mod = foundMod.get();
+        File img = fileService.load(id.toString()).toFile();
+
+        return ResponseEntity.ok(Map.of(
+                "bogoo", "hehee :3"
+        ));
+    }
+
+    @GetMapping("/{id}/image")
+    public ResponseEntity<Resource> getModIcon(@PathVariable("id") String modId){
+        Resource img = fileService.loadAsResourceNoExtension(modId, "icon");
+
+        return ResponseEntity.ok(img);
+    }
+
 }

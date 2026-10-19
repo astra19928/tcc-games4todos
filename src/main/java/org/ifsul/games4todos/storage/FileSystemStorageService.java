@@ -11,10 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
+import java.nio.file.*;
 import java.util.stream.Stream;
 
 @Service
@@ -117,6 +114,25 @@ public class FileSystemStorageService implements StorageService {
         catch (MalformedURLException e) {
             throw new StorageFileNotFoundException("Could not read file: " + filename, e);
         }
+    }
+
+    public Resource loadAsResourceNoExtension(String directory, String filename) {
+        Path dir = this.rootLocation.toAbsolutePath().normalize().resolve(directory);
+        String pattern = filename + ".*";
+
+        try (DirectoryStream<Path> stream = Files.newDirectoryStream(dir, pattern)) {
+            for (Path entry : stream) {
+                Resource resource = new UrlResource(entry.toUri());
+
+                if (resource.exists() || resource.isReadable())
+                    return resource;
+            }
+        }
+        catch (IOException e) {
+            throw new StorageFileNotFoundException("Could not read file: " + filename, e);
+        }
+
+        return null;
     }
 
     @Override
