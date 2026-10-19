@@ -8,8 +8,10 @@ const loadUser = async () => {
                 'Accept': 'application/json'
             },
         });
-        if(!response.ok)
-            return;
+
+        if(response.redirected && response.url.includes('/login.html')) return console.log("Usuário não autenticado.");
+        if(response.status === 401) return console.log("Usuário não autenticado.");
+        if(!response.ok)            return;
 
         const data = await response.json();
 
@@ -23,8 +25,7 @@ const loadUser = async () => {
 const loadHeader = async () => {
     try{
         const response = await fetch('/header.html');
-        if(!response.ok)
-            throw new Error("Requisição header erro");
+        if(!response.ok) throw new Error("Requisição header erro");
 
         const data = await response.text();
         document.getElementById('header').innerHTML = data;

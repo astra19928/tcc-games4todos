@@ -14,8 +14,8 @@ public enum AuthorityPermissions {
             "/header.html",
             "/modificacao.html",
             "/cadastro.html",
-            "/api/mod/{id}",
-            "/api/mod/{id}/image",
+            "/api/mods/{id}",
+            "/api/mods/{id}/image",
             "/mods",
             "/mods/{id}"
     }),
@@ -25,8 +25,8 @@ public enum AuthorityPermissions {
             "/api/login/me",
             "/api/upload",
             "/user/upload.html",
-            "/api/mod",
-            "/api/mod/{id}/download",
+            "/api/mods/upload",
+            "/api/mods/{id}/download",
 
     });
 

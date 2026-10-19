@@ -14,7 +14,7 @@ form.addEventListener('submit', async (event) => {
     
 
     try{
-        const response = await fetch('/api/mod', {
+        const response = await fetch('/api/mods/upload', {
             method: 'POST',
             body: formData
         });

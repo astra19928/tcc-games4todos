@@ -3,7 +3,7 @@ const id = urls[2];
 const message = document.getElementById('errorMessage');
 
 async function loadMod() {
-    const response = await fetch(`/api/mod/${id}`, {
+    const response = await fetch(`/api/mods/${id}`, {
         method: 'GET'
     });
 
@@ -21,10 +21,10 @@ async function loadMod() {
     document.getElementById('release-date').textContent = mod.date;
     document.getElementById('downloads').textContent = mod.downloads;
     document.getElementById('file-size').textContent = fileSize;
-    document.getElementById('mod-icon').src = `/api/mod/${id}/image`;
+    document.getElementById('mod-icon').src = `/api/mods/${id}/image`;
 
     document.getElementById('site').hidden = false;
-    document.getElementById('download').href = `/api/mod/${id}/download`;
+    document.getElementById('download').href = `/api/mods/${id}/download`;
     message.hidden = true;
 }
 

@@ -16,6 +16,7 @@ import java.time.LocalDate;
 public class ModDTO {
     private String gameName;
     private String modName;
+    private String uploaderName;
     private String developers;
     private LocalDate releaseDate;
     private MultipartFile image;

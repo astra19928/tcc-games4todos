@@ -17,7 +17,7 @@ import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 @RestController
-@RequestMapping("/mod")
+@RequestMapping("/mods")
 public class ModController {
 
     private final ModService modService;
@@ -28,22 +28,22 @@ public class ModController {
         this.fileService = fileService;
     }
 
-    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(path = "/upload",
+            consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> receiveModUpload(
             @ModelAttribute ModDTO mod,
             Authentication auth
     ){
         G4TUserDetails details = (G4TUserDetails) auth.getPrincipal();
-        User user = details.getUser();
+        if(details == null) return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 
-        if(user == null)
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        User user = details.getUser();
 
         Integer userID = user.getId();
 
         boolean imgValida = modService.validateImage(mod.getImage());
         if(!imgValida)
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return ResponseEntity.badRequest().build();
 
         Mod convertedMod = modService.convertUnverified(mod, userID);
         Mod newMod = modService.save(convertedMod);
@@ -56,7 +56,7 @@ public class ModController {
 
         }catch(Exception e){
             modService.delete(convertedMod);
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return ResponseEntity.internalServerError().build();
         }
 
         return ResponseEntity.ok("O mod foi enviado com sucesso e está sendo verificado e processado");
@@ -76,7 +76,6 @@ public class ModController {
             return ResponseEntity.notFound().build();
 
         Mod mod = foundMod.get();
-        File img = fileService.load(id.toString()).toFile();
 
         ModResponseDTO responseDTO = new ModResponseDTO(
                 mod.getGameName(),
@@ -144,6 +143,12 @@ public class ModController {
 
         if (!file.exists() || !file.isReadable())
             return ResponseEntity.notFound().build();
+
+        Mod mod = foundMod.get();
+        int newDownloads = mod.getDownloads() + 1;
+
+        mod.setDownloads(newDownloads);
+        modService.save(mod);
 
         return ResponseEntity.ok()
                 .contentType(MediaType.APPLICATION_OCTET_STREAM)
