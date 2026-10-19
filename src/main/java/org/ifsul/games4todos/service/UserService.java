@@ -27,11 +27,4 @@ public class UserService {
         this.UserRepository.delete(User);
     }
 
-    public List<User> findAll() {
-        return this.UserRepository.findAll();
-    }
-
-    public User findById(Integer id){
-        return this.UserRepository.findById(id).orElse(null);
-    }
 }

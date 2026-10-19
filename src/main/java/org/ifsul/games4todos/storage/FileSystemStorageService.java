@@ -5,6 +5,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileSystemUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -33,11 +34,11 @@ public class FileSystemStorageService implements StorageService {
 
     @Override
     public void store(MultipartFile file) {
-        store(file, null);
+        store(file, null, null);
     }
 
     @Override
-    public void store(MultipartFile file, String subdirectory) {
+    public void store(MultipartFile file, String subdirectory, String rename) {
         try {
             if (file.isEmpty()) {
                 throw new StorageException("Failed to store empty file.");
@@ -49,7 +50,14 @@ public class FileSystemStorageService implements StorageService {
                     ? root
                     : root.resolve(subdirectory).normalize();
 
-            String filename = Paths.get(file.getOriginalFilename()).getFileName().toString();
+            String originalFilename = Paths.get(file.getOriginalFilename()).getFileName().toString();
+            String extension = (StringUtils.hasText(originalFilename) && originalFilename.contains("."))
+                    ? originalFilename.substring(originalFilename.lastIndexOf("."))
+                    : null;
+
+            String filename = (rename == null || subdirectory.isBlank())
+                    ? originalFilename
+                    : rename + extension;
             Path destinationFile = targetDir.resolve(filename).normalize();
 
             // cannot store files outside storage root

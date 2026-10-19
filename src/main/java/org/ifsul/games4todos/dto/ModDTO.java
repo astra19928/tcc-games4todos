@@ -19,5 +19,6 @@ public class ModDTO {
     private String developers;
     private LocalDate releaseDate;
     private MultipartFile image;
+    private MultipartFile permImage;
     private MultipartFile file;
 }

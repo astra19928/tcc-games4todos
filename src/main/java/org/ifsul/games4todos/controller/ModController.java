@@ -35,23 +35,30 @@ public class ModController {
     ){
         G4TUserDetails details = (G4TUserDetails) auth.getPrincipal();
         User user = details.getUser();
+
+        if(user == null)
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+
         Integer userID = user.getId();
+
+        boolean imgValida = modService.validateImage(mod.getImage());
+        if(!imgValida)
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
         Mod convertedMod = modService.convertUnverified(mod, userID);
         Mod newMod = modService.save(convertedMod);
 
-        //store image and mod file somewhere around here
-        String fileDir = String.valueOf(newMod.getId());
-        fileService.store(mod.getFile(), fileDir);
-        fileService.store(mod.getImage(), fileDir);
-        //fileService.store(mod.getPermissionImage(), fileDir);
+        try{
+            String fileDir = String.valueOf(newMod.getId());
+            fileService.store(mod.getFile(), fileDir, "content");
+            fileService.store(mod.getImage(), fileDir, "icon");
+            //fileService.store(mod.getPermissionImage(), fileDir);
 
-        // if BADBADNOTGOOD HAPPENS
-        if(false){
+        }catch(Exception e){
             modService.delete(convertedMod);
-            return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        
+
         return ResponseEntity.ok("O mod foi enviado com sucesso e está sendo verificado e processado");
     }
 }

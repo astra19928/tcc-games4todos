@@ -1,4 +1,6 @@
 const form = document.getElementById('upload-form');
+const preview = document.getElementById('uploaded-mod-image');
+
 form.addEventListener('submit', async (event) => {
     event.preventDefault();
 
@@ -18,14 +20,14 @@ form.addEventListener('submit', async (event) => {
         });
 
         if (!response.ok) {
-            throw new Error('Houve um problema com a requisição!');
+            throw new Error(`Erro HTTP! Status: ${response.status}`);
         }
 
         const data = await response.text();
 
         document.getElementById('responseMessage').innerText = "Succeso: " + data;
         document.getElementById('upload-form').reset();
-
+        preview.setAttribute('src', "#");
     } catch (error) {
         document.getElementById('responseMessage').innerText = "Erro enviando formulário: " + error.message;
         console.error('Error:', error);
@@ -39,7 +41,6 @@ const displayImage = () =>{
     const file = input.files;
     if (file) {
         const fileReader = new FileReader();
-        const preview = document.getElementById('uploaded-mod-image');
 
         fileReader.onload = event => {
             preview.setAttribute('src', event.target.result);
