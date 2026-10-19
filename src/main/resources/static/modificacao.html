@@ -11,21 +11,22 @@
     <link rel="stylesheet" href="css/general.css">
     <link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="css/modificacao.css">
+    <script src="/js/loadMod.js"></script>
 </head>
 
 <body>
     <main class="site-container flex-container-column">
         <header id="header" class="header"></header>
-        <script src="js/loadHeader.js"></script>
+        <script src="/js/loadHeader.js"></script>
 
         <section class="info-container flex-container">
 
             <div class="game-info flex-container-column">
-                <p class="game-title">
+                <p id="game-title" class="game-title">
                     Monster Hunter Freedom Unite
                 </p>
 
-                <img class="card-image" src="images/PLACEHOLDER_nagacuga.png">
+                <img id="mod-icon" class="card-image" src="#" alt="Imagem da modificação">
 
                 <div class="mod-actions flex-container">
 
@@ -42,19 +43,19 @@
             </div>
 
             <div class="mod-info flex-container-column">
-                <div class="mod-info-box">
-                    Desenvolvedores: KosmicoJoga e comedordePLaśtico
+                <div id="dev-info" class="mod-info-box">
+                    Desenvolvedores:
                 </div>
-                <div class="mod-info-box">
-                    Upload feito por: FarmadorDeAura67
+                <div id="uploader" class="mod-info-box">
+                    Upload feito por:
                 </div>
-                <div class="mod-info-box">
-                    Downloads: 16.420
+                <div id="downloads" class="mod-info-box">
+                    Downloads:
                 </div>
-                <div class="mod-info-box">
-                    Lançamento: 16/04/2020
+                <div id="release-date" class="mod-info-box">
+                    Lançamento:
                 </div>
-                <div class="mod-info-box">
+                <div id="file-size" class="mod-info-box">
                     Tamanho: 2.69MB
                 </div>
 

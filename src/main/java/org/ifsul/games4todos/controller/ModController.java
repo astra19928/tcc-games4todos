@@ -1,6 +1,7 @@
 package org.ifsul.games4todos.controller;
 
 import org.ifsul.games4todos.dto.ModDTO;
+import org.ifsul.games4todos.dto.ModResponseDTO;
 import org.ifsul.games4todos.model.Mod;
 import org.ifsul.games4todos.model.User;
 import org.ifsul.games4todos.security.G4TUserDetails;
@@ -64,7 +65,7 @@ public class ModController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> viewModById(@PathVariable("id") String modId){
+    public ResponseEntity<ModResponseDTO> viewModById(@PathVariable("id") String modId){
         Integer id;
         try{
             id = Integer.parseInt(modId);
@@ -79,9 +80,13 @@ public class ModController {
         Mod mod = foundMod.get();
         File img = fileService.load(id.toString()).toFile();
 
-        return ResponseEntity.ok(Map.of(
-                "bogoo", "hehee :3"
-        ));
+        ModResponseDTO responseDTO = new ModResponseDTO(
+                mod.getNameDevelopers(),
+                "placeholder",
+                mod.getReleaseDate(),
+                mod.getFileSize()
+        );
+        return ResponseEntity.ok(responseDTO);
     }
 
     @GetMapping("/{id}/image")
