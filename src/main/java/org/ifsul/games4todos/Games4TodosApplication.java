@@ -13,7 +13,8 @@ scanBasePackages = {
 		"org.ifsul.games4todos.service",
 		"org.ifsul.games4todos.model",
         "org.ifsul.games4todos.security",
-        "org.ifsul.games4todos.storage"
+        "org.ifsul.games4todos.storage",
+        "org.ifsul.games4todos.pagecontroller"
 })
 @EnableConfigurationProperties(StorageProperties.class)
 @EnableAsync

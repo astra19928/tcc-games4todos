@@ -8,15 +8,13 @@ import org.ifsul.games4todos.security.G4TUserDetails;
 import org.ifsul.games4todos.service.ModService;
 import org.ifsul.games4todos.storage.FileSystemStorageService;
 import org.springframework.core.io.Resource;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.File;
-import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
 @RestController
 @RequestMapping("/mod")
@@ -31,7 +29,7 @@ public class ModController {
     }
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<?> gehehehaThankYou(
+    public ResponseEntity<?> receiveModUpload(
             @ModelAttribute ModDTO mod,
             Authentication auth
     ){
@@ -70,19 +68,22 @@ public class ModController {
         try{
             id = Integer.parseInt(modId);
         }catch(NumberFormatException e){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return ResponseEntity.badRequest().build();
         }
 
         Optional<Mod> foundMod = modService.findById(id);
         if(foundMod.isEmpty())
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return ResponseEntity.notFound().build();
 
         Mod mod = foundMod.get();
         File img = fileService.load(id.toString()).toFile();
 
         ModResponseDTO responseDTO = new ModResponseDTO(
+                mod.getGameName(),
+                mod.getModName(),
                 mod.getNameDevelopers(),
                 "placeholder",
+                mod.getDownloads(),
                 mod.getReleaseDate(),
                 mod.getFileSize()
         );
@@ -91,9 +92,67 @@ public class ModController {
 
     @GetMapping("/{id}/image")
     public ResponseEntity<Resource> getModIcon(@PathVariable("id") String modId){
-        Resource img = fileService.loadAsResourceNoExtension(modId, "icon");
+        Integer id;
+        try {
+            id = Integer.parseInt(modId);
+        } catch (NumberFormatException e) {
+            return ResponseEntity.badRequest().build();
+        }
 
-        return ResponseEntity.ok(img);
+        Optional<Mod> foundMod = modService.findById(id);
+        if (foundMod.isEmpty())
+            return ResponseEntity.notFound().build();
+
+        Resource image;
+        try {
+            image = fileService.loadAsResourceNoExtension(id.toString(), "icon");
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+
+        if (!image.exists() || !image.isReadable())
+            return ResponseEntity.notFound().build();
+
+        MediaType type = MediaTypeFactory.getMediaType(image)
+                .orElse(MediaType.APPLICATION_OCTET_STREAM);
+
+        return ResponseEntity.ok()
+                .contentType(type)
+                .cacheControl(CacheControl.maxAge(1, TimeUnit.HOURS).cachePublic())
+                .body(image);
+    }
+
+    @GetMapping("/{id}/download")
+    public ResponseEntity<Resource> downloadMod(@PathVariable("id") String modId){
+        Integer id;
+        try {
+            id = Integer.parseInt(modId);
+        } catch (NumberFormatException e) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        Optional<Mod> foundMod = modService.findById(id);
+        if (foundMod.isEmpty())
+            return ResponseEntity.notFound().build();
+
+        Resource file;
+        try {
+            file = fileService.loadAsResourceNoExtension(id.toString(), "content");
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+
+        if (!file.exists() || !file.isReadable())
+            return ResponseEntity.notFound().build();
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                .header(HttpHeaders.CONTENT_DISPOSITION,
+                        ContentDisposition.attachment()
+                                .filename(file.getFilename())
+                                .build()
+                                .toString())
+                .body(file);
     }
 
 }

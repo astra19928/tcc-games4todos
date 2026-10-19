@@ -1,22 +1,35 @@
 const urls = window.location.pathname.split('/');
 const id = urls[2];
+const message = document.getElementById('errorMessage');
 
-try{
+async function loadMod() {
     const response = await fetch(`/api/mod/${id}`, {
         method: 'GET'
     });
 
-    if (!response.ok) {
-        throw new Error('Houve um problema com a requisição!');
-    }
+    if(response.status === 404) return showError("Mod não encontrado.");
+    if(response.status === 400) return showError("ID de mod inválido.");
+    if(!response.ok)            return showError("Erro ao carregar mod.");
 
-    const data = await response.json();
-    document.getElementById('dev-info').innerText += data.developers;
-    document.getElementById('uploader').innerText += data.uploader;
-    document.getElementById('release-date').innerText += data.date;
-    document.getElementById('file-size').innerText += data.fileSize;
+    const mod = await response.json();
 
-} catch (error) {
-    document.getElementById('responseMessage').innerText = "Erro enviando formulário: " + error.message;
-    console.error('Error:', error);
+    const fileSize = mod.fileSize.toFixed(2);
+    document.getElementById('game-title').textContent = mod.gameName;
+    //document.getElementById('mod-name').textContent = mod.modName;
+    document.getElementById('dev-info').textContent = mod.developers;
+    document.getElementById('uploader').textContent = mod.uploader;
+    document.getElementById('release-date').textContent = mod.date;
+    document.getElementById('downloads').textContent = mod.downloads;
+    document.getElementById('file-size').textContent = fileSize;
+    document.getElementById('mod-icon').src = `/api/mod/${id}/image`;
+
+    document.getElementById('site').hidden = false;
+    document.getElementById('download').href = `/api/mod/${id}/download`;
+    message.hidden = true;
 }
+
+function showError(error){
+    message.textContent = "Erro! " + error;
+}
+
+loadMod();

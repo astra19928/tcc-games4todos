@@ -10,8 +10,11 @@ import java.time.LocalDate;
 @Getter
 @Setter
 public class ModResponseDTO {
+    private String modName;
+    private String gameName;
     private String developers;
     private String uploader;
+    private Integer downloads;
     private LocalDate date;
     private Float fileSize;
 }

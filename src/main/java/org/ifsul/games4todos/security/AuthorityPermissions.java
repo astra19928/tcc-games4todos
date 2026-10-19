@@ -15,7 +15,9 @@ public enum AuthorityPermissions {
             "/modificacao.html",
             "/cadastro.html",
             "/api/mod/{id}",
-            "/api/mod/{id}/image"
+            "/api/mod/{id}/image",
+            "/mods",
+            "/mods/{id}"
     }),
     USER(new String[]{
             "/api/config",
@@ -23,8 +25,9 @@ public enum AuthorityPermissions {
             "/api/login/me",
             "/api/upload",
             "/user/upload.html",
-            "/api/download",
-            "/api/mod"
+            "/api/mod",
+            "/api/mod/{id}/download",
+
     });
 
     private final String[] urls;
