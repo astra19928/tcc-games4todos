@@ -7,7 +7,8 @@ public enum ExtensionPermissions {
     IMAGE(new String[]{
             ".png",
             ".jpeg",
-            ".jpg"
+            ".jpg",
+            ".webp"
     });
 
     private final String[] extensions;

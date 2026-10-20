@@ -6,6 +6,7 @@ import org.ifsul.games4todos.model.Mod;
 import org.ifsul.games4todos.model.User;
 import org.ifsul.games4todos.security.G4TUserDetails;
 import org.ifsul.games4todos.service.ModService;
+import org.ifsul.games4todos.service.UserService;
 import org.ifsul.games4todos.storage.FileSystemStorageService;
 import org.springframework.core.io.Resource;
 import org.springframework.http.*;
@@ -21,10 +22,12 @@ import java.util.concurrent.TimeUnit;
 public class ModController {
 
     private final ModService modService;
+    private final UserService userService;
     private final FileSystemStorageService fileService;
 
-    public ModController(ModService modService, FileSystemStorageService fileService) {
+    public ModController(ModService modService, UserService userService, FileSystemStorageService fileService) {
         this.modService = modService;
+        this.userService = userService;
         this.fileService = fileService;
     }
 
@@ -77,11 +80,17 @@ public class ModController {
 
         Mod mod = foundMod.get();
 
+        String uploaderName = "Usuário deletado";
+
+        Optional<User> foundUploader = userService.findById(mod.getIdUploader());
+        if(foundUploader.isPresent())
+            uploaderName = foundUploader.get().getNickname();
+
         ModResponseDTO responseDTO = new ModResponseDTO(
                 mod.getGameName(),
                 mod.getModName(),
                 mod.getNameDevelopers(),
-                "placeholder",
+                uploaderName,
                 mod.getDownloads(),
                 mod.getReleaseDate(),
                 mod.getFileSize()
