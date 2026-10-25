@@ -12,28 +12,19 @@ form.addEventListener('submit', async (event) => {
     formData.append('releaseDate', document.getElementById('mod-release-date').value);
     formData.append('image', document.getElementById('mod-image-submit').files[0]);
     formData.append('file', document.getElementById('mod-file').files[0]);
-    
 
-    try{
-        const response = await fetch('/api/mods/upload', {
-            method: 'POST',
-            body: formData
-        });
+    const response = await fetch('/api/mods/upload', {
+        method: 'POST',
+        body: formData
+    });
 
-        if (!response.ok) {
-            throw new Error(`Erro HTTP! Status: ${response.status}`);
-        }
+    if(!response.ok) return showResponse('Erro ao realizar upload de mod.');
 
-        const data = await response.text();
+    const data = await response.text();
 
-        document.getElementById('responseMessage').innerText = "Succeso: " + data;
-        document.getElementById('upload-form').reset();
-        preview.setAttribute('src', "#");
-    } catch (error) {
-        document.getElementById('responseMessage').innerText = "Erro enviando formulário: " + error.message;
-        console.error('Error:', error);
-    }
-
+    showResponse("Succeso: " + data);
+    document.getElementById('upload-form').reset();
+    preview.setAttribute('src', "#");
 });
 
 const input = document.getElementById('mod-image-submit');
@@ -49,6 +40,10 @@ const displayImage = () =>{
 
         fileReader.readAsDataURL(file[0]);
     }
+}
+
+function showResponse(text){
+    document.getElementById('responseMessage').innerText = text;
 }
 
 input.addEventListener("change", displayImage);

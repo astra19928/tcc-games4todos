@@ -7,14 +7,15 @@ async function loadMod() {
         method: 'GET'
     });
 
-    if(response.status === 404) return showError("Mod não encontrado.");
-    if(response.status === 400) return showError("ID de mod inválido.");
-    if(!response.ok)            return showError("Erro ao carregar mod.");
+    if(response.status === 404) return showError('Mod não encontrado.');
+    if(response.status === 400) return showError('ID de mod inválido.');
+    if(!response.ok)            return showError('Erro ao carregar mod.');
 
     const mod = await response.json();
 
+    const gameTitle = mod.gameName + " (" + mod.modName + ")";
     const fileSize = mod.fileSize.toFixed(2);
-    document.getElementById('game-title').textContent = mod.gameName;
+    document.getElementById('game-title').textContent = gameTitle;
     //document.getElementById('mod-name').textContent = mod.modName;
     document.getElementById('dev-info').textContent = mod.developers;
     document.getElementById('uploader').textContent = mod.uploader;
@@ -32,7 +33,7 @@ async function loadMod() {
 }
 
 function showError(error){
-    message.textContent = "Erro! " + error;
+    message.textContent = 'Erro! ' + error;
 }
 
 loadMod();

@@ -127,7 +127,7 @@ public class ModController {
 
         return ResponseEntity.ok()
                 .contentType(type)
-                .cacheControl(CacheControl.maxAge(1, TimeUnit.HOURS).cachePublic())
+                .cacheControl(CacheControl.maxAge(1, TimeUnit.SECONDS).cachePublic()) // MUDAR PARA HOUR DEPOIS
                 .body(image);
     }
 
