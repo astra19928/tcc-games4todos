@@ -12,9 +12,10 @@ CREATE TABLE user(
 CREATE TABLE modification(
     id_modification INT PRIMARY KEY AUTO_INCREMENT,
     id_uploader INT NOT NULL,
-    name_creator VARCHAR(50),
     game_name VARCHAR(100) NOT NULL,
+    name_creator VARCHAR(50),
     mod_name VARCHAR(100) NOT NULL,
+    description TEXT,
     downloads INT NOT NULL,
     release_date DATE,
     file_size FLOAT NOT NULL,

@@ -35,6 +35,9 @@ public class Mod {
     @Column(nullable = false, length = 100, name="mod_name")
     private String modName;
 
+    @Column(name="description")
+    private String description;
+
     @Column(nullable = false, name="downloads")
     private Integer downloads;
 

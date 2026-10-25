@@ -8,6 +8,7 @@ form.addEventListener('submit', async (event) => {
     formData.append('gameName', document.getElementById('game-name').value);
     formData.append('modName', document.getElementById('mod-name').value);
     formData.append('developers', document.getElementById('mod-developers').value);
+    formData.append('description', document.getElementById('description').value);
     formData.append('releaseDate', document.getElementById('mod-release-date').value);
     formData.append('image', document.getElementById('mod-image-submit').files[0]);
     formData.append('file', document.getElementById('mod-file').files[0]);

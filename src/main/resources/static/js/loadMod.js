@@ -19,12 +19,15 @@ async function loadMod() {
     document.getElementById('dev-info').textContent = mod.developers;
     document.getElementById('uploader').textContent = mod.uploader;
     document.getElementById('release-date').textContent = mod.date;
+    document.getElementById('description').textContent = mod.description;
     document.getElementById('downloads').textContent = mod.downloads;
     document.getElementById('file-size').textContent = fileSize;
     document.getElementById('mod-icon').src = `/api/mods/${id}/image`;
 
     document.getElementById('site').hidden = false;
     document.getElementById('download').href = `/api/mods/${id}/download`;
+
+    window.document.title = mod.modName;
     message.hidden = true;
 }
 

@@ -6,15 +6,13 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 
-@AllArgsConstructor
-@Getter
-@Setter
-public class ModResponseDTO {
-    private String modName;
-    private String gameName;
-    private String developers;
-    private String uploader;
-    private Integer downloads;
-    private LocalDate date;
-    private Float fileSize;
-}
+public record ModResponseDTO(
+    String gameName,
+    String modName,
+    String uploader,
+    String developers,
+    String description,
+    LocalDate date,
+    Integer downloads,
+    Float fileSize
+){}

@@ -44,7 +44,7 @@ public class ModController {
 
         Integer userID = user.getId();
 
-        boolean imgValida = modService.validateImage(mod.getImage());
+        boolean imgValida = modService.validateImage(mod.image());
         if(!imgValida)
             return ResponseEntity.badRequest().build();
 
@@ -53,8 +53,8 @@ public class ModController {
 
         try{
             String fileDir = String.valueOf(newMod.getId());
-            fileService.store(mod.getFile(), fileDir, "content");
-            fileService.store(mod.getImage(), fileDir, "icon");
+            fileService.store(mod.file(), fileDir, "content");
+            fileService.store(mod.image(), fileDir, "icon");
             //fileService.store(mod.getPermissionImage(), fileDir);
 
         }catch(Exception e){
@@ -89,10 +89,11 @@ public class ModController {
         ModResponseDTO responseDTO = new ModResponseDTO(
                 mod.getGameName(),
                 mod.getModName(),
-                mod.getNameDevelopers(),
                 uploaderName,
-                mod.getDownloads(),
+                mod.getNameDevelopers(),
+                mod.getDescription(),
                 mod.getReleaseDate(),
+                mod.getDownloads(),
                 mod.getFileSize()
         );
         return ResponseEntity.ok(responseDTO);

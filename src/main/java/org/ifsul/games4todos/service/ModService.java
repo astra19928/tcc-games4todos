@@ -21,17 +21,18 @@ public class ModService {
 
 
     public Mod convertUnverified(ModDTO modDTO, Integer userID){
-        long fileSize = modDTO.getFile().getSize();
+        long fileSize = modDTO.file().getSize();
         float mb = (float) fileSize / (1024f * 1024f);
 
         Mod mod = new Mod(
                 null,
                 userID,
-                modDTO.getGameName(),
-                modDTO.getDevelopers(),
-                modDTO.getModName(),
+                modDTO.gameName(),
+                modDTO.developers(),
+                modDTO.modName(),
+                modDTO.description(),
                 0,
-                modDTO.getReleaseDate(),
+                modDTO.releaseDate(),
                 mb,
                 false
         );

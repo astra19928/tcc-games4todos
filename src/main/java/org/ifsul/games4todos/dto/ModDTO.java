@@ -8,18 +8,14 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 
-// LOMBOK
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@Setter
-public class ModDTO {
-    private String gameName;
-    private String modName;
-    private String uploaderName;
-    private String developers;
-    private LocalDate releaseDate;
-    private MultipartFile image;
-    private MultipartFile permImage;
-    private MultipartFile file;
-}
+public record ModDTO (
+    String gameName,
+    String modName,
+    String uploaderName,
+    String developers,
+    String description,
+    LocalDate releaseDate,
+    MultipartFile image,
+    MultipartFile permImage,
+    MultipartFile file
+){}
