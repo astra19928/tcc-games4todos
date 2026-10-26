@@ -71,6 +71,6 @@ public class SessionController {
         User user = details.getUser();
         Integer id = user.getId();
         return ResponseEntity.ok(Map.of("name", user.getNickname(),
-                "iconUrl", "api/users/" + id + "/image"));
+                "iconUrl", "/api/users/" + id + "/image"));
     }
 }

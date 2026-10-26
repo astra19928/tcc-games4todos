@@ -51,10 +51,11 @@ public class ModController {
 
         Mod convertedMod = modService.convertUnverified(mod, userID);
         Mod newMod = modService.save(convertedMod);
+        Integer id = newMod.getId();
 
         try{
-            fileService.store(mod.file(), fileDir, "content");
-            fileService.store(mod.image(), fileDir, "icon");
+            fileService.store(mod.file(), fileDir + id, "content");
+            fileService.store(mod.image(), fileDir + id, "icon");
             //fileService.store(mod.getPermissionImage(), fileDir);
 
         }catch(Exception e){
@@ -114,7 +115,7 @@ public class ModController {
 
         Resource image;
         try {
-            image = fileService.loadAsResourceNoExtension( fileDir + id.toString(), "icon");
+            image = fileService.loadAsResourceNoExtension( fileDir + id, "icon");
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
         }
@@ -146,7 +147,7 @@ public class ModController {
 
         Resource file;
         try {
-            file = fileService.loadAsResourceNoExtension(fileDir + id.toString(), "content");
+            file = fileService.loadAsResourceNoExtension(fileDir + id, "content");
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
         }
