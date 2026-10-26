@@ -40,18 +40,6 @@ public class ModService {
         return mod;
     }
 
-    public boolean validateImage(MultipartFile file){
-        String originalFilename = file.getOriginalFilename();
-
-        String extension = (StringUtils.hasText(originalFilename) && originalFilename.contains("."))
-                ? originalFilename.substring(originalFilename.lastIndexOf("."))
-                : null;
-
-        String[] permissions = ExtensionPermissions.IMAGE.getExtensions();
-
-        return Arrays.asList(permissions).contains(extension);
-    }
-
     public Mod save(Mod mod){
         return this.modRepository.save(mod);
     }

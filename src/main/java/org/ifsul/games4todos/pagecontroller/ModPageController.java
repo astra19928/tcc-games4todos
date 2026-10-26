@@ -45,7 +45,7 @@ public class ModPageController {
             uploaderName = foundUploader.get().getNickname();
 
         String formatFile = String.format("%.2f", mod.getFileSize());
-        model.addAttribute("gameName", mod.getGameName() + "(" + mod.getModName() + ")");
+        model.addAttribute("gameName", mod.getGameName() + " (" + mod.getModName() + ")");
         model.addAttribute("modName", mod.getModName());
         model.addAttribute("uploaderName", uploaderName);
         model.addAttribute("developerName", mod.getNameDevelopers());

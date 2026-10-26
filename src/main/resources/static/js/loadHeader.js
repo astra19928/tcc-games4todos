@@ -15,7 +15,7 @@ const loadUser = async () => {
 
     const data = await response.json();
 
-    return data.name;
+    return data;
 }
 
 const loadHeader = async () => {
@@ -27,16 +27,18 @@ const loadHeader = async () => {
 }
 
 const load = async () => {
-    const name = await loadUser();
+    const data = await loadUser();
     await loadHeader();
 
-    if(name){
-        let icon = document.getElementById("user-icon");
-        icon.src = "/images/PLACEHOLDER_nagacuga.png";
+    if(data){
+        const icon = document.getElementById("user-icon");
+        icon.src = data.iconUrl;
         icon.style.display = "block";
-        document.getElementById("user-symbol").style.display = "none";
+
         const nameElem = document.getElementById("user-name");
-        nameElem.innerText = name;
+        nameElem.innerText = data.name;
+
+        document.getElementById("user-symbol").style.display = "none";
     }
 }
 

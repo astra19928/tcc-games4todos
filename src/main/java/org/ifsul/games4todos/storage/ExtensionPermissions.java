@@ -1,4 +1,4 @@
-package org.ifsul.games4todos.service;
+package org.ifsul.games4todos.storage;
 
 import lombok.Getter;
 

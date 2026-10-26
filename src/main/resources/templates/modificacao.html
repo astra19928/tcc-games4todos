@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nome do Mod Aqui</title>
+    <title th:text="${modName}">Nome do Mod Aqui</title>
     <link
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:FILL,wght@0..1,100..700&icon_names=search,comment,star,settings,account_circle&display=block"
         rel="stylesheet" />
@@ -18,7 +18,7 @@
         <header id="header" class="header"></header>
         <script src="/js/loadHeader.js"></script>
 
-            <p th:if="${responseMessage != null}"th:text="${responseMessage}"></p>
+        <p th:if="${responseMessage != null}"th:text="${responseMessage}"></p>
 
         <article th:if="${responseMessage == null}" id="site" style="width: 100%" >
             <section class="info-container flex-container">
@@ -81,7 +81,18 @@
                 Comentários
             </div>
 
-            <section class="site-body flex-container-column">
+            <section class="site-body flex-container-column comment-section">
+
+                <div class="comment-container">
+                    <img class="comment-icon" src="#" alt="Imagem do usuário">
+                    <textarea
+                            id="comment"
+                            class="text-input comment"
+                            aria-label="Comentar sobre o mod"
+                            placeholder="Comentar..."
+                    ></textarea>
+                </div>
+
 
             </section>
         </article>

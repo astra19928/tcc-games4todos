@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.nio.file.*;
+import java.util.Arrays;
 import java.util.stream.Stream;
 
 @Service
@@ -122,6 +123,10 @@ public class FileSystemStorageService implements StorageService {
 
         try (DirectoryStream<Path> stream = Files.newDirectoryStream(dir, pattern)) {
             for (Path entry : stream) {
+                if (!entry.startsWith(dir)) {
+                    throw new StorageException(
+                            "Cannot store file outside storage directory.");
+                }
                 Resource resource = new UrlResource(entry.toUri());
 
                 if (resource.exists() || resource.isReadable())
@@ -164,5 +169,17 @@ public class FileSystemStorageService implements StorageService {
         catch (IOException e) {
             throw new StorageException("Could not initialize storage", e);
         }
+    }
+
+    public boolean validateImage(MultipartFile file){
+        String originalFilename = file.getOriginalFilename();
+
+        String extension = (StringUtils.hasText(originalFilename) && originalFilename.contains("."))
+                ? originalFilename.substring(originalFilename.lastIndexOf("."))
+                : null;
+
+        String[] permissions = ExtensionPermissions.IMAGE.getExtensions();
+
+        return Arrays.asList(permissions).contains(extension);
     }
 }

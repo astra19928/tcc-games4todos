@@ -24,6 +24,7 @@ public class ModController {
     private final ModService modService;
     private final UserService userService;
     private final FileSystemStorageService fileService;
+    private final String fileDir = "mods/";
 
     public ModController(ModService modService, UserService userService, FileSystemStorageService fileService) {
         this.modService = modService;
@@ -44,7 +45,7 @@ public class ModController {
 
         Integer userID = user.getId();
 
-        boolean imgValida = modService.validateImage(mod.image());
+        boolean imgValida = fileService.validateImage(mod.image());
         if(!imgValida)
             return ResponseEntity.badRequest().build();
 
@@ -52,7 +53,6 @@ public class ModController {
         Mod newMod = modService.save(convertedMod);
 
         try{
-            String fileDir = String.valueOf(newMod.getId());
             fileService.store(mod.file(), fileDir, "content");
             fileService.store(mod.image(), fileDir, "icon");
             //fileService.store(mod.getPermissionImage(), fileDir);
@@ -114,7 +114,7 @@ public class ModController {
 
         Resource image;
         try {
-            image = fileService.loadAsResourceNoExtension(id.toString(), "icon");
+            image = fileService.loadAsResourceNoExtension( fileDir + id.toString(), "icon");
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
         }
@@ -146,7 +146,7 @@ public class ModController {
 
         Resource file;
         try {
-            file = fileService.loadAsResourceNoExtension(id.toString(), "content");
+            file = fileService.loadAsResourceNoExtension(fileDir + id.toString(), "content");
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
         }

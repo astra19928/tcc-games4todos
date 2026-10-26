@@ -69,6 +69,8 @@ public class SessionController {
         }
         G4TUserDetails details = (G4TUserDetails) auth.getPrincipal();
         User user = details.getUser();
-        return ResponseEntity.ok(Map.of("name", user.getNickname()));
+        Integer id = user.getId();
+        return ResponseEntity.ok(Map.of("name", user.getNickname(),
+                "iconUrl", "api/users/" + id + "/image"));
     }
 }

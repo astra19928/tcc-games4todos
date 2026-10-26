@@ -27,7 +27,7 @@
                 <input
                         type="text"
                         id="name-create"
-                        class="cadastro-text-input"
+                        class="text-input"
                         name="username"
                         aria-label="Criar nome de usuário"
                         placeholder="Nome"
@@ -36,7 +36,7 @@
                 <input
                         type="email"
                         id="email-create"
-                        class="cadastro-text-input"
+                        class="text-input"
                         name="email"
                         aria-label="Criar email de usuário"
                         placeholder="E-mail"
@@ -45,7 +45,7 @@
                 <input
                         type="text"
                         id="password-create"
-                        class="cadastro-text-input"
+                        class="text-input"
                         name="password"
                         aria-label="Criar senha de usuário"
                         placeholder="Senha"
@@ -86,6 +86,20 @@
                 </div> -->
 
                 <button type="submit" id="user-submit">Realizar Cadastro</button>
+            </div>
+
+            <div class="form-container flex-container-column">
+                <img src="#" class="uploaded-form-image" id="uploaded-user-image" alt="Pré-visualização do icone do usuário">
+
+                <div class="label-input-container flex-container-column">
+                    <label for="form-image-submit">Insira o seu ícone de usuário</label>
+                    <input
+                            type="file"
+                            id="form-image-submit"
+                            accept="image/png, image/jpeg, image/jpg, image/webp"
+                    >
+                </div>
+
             </div>
 
             <t id="responseMessage"></t>
