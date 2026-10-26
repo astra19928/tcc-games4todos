@@ -89,20 +89,33 @@
 .comment-container {
     display: flex;
     align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.comment-container > * {
+    border: 2px solid black;
 }
 
 .comment-icon {
-    width: 200px;
-    height: 200px;
+    width: 150px;
+    height: 150px;
     object-fit: cover;
     object-position: center;
+    margin: 0 auto;
 }
+
+.comment-icon::before {
+    text-align: center;
+}
+
 .comment {
     max-width: unset;
-    width: unset;
+    width: 300px;
     min-height: 80px;
     flex-grow: 1;
 }
+
 @media (max-width: 1280px){
     :root {
         --info-background-color: #AFB4E9;
