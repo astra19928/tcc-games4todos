@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nome do Mod Aqui</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:FILL,wght@0..1,100..700&icon_names=search,comment,star,settings,account_circle&display=block"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="/css/general.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/modificacao.css">
+</head>
+
+<body>
+    <main class="site-container flex-container-column">
+        <header id="header" class="header"></header>
+        <script src="/js/loadHeader.js"></script>
+
+            <p th:if="${responseMessage != null}"th:text="${responseMessage}"></p>
+
+        <article th:if="${responseMessage == null}" id="site" style="width: 100%" >
+            <section class="info-container flex-container">
+
+                <div class="game-info flex-container-column">
+                    <p class="game-title">
+                        <span id="game-title" th:text="${gameName}"></span>
+                    </p>
+
+                    <img id="mod-icon" class="card-image" src="#" th:src="${imgSrc}"alt="Imagem da modificação">
+
+                    <div class="mod-actions flex-container">
+
+                        <a id="download" class="button" th:href="${downloadUrl}">
+                            Download
+                        </a>
+
+                        <div class="button">
+                            <span class="material-symbols-outlined favorite-icon">star</span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="mod-info flex-container-column">
+                    <div class="mod-info-box">
+                        Desenvolvedores: <span th:text="${developerName}"></span>
+                    </div>
+                    <div class="mod-info-box">
+                        Upload feito por: <span th:text="${uploaderName}"></span>
+                    </div>
+                    <div class="mod-info-box">
+                        Downloads: <span th:text="${downloads}"></span>
+                    </div>
+                    <div class="mod-info-box">
+                        Lançamento: <span th:text="${releaseDate}"></span>
+                    </div>
+                    <div class="mod-info-box">
+                        Tamanho: <span th:text="${fileSize}"></span>MB
+                    </div>
+
+                </div>
+
+            </section>
+
+            <div class="section-divider flex-container">
+                Descrição
+            </div>
+
+            <section th:text="${description}" class="site-body description">
+                Monstie huntie freedom unitey. freedom unityeh monsteri huntie! hointoe monsters i loive the nagacgua i love
+                moinstie huntie reheheh !@ nagacguga and the girexa nd the rajang are so awesom ei freaking love raganjg
+                actually maye not that much as NARGACGUA MY BELOVED what the heck do you mean my brother said "tigrex is like a
+                cooler version of nargacuga" im going to beat him up i hatre my stupid chud brother for not liking monargacuga as
+                much as me
+            </section>
+
+            <div class="section-divider flex-container" hidden>
+                Comentários
+            </div>
+
+            <section class="site-body flex-container-column">
+
+            </section>
+        </article>
+
+    </main>
+
+</body>
+
+</html>

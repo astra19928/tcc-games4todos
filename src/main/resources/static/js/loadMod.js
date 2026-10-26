@@ -16,7 +16,6 @@ async function loadMod() {
     const gameTitle = mod.gameName + " (" + mod.modName + ")";
     const fileSize = mod.fileSize.toFixed(2);
     document.getElementById('game-title').textContent = gameTitle;
-    //document.getElementById('mod-name').textContent = mod.modName;
     document.getElementById('dev-info').textContent = mod.developers;
     document.getElementById('uploader').textContent = mod.uploader;
     document.getElementById('release-date').textContent = mod.date;

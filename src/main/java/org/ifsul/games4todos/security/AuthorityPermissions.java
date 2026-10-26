@@ -12,7 +12,6 @@ public enum AuthorityPermissions {
             "/index.html",
             "/login.html",
             "/header.html",
-            "/modificacao.html",
             "/cadastro.html",
             "/api/mods/{id}",
             "/api/mods/{id}/image",

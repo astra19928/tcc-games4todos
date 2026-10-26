@@ -13,7 +13,7 @@ CREATE TABLE modification(
     id_modification INT PRIMARY KEY AUTO_INCREMENT,
     id_uploader INT NOT NULL,
     game_name VARCHAR(100) NOT NULL,
-    name_creator VARCHAR(50),
+    name_developers VARCHAR(80),
     mod_name VARCHAR(100) NOT NULL,
     description TEXT,
     downloads INT NOT NULL,
