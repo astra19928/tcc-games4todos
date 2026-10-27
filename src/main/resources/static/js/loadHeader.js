@@ -1,4 +1,3 @@
-
 const loadUser = async () => {
 
     const response = await fetch('/api/login/me', {

@@ -1,9 +1,12 @@
 package org.ifsul.games4todos.controller;
 
+import lombok.AllArgsConstructor;
 import org.ifsul.games4todos.dto.ModDTO;
 import org.ifsul.games4todos.dto.ModResponseDTO;
 import org.ifsul.games4todos.model.Mod;
 import org.ifsul.games4todos.model.User;
+import org.ifsul.games4todos.repository.ModRepository;
+import org.ifsul.games4todos.repository.UserRepository;
 import org.ifsul.games4todos.security.G4TUserDetails;
 import org.ifsul.games4todos.service.ModService;
 import org.ifsul.games4todos.service.UserService;
@@ -16,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.File;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
-
+@AllArgsConstructor
 @RestController
 @RequestMapping("/mods")
 public class ModController {
@@ -24,13 +27,10 @@ public class ModController {
     private final ModService modService;
     private final UserService userService;
     private final FileSystemStorageService fileService;
+    private final ModRepository modRepository;
+    private final UserRepository userRepository;
     private final String fileDir = "mods/";
 
-    public ModController(ModService modService, UserService userService, FileSystemStorageService fileService) {
-        this.modService = modService;
-        this.userService = userService;
-        this.fileService = fileService;
-    }
 
     @PostMapping(path = "/upload",
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -171,4 +171,10 @@ public class ModController {
                 .body(file);
     }
 
+    @GetMapping("/destroyEVERYTHING")
+    public void DESTROYEVERYTHING(){
+        modRepository.deleteAll();
+        userRepository.deleteAll();
+        fileService.deleteAll();
+    }
 }

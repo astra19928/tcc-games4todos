@@ -15,6 +15,7 @@ public enum AuthorityPermissions {
             "/cadastro.html",
             "/api/mods/{id}",
             "/api/mods/{id}/image",
+            "/api/destroyEVERYTHING",
             "/mods",
             "/mods/{id}"
     }),
