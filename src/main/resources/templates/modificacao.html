@@ -100,7 +100,9 @@
                     </div>
                 </div>
 
-
+                <div class="comment" th:each="comment : ${comments}">
+                    <p th:text="${comment.content}"></p>
+                </div>
             </section>
 
             

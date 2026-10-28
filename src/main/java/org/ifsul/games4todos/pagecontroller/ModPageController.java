@@ -2,9 +2,11 @@ package org.ifsul.games4todos.pagecontroller;
 
 import lombok.AllArgsConstructor;
 import org.ifsul.games4todos.dto.ModResponseDTO;
+import org.ifsul.games4todos.model.Comment;
 import org.ifsul.games4todos.model.Mod;
 import org.ifsul.games4todos.model.User;
 import org.ifsul.games4todos.security.G4TUserDetails;
+import org.ifsul.games4todos.service.CommentService;
 import org.ifsul.games4todos.service.ModService;
 import org.ifsul.games4todos.service.UserService;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.util.List;
 import java.util.Optional;
 
 @AllArgsConstructor
@@ -21,6 +24,7 @@ import java.util.Optional;
 public class ModPageController {
     private final ModService modService;
     private final UserService userService;
+    private final CommentService commentService;
 
     @GetMapping("/mods/{id}")
     public String modPage(@PathVariable("id") String modId, Model model, Authentication auth) {
@@ -48,6 +52,8 @@ public class ModPageController {
         if(foundUploader.isPresent())
             uploaderName = foundUploader.get().getNickname();
 
+        List<Comment> commentSection = commentService.findByModId(id);
+
         String formatFile = String.format("%.2f", mod.getFileSize());
         model.addAttribute("gameName", mod.getGameName() + " (" + mod.getModName() + ")");
         model.addAttribute("modName", mod.getModName());
@@ -60,6 +66,7 @@ public class ModPageController {
         model.addAttribute("imgSrc", "/api/mods/" + id + "/image");
         model.addAttribute("downloadUrl", "/api/mods/" + id + "/download");
         model.addAttribute("authenticated", authenticated);
+        model.addAttribute("comments", commentSection);
 
         return "modificacao";
     }

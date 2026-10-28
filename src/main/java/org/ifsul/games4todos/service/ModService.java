@@ -3,6 +3,7 @@ package org.ifsul.games4todos.service;
 import org.ifsul.games4todos.dto.ModDTO;
 import org.ifsul.games4todos.model.Mod;
 import org.ifsul.games4todos.repository.ModRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -13,6 +14,7 @@ import java.util.Optional;
 
 @Service
 public class ModService {
+    @Autowired
     private final ModRepository modRepository;
 
     public ModService(ModRepository modRepository) {
