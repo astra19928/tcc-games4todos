@@ -3,11 +3,13 @@ package org.ifsul.games4todos.controller;
 import lombok.AllArgsConstructor;
 import org.ifsul.games4todos.dto.ModDTO;
 import org.ifsul.games4todos.dto.ModResponseDTO;
+import org.ifsul.games4todos.model.Comment;
 import org.ifsul.games4todos.model.Mod;
 import org.ifsul.games4todos.model.User;
 import org.ifsul.games4todos.repository.ModRepository;
 import org.ifsul.games4todos.repository.UserRepository;
 import org.ifsul.games4todos.security.G4TUserDetails;
+import org.ifsul.games4todos.service.CommentService;
 import org.ifsul.games4todos.service.ModService;
 import org.ifsul.games4todos.service.UserService;
 import org.ifsul.games4todos.storage.FileSystemStorageService;
@@ -16,7 +18,6 @@ import org.springframework.http.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.File;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 @AllArgsConstructor
@@ -29,6 +30,7 @@ public class ModController {
     private final FileSystemStorageService fileService;
     private final ModRepository modRepository;
     private final UserRepository userRepository;
+    private final CommentService commentService;
     private final String fileDir = "mods/";
 
 
@@ -169,6 +171,36 @@ public class ModController {
                                 .build()
                                 .toString())
                 .body(file);
+    }
+
+    @PostMapping("/{id}/comment")
+    public ResponseEntity<String> sendComment(@PathVariable("id") String modId, @RequestBody String content, Authentication auth){
+        Integer id;
+        try {
+            id = Integer.parseInt(modId);
+        } catch (NumberFormatException e) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        Optional<Mod> foundMod = modService.findById(id);
+        if (foundMod.isEmpty())
+            return ResponseEntity.notFound().build();
+
+        if(content.length() > 300)
+            return ResponseEntity.badRequest().build();
+
+        G4TUserDetails g4tUserDetails = (G4TUserDetails) auth.getPrincipal();
+        if(g4tUserDetails == null)
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+
+        Integer userId = g4tUserDetails.getUser().getId();
+        // xss attack protection here later
+        Comment comment = commentService.createComment(content, userId, id);
+
+        if(comment == null)
+            return ResponseEntity.internalServerError().build();
+
+        return ResponseEntity.ok("Comentário uploaded com sucesso. Refresh na página pfv");
     }
 
     @GetMapping("/destroyEVERYTHING")

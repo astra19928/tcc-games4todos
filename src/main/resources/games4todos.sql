@@ -27,7 +27,6 @@ CREATE TABLE comment(
 	id_comment INT PRIMARY KEY AUTO_INCREMENT,
     id_uploader INT NOT NULL,
     id_mod INT NOT NULL,
-    id_reply INT,
     content VARCHAR(300) NOT NULL,
 	likes INT NOT NULL,
     FOREIGN KEY(id_uploader) REFERENCES user(id_user),

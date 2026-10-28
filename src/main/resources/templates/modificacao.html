@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="/css/modificacao.css">
     <script src="/js/loadUser.js" type="module"></script>
     <script src="/js/loadHeader.js" type="module"></script>
+    <script src="/js/comment.js" type="module"></script>
 </head>
 
 <body>
@@ -85,7 +86,7 @@
             <section class="site-body flex-container-column comment-section">
 
                 <div th:if="${authenticated}" class="comment-container flex-container">
-                    <img class="comment-icon" src="#" alt="Imagem do usuário">
+                    <img id='comment-icon' class="comment-icon" src="#" alt="Imagem do usuário">
 
                     <div class="flex-container-column comment-submit-container">
                         <textarea
