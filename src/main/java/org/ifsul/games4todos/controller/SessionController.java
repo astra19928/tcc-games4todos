@@ -70,7 +70,10 @@ public class SessionController {
         G4TUserDetails details = (G4TUserDetails) auth.getPrincipal();
         User user = details.getUser();
         Integer id = user.getId();
-        return ResponseEntity.ok(Map.of("name", user.getNickname(),
+        return ResponseEntity.ok(Map.of(
+                "loggedIn", true,
+                "name", user.getNickname(),
+                "id", user.getId(),
                 "iconUrl", "/api/users/" + id + "/image"));
     }
 }

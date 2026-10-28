@@ -1,21 +1,4 @@
-const loadUser = async () => {
-
-    const response = await fetch('/api/login/me', {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        },
-    });
-
-    if(response.redirected && response.url.includes('/login.html')) return console.log("Usuário não autenticado.");
-    if(response.status === 401) return console.log("Usuário não autenticado.");
-    if(!response.ok)            return;
-
-    const data = await response.json();
-
-    return data;
-}
+import {getUser} from "./loadUser.js";
 
 const loadHeader = async () => {
     const response = await fetch('/header.html');
@@ -26,19 +9,19 @@ const loadHeader = async () => {
 }
 
 const load = async () => {
-    const data = await loadUser();
+    const user = await getUser();
     await loadHeader();
 
-    if(data){
+    if(user.loggedIn){
         const icon = document.getElementById("user-icon");
-        icon.src = data.iconUrl;
+        icon.src = user.iconUrl;
         icon.style.display = "block";
 
         const nameElem = document.getElementById("user-name");
-        nameElem.innerText = data.name;
+        nameElem.innerText = user.name;
 
         document.getElementById("user-symbol").style.display = "none";
     }
 }
 
-load();
+document.addEventListener("DOMContentLoaded", load);
