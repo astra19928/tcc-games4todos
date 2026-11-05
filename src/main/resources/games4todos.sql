@@ -20,26 +20,25 @@ CREATE TABLE modification(
     release_date DATE,
     file_size FLOAT NOT NULL,
     verified BOOLEAN NOT NULL,
-    FOREIGN KEY(id_uploader) REFERENCES user(id_user)
+    FOREIGN KEY(id_uploader) REFERENCES user(id_user) ON DELETE SET NULL
 );
 
 CREATE TABLE comment(
 	id_comment INT PRIMARY KEY AUTO_INCREMENT,
-    id_uploader INT NOT NULL,
+    id_uploader INT,
     id_mod INT NOT NULL,
     content VARCHAR(300) NOT NULL,
 	likes INT NOT NULL,
-    FOREIGN KEY(id_uploader) REFERENCES user(id_user),
-    FOREIGN KEY(id_mod) REFERENCES modification(id_modification),
-    FOREIGN KEY(id_reply) REFERENCES comment(id_comment)
+    FOREIGN KEY(id_uploader) REFERENCES user(id_user) ON DELETE SET NULL,
+    FOREIGN KEY(id_mod) REFERENCES modification(id_modification) ON DELETE CASCADE,
 );
 
 CREATE TABLE favorite(
 	id_user INT NOT NULL,
     id_mod INT NOT NULL,
     PRIMARY KEY(id_user, id_mod),
-    FOREIGN KEY(id_user) REFERENCES user(id_user),
-    FOREIGN KEY(id_mod) REFERENCES modification(id_modification)
+    FOREIGN KEY(id_user) REFERENCES user(id_user) ON DELETE CASCADE,
+    FOREIGN KEY(id_mod) REFERENCES modification(id_modification) ON DELETE CASCADE
 );
 
 CREATE TABLE condicao(

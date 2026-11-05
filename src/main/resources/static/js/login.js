@@ -6,27 +6,24 @@ document.getElementById('login-form').addEventListener('submit', async (event) =
         password: document.getElementById('password-login').value
     };
 
-    try{
-        const response = await fetch('/api/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(formData)
-        });
+    const response = await fetch('/api/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+    });
 
-        if (!response.ok) {
-            throw new Error('Houve um problema com a requisição!');
-        }
-
-        const data = await response.text();
-
-        document.getElementById('responseMessage').innerText = "Succeso: " + data;
-        document.getElementById('login-form').reset();
-
-    } catch (error) {
-        document.getElementById('responseMessage').innerText = "Erro enviando formulário: " + error.message;
-        console.error('Error:', error);
+    if (!response.ok) {
+        showError(response.statusText || response.body || "Houve um erro interno");
+        return;
     }
 
+    document.getElementById('login-form').reset();
+    window.location = response.url;
 });
+
+function showError(string){
+    document.getElementById('responseMessage').innerText = "Erro enviando formulário: " + error.message;
+    console.error('Error:', error);
+}

@@ -1,15 +1,12 @@
 package org.ifsul.games4todos.pagecontroller;
 
 import lombok.AllArgsConstructor;
-import org.ifsul.games4todos.dto.ModResponseDTO;
 import org.ifsul.games4todos.model.Comment;
 import org.ifsul.games4todos.model.Mod;
 import org.ifsul.games4todos.model.User;
-import org.ifsul.games4todos.security.G4TUserDetails;
 import org.ifsul.games4todos.service.CommentService;
 import org.ifsul.games4todos.service.ModService;
 import org.ifsul.games4todos.service.UserService;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,7 +18,7 @@ import java.util.Optional;
 
 @AllArgsConstructor
 @Controller
-public class ModPageController {
+public class PageController {
     private final ModService modService;
     private final UserService userService;
     private final CommentService commentService;
@@ -69,5 +66,10 @@ public class ModPageController {
         model.addAttribute("comments", commentSection);
 
         return "modificacao";
+    }
+
+    @GetMapping("/userPage")
+    public String userRedirect(){
+        return "index.html";
     }
 }

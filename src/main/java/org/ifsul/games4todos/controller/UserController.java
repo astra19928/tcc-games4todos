@@ -8,12 +8,14 @@ import org.ifsul.games4todos.model.User;
 import org.ifsul.games4todos.service.UserService;
 import org.ifsul.games4todos.storage.FileSystemStorageService;
 import org.springframework.core.io.Resource;
-import org.springframework.http.CacheControl;
-import org.springframework.http.MediaType;
-import org.springframework.http.MediaTypeFactory;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
@@ -24,10 +26,12 @@ public class UserController {
     private final UserService userService;
     private final FileSystemStorageService fileService;
     private final String fileDir = "users/";
+    private final AuthenticationManager authenticationManager;
 
-    public UserController(UserService userService, FileSystemStorageService fileService) {
+    public UserController(UserService userService, FileSystemStorageService fileService, AuthenticationManager authenticationManager) {
         this.userService = userService;
         this.fileService = fileService;
+        this.authenticationManager = authenticationManager;
     }
 
     @PostMapping
@@ -40,14 +44,19 @@ public class UserController {
         User savedUser = userService.save(user);
 
         try{
-            String fileDir = "users/" + savedUser.getId();
-            fileService.store(userDto.image(), fileDir, "icon");
+            String newFileDir = fileDir + savedUser.getId();
+            fileService.store(userDto.image(), newFileDir, "icon");
         }catch(Exception e){
             userService.delete(savedUser);
             return ResponseEntity.internalServerError().build();
         }
 
-        return ResponseEntity.ok("deez");
+        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
+                userDto.email(), userDto.password());
+        Authentication auth = authenticationManager.authenticate(authToken);
+        SecurityContextHolder.getContext().setAuthentication(auth);
+
+        return ResponseEntity.status(HttpStatus.FOUND).location(URI.create("/index.html")).build();
     }
 
     @GetMapping("/{id}/image")
@@ -65,7 +74,7 @@ public class UserController {
 
         Resource image;
         try {
-            image = fileService.loadAsResourceNoExtension( fileDir + id.toString(), "icon");
+            image = fileService.loadAsResourceNoExtension( fileDir + id, "icon");
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
         }
@@ -78,7 +87,7 @@ public class UserController {
 
         return ResponseEntity.ok()
                 .contentType(type)
-                .cacheControl(CacheControl.maxAge(1, TimeUnit.SECONDS).cachePublic()) // MUDAR PARA HOUR DEPOIS
+                .cacheControl(CacheControl.maxAge(1, TimeUnit.HOURS).cachePublic()) // MUDAR PARA HOUR DEPOIS
                 .body(image);
     }
 

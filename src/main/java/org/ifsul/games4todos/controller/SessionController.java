@@ -15,6 +15,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.Map;
 
 @RestController
@@ -40,13 +41,7 @@ public class SessionController {
         request.getSession(true)
                 .setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, context);
 
-        G4TUserDetails details = (G4TUserDetails) auth.getPrincipal();
-        User user = details.getUser();
-
-        return ResponseEntity.ok(Map.of(
-                "username", user.getEmail(),
-                "email",  user.getPassword()
-        ));
+        return ResponseEntity.status(HttpStatus.FOUND).location(URI.create("/index.html")).build();
     }
 
     @ExceptionHandler(BadCredentialsException.class)
