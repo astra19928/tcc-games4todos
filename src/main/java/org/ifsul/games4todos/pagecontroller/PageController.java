@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,11 +46,13 @@ public class PageController {
 
         boolean authenticated = auth != null && auth.isAuthenticated();
 
-        Optional<User> foundUploader = userService.findById(mod.getIdUploader());
-        if(foundUploader.isPresent())
-            uploaderName = foundUploader.get().getNickname();
+        User user = mod.getUploader();
+        if(user != null)
+            uploaderName = user.getNickname();
 
         List<Comment> commentSection = commentService.findByModId(id);
+        Collections.reverse(commentSection);
+        int length = commentSection.size();
 
         String formatFile = String.format("%.2f", mod.getFileSize());
         model.addAttribute("gameName", mod.getGameName() + " (" + mod.getModName() + ")");
@@ -63,6 +66,7 @@ public class PageController {
         model.addAttribute("imgSrc", "/api/mods/" + id + "/image");
         model.addAttribute("downloadUrl", "/api/mods/" + id + "/download");
         model.addAttribute("authenticated", authenticated);
+        model.addAttribute("commentSize", length);
         model.addAttribute("comments", commentSection);
 
         return "modificacao";

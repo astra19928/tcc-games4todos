@@ -2,6 +2,7 @@ package org.ifsul.games4todos.service;
 
 import org.ifsul.games4todos.dto.ModDTO;
 import org.ifsul.games4todos.model.Mod;
+import org.ifsul.games4todos.model.User;
 import org.ifsul.games4todos.repository.ModRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
@@ -22,13 +23,13 @@ public class ModService {
     }
 
 
-    public Mod convertUnverified(ModDTO modDTO, Integer userID){
+    public Mod convertUnverified(ModDTO modDTO, User user){
         long fileSize = modDTO.file().getSize();
         float mb = (float) fileSize / (1024f * 1024f);
 
         Mod mod = new Mod(
                 null,
-                userID,
+                user,
                 modDTO.gameName(),
                 modDTO.developers(),
                 modDTO.modName(),

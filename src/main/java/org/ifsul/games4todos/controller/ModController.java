@@ -13,6 +13,7 @@ import org.ifsul.games4todos.service.CommentService;
 import org.ifsul.games4todos.service.ModService;
 import org.ifsul.games4todos.service.UserService;
 import org.ifsul.games4todos.storage.FileSystemStorageService;
+import org.jspecify.annotations.NonNull;
 import org.springframework.core.io.Resource;
 import org.springframework.http.*;
 import org.springframework.security.core.Authentication;
@@ -45,13 +46,11 @@ public class ModController {
 
         User user = details.getUser();
 
-        Integer userID = user.getId();
-
         boolean imgValida = fileService.validateImage(mod.image());
         if(!imgValida)
             return ResponseEntity.badRequest().build();
 
-        Mod convertedMod = modService.convertUnverified(mod, userID);
+        Mod convertedMod = modService.convertUnverified(mod, user);
         Mod newMod = modService.save(convertedMod);
         Integer id = newMod.getId();
 
@@ -81,15 +80,19 @@ public class ModController {
         if(foundMod.isEmpty())
             return ResponseEntity.notFound().build();
 
-        Mod mod = foundMod.get();
+        ModResponseDTO responseDTO = getModResponseDTO(foundMod.get());
+        return ResponseEntity.ok(responseDTO);
+    }
+
+    private static @NonNull ModResponseDTO getModResponseDTO(Mod mod) {
 
         String uploaderName = "Usuário deletado";
 
-        Optional<User> foundUploader = userService.findById(mod.getIdUploader());
-        if(foundUploader.isPresent())
-            uploaderName = foundUploader.get().getNickname();
+        User uploader = mod.getUploader();
+        if(uploader != null)
+            uploaderName = uploader.getNickname();
 
-        ModResponseDTO responseDTO = new ModResponseDTO(
+        return new ModResponseDTO(
                 mod.getGameName(),
                 mod.getModName(),
                 uploaderName,
@@ -99,7 +102,6 @@ public class ModController {
                 mod.getDownloads(),
                 mod.getFileSize()
         );
-        return ResponseEntity.ok(responseDTO);
     }
 
     @GetMapping("/{id}/image")
@@ -193,9 +195,9 @@ public class ModController {
         if(g4tUserDetails == null)
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 
-        Integer userId = g4tUserDetails.getUser().getId();
+        User user = g4tUserDetails.getUser();
         // xss attack protection here later
-        Comment comment = commentService.createComment(content, userId, id);
+        Comment comment = commentService.createComment(content, user, id);
 
         if(comment == null)
             return ResponseEntity.internalServerError().build();

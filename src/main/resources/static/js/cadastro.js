@@ -20,10 +20,8 @@ form.addEventListener('submit', async (event) => {
         throw new Error('Houve um problema com a requisição!');
     }
 
-    const data = await response.text();
-
-    document.getElementById('responseMessage').innerText = 'Succeso: ' + data;
     form.reset();
+    window.location = response.url;
 });
 
 const input = document.getElementById('form-image-submit');

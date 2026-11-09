@@ -23,8 +23,9 @@ public class Mod {
     @Column(name = "id_modification")
     private Integer id;
 
-    @Column(nullable = false, name="id_uploader")
-    private Integer idUploader;
+    @ManyToOne
+    @JoinColumn(name="id_uploader")
+    private User uploader;
 
     @Column(nullable = false, length = 100, name="game_name")
     private String gameName;

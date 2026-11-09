@@ -26,7 +26,7 @@ async function submitComment() {
     if(response.status === 404) return console.log('nao eh isso nao...');
     if(!response.ok)            return console.log("coisas boas nao aconteceram...");
 
-    console.log("yippeeeeeee!!");
+    window.location.reload();
 }
 
 document.addEventListener("DOMContentLoaded", loadCommentIcon);

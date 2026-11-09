@@ -80,7 +80,7 @@
             </section>
 
             <div class="section-divider flex-container" hidden>
-                Comentários
+                Comentários <span th:text="' (' + ${commentSize} + ')'"></span>
             </div>
 
             <section class="site-body flex-container-column comment-section">
@@ -100,9 +100,19 @@
                     </div>
                 </div>
 
-                <div class="comment" th:each="comment : ${comments}">
-                    <p th:text="${comment.content}"></p>
+                <div class="flex-container comment-container" th:each="comment : ${comments}">
+                    <img th:src="${comment.getUserIconSrc()}" class="comment-icon comment-icon-not-user" src="#" alt="Imagem do usuário">
+
+                    <div class="flex-container-column comment-submit-container">
+                        <div class="comment-top flex-container">
+                            <p th:text="${comment.getUserName()}"></p>
+                            <p th:text="${comment.sendDate}"></p>
+                        </div>
+
+                        <div class="text-input comment" th:text="${comment.content}"></div>
+                    </div>
                 </div>
+
             </section>
 
             

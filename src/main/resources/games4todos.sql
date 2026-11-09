@@ -11,7 +11,7 @@ CREATE TABLE user(
 
 CREATE TABLE modification(
     id_modification INT PRIMARY KEY AUTO_INCREMENT,
-    id_uploader INT NOT NULL,
+    id_uploader INT,
     game_name VARCHAR(100) NOT NULL,
     name_developers VARCHAR(80),
     mod_name VARCHAR(100) NOT NULL,
@@ -29,8 +29,9 @@ CREATE TABLE comment(
     id_mod INT NOT NULL,
     content VARCHAR(300) NOT NULL,
 	likes INT NOT NULL,
+    send_date DATE DEFAULT (CURRENT_DATE),
     FOREIGN KEY(id_uploader) REFERENCES user(id_user) ON DELETE SET NULL,
-    FOREIGN KEY(id_mod) REFERENCES modification(id_modification) ON DELETE CASCADE,
+    FOREIGN KEY(id_mod) REFERENCES modification(id_modification) ON DELETE CASCADE
 );
 
 CREATE TABLE favorite(

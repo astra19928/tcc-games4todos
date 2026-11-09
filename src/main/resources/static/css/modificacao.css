@@ -82,6 +82,10 @@
     font-size: 24px;
 }
 
+.description {
+    overflow-wrap: anywhere;
+}
+
 .comment-section {
     align-items: stretch;
 }
@@ -97,10 +101,16 @@
 
 .comment-icon {
     width: 150px;
-    height: 150px;
+    aspect-ratio: 1 / 1;
     object-fit: cover;
     object-position: center;
-    margin: 0 auto;
+}
+
+.comment-top {
+    justify-content: space-between;
+}
+.comment-icon-not-user {
+    width: 100px;
 }
 
 .comment-icon::before {
@@ -113,8 +123,14 @@
     gap: 5px;
 }
 
+.comment-submit-container p {
+    font-weight: 700;
+    font-size: 22px;
+}
+
 .comment {
     width: unset;
+    height: unset;
     min-width: 300px;
     min-height: 80px;
     flex-grow: 1;
@@ -127,6 +143,6 @@
 @media (max-width: 1280px){
     :root {
         --info-background-color: #AFB4E9;
-        
+
     }
 }
