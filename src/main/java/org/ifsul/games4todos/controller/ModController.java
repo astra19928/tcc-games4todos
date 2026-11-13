@@ -188,6 +188,7 @@ public class ModController {
         if (foundMod.isEmpty())
             return ResponseEntity.notFound().build();
 
+        Mod mod = foundMod.get();
         if(content.length() > 300)
             return ResponseEntity.badRequest().build();
 
@@ -197,7 +198,7 @@ public class ModController {
 
         User user = g4tUserDetails.getUser();
         // xss attack protection here later
-        Comment comment = commentService.createComment(content, user, id);
+        Comment comment = commentService.createComment(content, user, mod);
 
         if(comment == null)
             return ResponseEntity.internalServerError().build();

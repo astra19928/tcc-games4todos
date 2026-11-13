@@ -28,8 +28,9 @@ public class Comment {
     @JoinColumn(name="id_uploader")
     private User user;
 
-    @Column(nullable = false, name="id_mod")
-    private Integer idMod;
+    @ManyToOne
+    @JoinColumn(name="id_mod")
+    private Mod mod;
 
     @Column(nullable = false, name="content", length=300)
     private String content;
@@ -54,5 +55,9 @@ public class Comment {
             return "Usuário deletado";
 
         return user.getNickname();
+    }
+
+    public String stringSendDate(){
+        return sendDate.toString();
     }
 }

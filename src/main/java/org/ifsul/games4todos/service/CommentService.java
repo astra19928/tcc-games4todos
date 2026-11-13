@@ -1,11 +1,13 @@
 package org.ifsul.games4todos.service;
 
 import org.ifsul.games4todos.model.Comment;
+import org.ifsul.games4todos.model.Mod;
 import org.ifsul.games4todos.model.User;
 import org.ifsul.games4todos.repository.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -17,14 +19,14 @@ public class CommentService {
         this.commentRepository = commentRepository;
     }
 
-    public Comment createComment(String content, User user, Integer modId){
+    public Comment createComment(String content, User user, Mod mod){
         Comment comment = new Comment(
                 null,
                 user,
-                modId,
+                mod,
                 content,
                 0,
-                null
+                LocalDate.now()
         );
 
         return commentRepository.save(comment);

@@ -106,7 +106,7 @@
                     <div class="flex-container-column comment-submit-container">
                         <div class="comment-top flex-container">
                             <p th:text="${comment.getUserName()}"></p>
-                            <p th:text="${comment.sendDate}"></p>
+                            <p th:text="${comment.stringSendDate()}"></p>
                         </div>
 
                         <div class="text-input comment" th:text="${comment.content}"></div>
