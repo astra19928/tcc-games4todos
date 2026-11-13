@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Collections;
 import java.util.List;
@@ -75,5 +76,11 @@ public class PageController {
     @GetMapping("/userPage")
     public String userRedirect(){
         return "index.html";
+    }
+
+    @GetMapping("/search")
+    public String searchPage(@RequestParam String query, Model model){
+        model.addAttribute("query", query);
+        return "search";
     }
 }

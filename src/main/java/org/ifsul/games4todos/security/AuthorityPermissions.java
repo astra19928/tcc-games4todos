@@ -13,6 +13,8 @@ public enum AuthorityPermissions {
             "/login.html",
             "/header.html",
             "/cadastro.html",
+            "/search",
+            "/search.html",
             "/api/mods/{id}",
             "/api/mods/{id}/image",
             "/api/destroyEVERYTHING",

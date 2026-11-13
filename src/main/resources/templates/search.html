@@ -2,9 +2,45 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pesquisa</title>
+    <link
+            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:FILL,wght@0..1,100..700&icon_names=search,comment,star,settings,account_circle&display=block"
+            rel="stylesheet" />
+    <link rel="stylesheet" href="/css/general.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <script src="/js/loadUser.js" type="module"></script>
+    <script src="/js/loadHeader.js" type="module"></script>
 </head>
-<body>
 
+<body>
+    <main class="site-container flex-container-column">
+        <header id="header" class="header"></header>
+
+        <article class="site-body flex-container-column">
+
+            <div class="search-bar flex-container">
+                <label for="search-submit" class="search-icon">
+                    <span class="material-symbols-outlined">search</span>
+                </label>
+
+                <form class="search-form" action="/search" method="GET" role="search">
+                    <input
+                            type="search"
+                            id="site-search"
+                            class="search-bar-input"
+                            name="query"
+                            th:value="${query}"
+                            placeholder="Pesquisar (ir pagina mod, temporario)"
+                            aria-label="Pesquise por um mod"
+                    />
+                    <button type="submit" id="search-submit" style="display: none;"></button>
+                </form>
+
+            </div>
+
+        </article>
+    </main>
 </body>
+
 </html>
