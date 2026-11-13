@@ -8,6 +8,22 @@
     align-items: stretch;
 }
 
+.card-image {
+    align-self: center;
+    border: 2px solid black;
+}
+
+.search-bar.page-search-bar {
+    border: 2px solid black;
+    border-radius: 9999px;
+}
+
+a {
+    font-size: 28px;
+    font-weight: 700;
+    color: black;
+}
+
 .search-result-text-container {
     gap: 10px;
     align-items: flex-start;

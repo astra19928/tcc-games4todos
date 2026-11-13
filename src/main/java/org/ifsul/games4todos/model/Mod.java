@@ -62,4 +62,9 @@ public class Mod {
     public String formatFileSize(){
         return String.format("%.2fMB", fileSize);
     }
+
+
+    public String getHref(){
+        return "/mods/" + id;
+    }
 }

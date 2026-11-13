@@ -20,22 +20,22 @@
 
         <article class="site-body flex-container-column">
 
-            <div class="search-bar flex-container">
-                <label for="search-submit" class="search-icon">
+            <div class="search-bar page-search-bar flex-container">
+                <label for="page-search-submit" class="search-icon">
                     <span class="material-symbols-outlined">search</span>
                 </label>
 
                 <form class="search-form" action="/search" method="GET" role="search">
                     <input
                             type="search"
-                            id="site-search"
+                            id="page-site-search"
                             class="search-bar-input"
                             name="query"
                             th:value="${query}"
                             placeholder="Pesquisar (ir pagina mod, temporario)"
                             aria-label="Pesquise por um mod"
                     />
-                    <button type="submit" id="search-submit" style="display: none;"></button>
+                    <button type="submit" id="page-search-submit" style="display: none;"></button>
                 </form>
 
             </div>
@@ -43,11 +43,12 @@
             <p th:if="${mods == null or mods.isEmpty()}">Nenhum mod encontrado!</p>
 
             <section th:if="${mods != null and !mods.isEmpty()}" class="flex-container-column">
+
                 <div th:each="modification : ${mods}" class="search-result-container flex-container">
                     <img th:src="${modification.getModIconSrc()}" class = "card-image" alt="Capa do Mod">
 
                     <div class="search-result-text-container flex-container-column">
-                        <h2 th:text="${modification.getFullTitle()}">MISSING TITLE</h2>
+                        <a th:href="${modification.getHref()}" th:text="${modification.getFullTitle()}">MISSING TITLE</a>
 
                         <p th:text="${modification.nameDevelopers}">MISSING DEVELOPERS</p>
                         <p th:text="${modification.formatFileSize() + ' - ' + modification.releaseDate}">MISSING RELEASE DATE</p>
