@@ -20,7 +20,7 @@
     <main class="site-container flex-container-column">
         <header id="header" class="header"></header>
 
-        <p th:if="${responseMessage != null}"th:text="${responseMessage}"></p>
+        <p th:if="${responseMessage != null}" th:text="${responseMessage}"></p>
 
         <article th:if="${responseMessage == null}" id="site" style="width: 100%" >
             <section class="info-container flex-container">
@@ -30,7 +30,7 @@
                         <span id="game-title" th:text="${gameName}"></span>
                     </p>
 
-                    <img id="mod-icon" class="card-image" src="#" th:src="${imgSrc}"alt="Imagem da modificação">
+                    <img class="card-image" src="#" th:src="${imgSrc}" alt="Imagem da modificação">
 
                     <div class="mod-actions flex-container">
 

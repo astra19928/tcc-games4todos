@@ -9,6 +9,7 @@
             rel="stylesheet" />
     <link rel="stylesheet" href="/css/general.css">
     <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/search.css">
     <script src="/js/loadUser.js" type="module"></script>
     <script src="/js/loadHeader.js" type="module"></script>
 </head>
@@ -38,6 +39,23 @@
                 </form>
 
             </div>
+
+            <p th:if="${mods == null or mods.isEmpty()}">Nenhum mod encontrado!</p>
+
+            <section th:if="${mods != null and !mods.isEmpty()}" class="flex-container-column">
+                <div th:each="modification : ${mods}" class="search-result-container flex-container">
+                    <img th:src="${modification.getModIconSrc()}" class = "card-image" alt="Capa do Mod">
+
+                    <div class="search-result-text-container flex-container-column">
+                        <h2 th:text="${modification.getFullTitle()}">MISSING TITLE</h2>
+
+                        <p th:text="${modification.nameDevelopers}">MISSING DEVELOPERS</p>
+                        <p th:text="${modification.formatFileSize() + ' - ' + modification.releaseDate}">MISSING RELEASE DATE</p>
+                        <p th:text="${modification.description}">boo!!! :3</p>
+                    </div>
+                </div>
+
+            </section>
 
         </article>
     </main>

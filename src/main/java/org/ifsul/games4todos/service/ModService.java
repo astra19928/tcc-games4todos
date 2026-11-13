@@ -7,10 +7,8 @@ import org.ifsul.games4todos.repository.ModRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -61,4 +59,7 @@ public class ModService {
         return this.modRepository.findById(id);
     }
 
+    public List<Mod> findAllByQuery(String query){
+        return this.modRepository.findAllByQuery(query);
+    }
 }

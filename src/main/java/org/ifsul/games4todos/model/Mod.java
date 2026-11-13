@@ -50,4 +50,16 @@ public class Mod {
 
     @Column(nullable = false, name="verified")
     private Boolean verified;
+
+    public String getFullTitle(){
+        return gameName + " (" + modName + ")";
+    }
+
+    public String getModIconSrc(){
+        return "/api/mods/" + id + "/image";
+    }
+
+    public String formatFileSize(){
+        return String.format("%.2fMB", fileSize);
+    }
 }

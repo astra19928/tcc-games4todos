@@ -6,7 +6,6 @@ import org.ifsul.games4todos.model.Mod;
 import org.ifsul.games4todos.model.User;
 import org.ifsul.games4todos.service.CommentService;
 import org.ifsul.games4todos.service.ModService;
-import org.ifsul.games4todos.service.UserService;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,7 +21,6 @@ import java.util.Optional;
 @Controller
 public class PageController {
     private final ModService modService;
-    private final UserService userService;
     private final CommentService commentService;
 
     @GetMapping("/mods/{id}")
@@ -55,15 +53,14 @@ public class PageController {
         Collections.reverse(commentSection);
         int length = commentSection.size();
 
-        String formatFile = String.format("%.2f", mod.getFileSize());
-        model.addAttribute("gameName", mod.getGameName() + " (" + mod.getModName() + ")");
+        model.addAttribute("gameName", mod.getFullTitle());
         model.addAttribute("modName", mod.getModName());
         model.addAttribute("uploaderName", uploaderName);
         model.addAttribute("developerName", mod.getNameDevelopers());
         model.addAttribute("description", mod.getDescription());
         model.addAttribute("releaseDate", mod.getReleaseDate());
         model.addAttribute("downloads", mod.getDownloads());
-        model.addAttribute("fileSize", formatFile);
+        model.addAttribute("fileSize", mod.formatFileSize());
         model.addAttribute("imgSrc", "/api/mods/" + id + "/image");
         model.addAttribute("downloadUrl", "/api/mods/" + id + "/download");
         model.addAttribute("authenticated", authenticated);
@@ -80,7 +77,12 @@ public class PageController {
 
     @GetMapping("/search")
     public String searchPage(@RequestParam String query, Model model){
+
+        List<Mod> mods = modService.findAllByQuery(query);
+
         model.addAttribute("query", query);
+        model.addAttribute("mods", mods);
+
         return "search";
     }
 }

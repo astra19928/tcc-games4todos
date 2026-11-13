@@ -1,0 +1,15 @@
+.site-body {
+    align-items: flex-start;
+    text-align: left;
+}
+
+.search-result-container {
+    gap: 10px;
+    align-items: stretch;
+}
+
+.search-result-text-container {
+    gap: 10px;
+    align-items: flex-start;
+    justify-content: space-around;
+}
