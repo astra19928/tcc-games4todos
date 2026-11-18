@@ -78,6 +78,7 @@ public class PageController {
     @GetMapping("/search")
     public String searchPage(@RequestParam String query, Model model){
 
+
         List<Mod> mods = modService.findAllByQuery(query);
 
         model.addAttribute("query", query);
@@ -85,4 +86,18 @@ public class PageController {
 
         return "search";
     }
+
+    /*
+    @GetMapping("/users/config")
+    public String userConfig(Model model, Authentication auth){
+        G4TUserDetails g4tUserDetails = (G4TUserDetails) auth.getPrincipal();
+        if(g4tUserDetails == null)
+            return "login";
+
+        User user = g4tUserDetails.getUser();
+
+        model.addAttribute("username", user.getNickname());
+        model.addAttribute("password", user.getPassword());
+    }
+    */
 }

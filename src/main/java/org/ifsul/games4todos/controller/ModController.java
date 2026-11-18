@@ -6,12 +6,9 @@ import org.ifsul.games4todos.dto.ModResponseDTO;
 import org.ifsul.games4todos.model.Comment;
 import org.ifsul.games4todos.model.Mod;
 import org.ifsul.games4todos.model.User;
-import org.ifsul.games4todos.repository.ModRepository;
-import org.ifsul.games4todos.repository.UserRepository;
 import org.ifsul.games4todos.security.G4TUserDetails;
 import org.ifsul.games4todos.service.CommentService;
 import org.ifsul.games4todos.service.ModService;
-import org.ifsul.games4todos.service.UserService;
 import org.ifsul.games4todos.storage.FileSystemStorageService;
 import org.jspecify.annotations.NonNull;
 import org.springframework.core.io.Resource;
@@ -27,10 +24,7 @@ import java.util.concurrent.TimeUnit;
 public class ModController {
 
     private final ModService modService;
-    private final UserService userService;
     private final FileSystemStorageService fileService;
-    private final ModRepository modRepository;
-    private final UserRepository userRepository;
     private final CommentService commentService;
     private final String fileDir = "mods/";
 
@@ -50,7 +44,7 @@ public class ModController {
         if(!imgValida)
             return ResponseEntity.badRequest().build();
 
-        Mod convertedMod = modService.convertUnverified(mod, user);
+        Mod convertedMod = modService.mapToEntity(mod, user);
         Mod newMod = modService.save(convertedMod);
         Integer id = newMod.getId();
 
@@ -105,14 +99,7 @@ public class ModController {
     }
 
     @GetMapping("/{id}/image")
-    public ResponseEntity<Resource> getModIcon(@PathVariable("id") String modId){
-        Integer id;
-        try {
-            id = Integer.parseInt(modId);
-        } catch (NumberFormatException e) {
-            return ResponseEntity.badRequest().build();
-        }
-
+    public ResponseEntity<Resource> getModIcon(@PathVariable("id") Integer id){
         Optional<Mod> foundMod = modService.findById(id);
         if (foundMod.isEmpty())
             return ResponseEntity.notFound().build();
@@ -132,19 +119,12 @@ public class ModController {
 
         return ResponseEntity.ok()
                 .contentType(type)
-                .cacheControl(CacheControl.maxAge(1, TimeUnit.SECONDS).cachePublic()) // MUDAR PARA HOUR DEPOIS
+                .cacheControl(CacheControl.maxAge(1, TimeUnit.HOURS).cachePublic())
                 .body(image);
     }
 
     @GetMapping("/{id}/download")
-    public ResponseEntity<Resource> downloadMod(@PathVariable("id") String modId){
-        Integer id;
-        try {
-            id = Integer.parseInt(modId);
-        } catch (NumberFormatException e) {
-            return ResponseEntity.badRequest().build();
-        }
-
+    public ResponseEntity<Resource> downloadMod(@PathVariable("id") Integer id){
         Optional<Mod> foundMod = modService.findById(id);
         if (foundMod.isEmpty())
             return ResponseEntity.notFound().build();
@@ -176,14 +156,7 @@ public class ModController {
     }
 
     @PostMapping("/{id}/comment")
-    public ResponseEntity<String> sendComment(@PathVariable("id") String modId, @RequestBody String content, Authentication auth){
-        Integer id;
-        try {
-            id = Integer.parseInt(modId);
-        } catch (NumberFormatException e) {
-            return ResponseEntity.badRequest().build();
-        }
-
+    public ResponseEntity<String> sendComment(@PathVariable("id") Integer id, @RequestBody String content, Authentication auth){
         Optional<Mod> foundMod = modService.findById(id);
         if (foundMod.isEmpty())
             return ResponseEntity.notFound().build();
@@ -197,19 +170,13 @@ public class ModController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 
         User user = g4tUserDetails.getUser();
-        // xss attack protection here later
+
         Comment comment = commentService.createComment(content, user, mod);
 
         if(comment == null)
             return ResponseEntity.internalServerError().build();
 
-        return ResponseEntity.ok("Comentário uploaded com sucesso. Refresh na página pfv");
+        return ResponseEntity.ok("Upload de comentário feito com sucesso.");
     }
 
-    @GetMapping("/destroyEVERYTHING")
-    public void DESTROYEVERYTHING(){
-        modRepository.deleteAll();
-        userRepository.deleteAll();
-        fileService.deleteAll();
-    }
 }

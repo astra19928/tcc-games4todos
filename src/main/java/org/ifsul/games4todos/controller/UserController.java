@@ -2,9 +2,7 @@ package org.ifsul.games4todos.controller;
 
 
 import jakarta.servlet.http.HttpServletRequest;
-import org.ifsul.games4todos.dto.ModResponseDTO;
 import org.ifsul.games4todos.dto.UserDTO;
-import org.ifsul.games4todos.model.Mod;
 import org.ifsul.games4todos.model.User;
 import org.ifsul.games4todos.service.UserService;
 import org.ifsul.games4todos.storage.FileSystemStorageService;
@@ -38,24 +36,27 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<?> cadastrar(@ModelAttribute UserDTO userDto, HttpServletRequest request){
-        boolean imgValida = fileService.validateImage(userDto.image());
+    public ResponseEntity<?> cadastrar(@ModelAttribute UserDTO dto, HttpServletRequest request){
+        boolean imgValida = fileService.validateImage(dto.image());
         if(!imgValida)
             return ResponseEntity.badRequest().build();
 
-        User user = new User(null, userDto.nickname(), userDto.email(), userDto.password());
-        User savedUser = userService.save(user);
 
-        try{
-            String newFileDir = fileDir + savedUser.getId();
-            fileService.store(userDto.image(), newFileDir, "icon");
-        }catch(Exception e){
-            userService.delete(savedUser);
-            return ResponseEntity.internalServerError().build();
+        User savedUser = userService.create(dto);
+
+        if(!dto.image().isEmpty()){
+            try{
+                String newFileDir = fileDir + savedUser.getId();
+                fileService.store(dto.image(), newFileDir, "icon");
+            } catch(Exception e){
+                userService.delete(savedUser);
+                return ResponseEntity.internalServerError().build();
+            }
         }
 
+
         UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-                userDto.email(), userDto.password());
+                dto.email(), dto.password());
         Authentication auth = authenticationManager.authenticate(authToken);
         SecurityContext context = SecurityContextHolder.createEmptyContext();
 

@@ -1,16 +1,14 @@
 package org.ifsul.games4todos.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 // JPA
 @Entity
 @Table(name = "user")
 
 // LOMBOK
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

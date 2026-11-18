@@ -21,6 +21,10 @@ const load = async () => {
         nameElem.innerText = user.name;
 
         document.getElementById("user-symbol").style.display = "none";
+
+        const settings = document.getElementById("user-settings-icon");
+        settings.innerText = "settings";
+        settings.href = "/users/" + user.id + "/config";
     }
 }
 
