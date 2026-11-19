@@ -24,7 +24,7 @@ const load = async () => {
 
         const settings = document.getElementById("user-settings-icon");
         settings.innerText = "settings";
-        settings.href = "/config";
+        settings.href = "/users/me/config";
         settings.style.visibility = "visible";
     }
 }

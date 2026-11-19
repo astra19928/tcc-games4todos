@@ -56,6 +56,12 @@ public class UserService {
 
         return user;
     }
+
+    public User fetch(User user){
+        return userRepository.findById(user.getId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado"));
+    }
+
     public User save(User user){
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return this.userRepository.save(user);

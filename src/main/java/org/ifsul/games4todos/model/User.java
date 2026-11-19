@@ -37,4 +37,8 @@ public class User {
         inverseJoinColumns = @JoinColumn(name="id_type")
     )
     private List<DisabilityType> disabilityTypes;
+
+    public String getIconSrc(){
+        return "/users" + id + "/image";
+    }
 }

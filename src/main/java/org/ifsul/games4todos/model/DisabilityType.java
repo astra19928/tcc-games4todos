@@ -20,6 +20,6 @@ public class DisabilityType {
     private DisabilityCategory category;
 
     public String getFullName() {
-        return category.getName() + "(" + name + ")";
+        return category.getName() + " (" + name + ")";
     }
 }

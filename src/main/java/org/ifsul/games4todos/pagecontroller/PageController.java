@@ -1,12 +1,13 @@
 package org.ifsul.games4todos.pagecontroller;
 
 import lombok.AllArgsConstructor;
-import org.ifsul.games4todos.model.Comment;
-import org.ifsul.games4todos.model.Mod;
-import org.ifsul.games4todos.model.User;
+import org.ifsul.games4todos.model.*;
+import org.ifsul.games4todos.repository.UserRepository;
 import org.ifsul.games4todos.security.G4TUserDetails;
 import org.ifsul.games4todos.service.CommentService;
+import org.ifsul.games4todos.service.DisabilityService;
 import org.ifsul.games4todos.service.ModService;
+import org.ifsul.games4todos.service.UserService;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,6 +25,8 @@ import java.util.Optional;
 public class PageController {
     private final ModService modService;
     private final CommentService commentService;
+    private final UserService userService;
+    private final DisabilityService disabilityService;
 
     @GetMapping("/mods/{id}")
     public String modPage(@PathVariable("id") String modId, Model model, Authentication auth) {
@@ -94,11 +98,21 @@ public class PageController {
         if(g4tUserDetails == null)
             return "/login.html";
 
-        User user = g4tUserDetails.getUser();
+        User detailsUser = g4tUserDetails.getUser();
+        User user = userService.fetch(detailsUser);
+        List<DisabilityType> disabilities = user.getDisabilityTypes();
+        List<DisabilityCategory> allDisabilities = disabilityService.findALlCategories();
+
+        HashMap<Integer, Integer> categoryTypeMap = new HashMap<>();
+
+        for(DisabilityType dis : disabilities)
+            categoryTypeMap.put(dis.getCategory().getId(), dis.getId());
 
         model.addAttribute("username", user.getNickname());
         model.addAttribute("password", user.getPassword());
-        model.addAttribute("disabilities", user.getDisabilityTypes());
+        model.addAttribute("disabilities", allDisabilities);
+        model.addAttribute("userDisabilitiesMap", categoryTypeMap);
+        model.addAttribute("user", user);
 
         return "user-config";
     }

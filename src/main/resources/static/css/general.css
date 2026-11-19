@@ -85,6 +85,9 @@ input {
     color: var(--placeholder-text-color);
 }
 
+.display-contents {
+    display: contents;
+}
 @media (max-width: 1280px) {
     :root {
         --primary-color: black;
