@@ -3,6 +3,11 @@
     text-align: left;
 }
 
+.search-results {
+    align-items: flex-start;
+    gap: 20px;
+}
+
 .search-result-container {
     gap: 10px;
     align-items: stretch;
@@ -19,8 +24,7 @@
 }
 
 a {
-    font-size: 28px;
-    font-weight: 700;
+    text-decoration: none;
     color: black;
 }
 

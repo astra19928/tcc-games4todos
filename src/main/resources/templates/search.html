@@ -32,7 +32,7 @@
                             class="search-bar-input"
                             name="query"
                             th:value="${query}"
-                            placeholder="Pesquisar (ir pagina mod, temporario)"
+                            placeholder="Pesquisar"
                             aria-label="Pesquise por um mod"
                     />
                     <button type="submit" id="page-search-submit" style="display: none;"></button>
@@ -42,19 +42,19 @@
 
             <p th:if="${mods == null or mods.isEmpty()}">Nenhum mod encontrado!</p>
 
-            <section th:if="${mods != null and !mods.isEmpty()}" class="flex-container-column">
+            <section th:if="${mods != null and !mods.isEmpty()}" class="flex-container-column search-results">
 
-                <div th:each="modification : ${mods}" class="search-result-container flex-container">
+                <a th:href="${modification.getHref()}" th:each="modification : ${mods}" class="search-result-container flex-container">
                     <img th:src="${modification.getModIconSrc()}" class = "card-image" alt="Capa do Mod">
 
                     <div class="search-result-text-container flex-container-column">
-                        <a th:href="${modification.getHref()}" th:text="${modification.getFullTitle()}">MISSING TITLE</a>
+                        <h2 th:text="${modification.getFullTitle()}">MISSING TITLE</h2>
 
                         <p th:text="${modification.nameDevelopers}">MISSING DEVELOPERS</p>
                         <p th:text="${modification.formatFileSize() + ' - ' + modification.releaseDate}">MISSING RELEASE DATE</p>
                         <p th:text="${modification.description}">boo!!! :3</p>
                     </div>
-                </div>
+                </a>
 
             </section>
 

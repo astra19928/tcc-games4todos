@@ -26,3 +26,14 @@
     width: 100%;
     text-align: center;
 }
+
+.disability-fieldset {
+    align-items: stretch;
+    gap: 10px;
+}
+
+.disability-option {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}

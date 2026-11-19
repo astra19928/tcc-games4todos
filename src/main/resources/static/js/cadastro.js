@@ -4,7 +4,6 @@ const preview = document.getElementById('uploaded-user-image');
 const responseMessage = document.getElementById('responseMessage');
 const disabilityCheckboxes = document.querySelectorAll('.disability-checkbox');
  
-// --- Necessidades de acessibilidade: mostra/esconde o select de subtipo ---
 const toggleDisabilitySelect = (checkbox) => {
     const select = document.getElementById(checkbox.dataset.target);
  

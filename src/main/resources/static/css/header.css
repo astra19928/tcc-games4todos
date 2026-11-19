@@ -30,7 +30,7 @@
     border-radius: 10px;
     color: var(--text-color-dark);
     font-weight: bold;
-    justify-self: flex-start;
+    place-self: center start;
 }
 
 .icon-container {
@@ -59,6 +59,7 @@
 
 .logo-padding {
     max-width: 100%;
+    place-self: center;
 }
 
 .logo {
@@ -71,6 +72,7 @@
     width: 224px;
     max-width: 100%;
     min-height: 92px;
+    transform: translate(-10px, -10px);
 }
 
 .logo::before, .logo::after {
@@ -177,6 +179,17 @@
     width: 100%;
 }
 
+.settings-icon {
+    place-self: center end;
+    font-size: 36px;
+    color: var(--text-color-dark);
+
+    padding: 10px;
+    border-radius: 10px;
+    background-color: var(--primary-color);
+
+    visibility: hidden;
+}
 
 @media (max-width: 640px) {
     .header-bottom {
@@ -189,7 +202,9 @@
     }
 
     .header-top {
+        display: flex;
         flex-wrap: wrap;
+        justify-content: space-between;
     }
 
     .logo-padding {

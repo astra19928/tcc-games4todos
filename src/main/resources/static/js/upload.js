@@ -25,6 +25,7 @@ form.addEventListener('submit', async (event) => {
     showResponse("Succeso: " + data);
     document.getElementById('upload-form').reset();
     preview.setAttribute('src', "#");
+    preview.classList.remove("uploaded-mod-image");
 });
 
 const input = document.getElementById('mod-image-submit');
@@ -36,6 +37,7 @@ const displayImage = () =>{
 
         fileReader.onload = event => {
             preview.setAttribute('src', event.target.result);
+            preview.classList.add("uploaded-mod-image");
         }
 
         fileReader.readAsDataURL(file[0]);
