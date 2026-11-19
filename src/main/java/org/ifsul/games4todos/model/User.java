@@ -3,6 +3,8 @@ package org.ifsul.games4todos.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 // JPA
 @Entity
 @Table(name = "user")
@@ -29,4 +31,10 @@ public class User {
     @Column(nullable = false, length = 255)
     private String password;
 
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "user_disability",
+        joinColumns = @JoinColumn(name="id_user"),
+        inverseJoinColumns = @JoinColumn(name="id_type")
+    )
+    private List<DisabilityType> disabilityTypes;
 }

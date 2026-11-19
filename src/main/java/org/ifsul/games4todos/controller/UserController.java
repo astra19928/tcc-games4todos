@@ -54,7 +54,6 @@ public class UserController {
             }
         }
 
-
         UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                 dto.email(), dto.password());
         Authentication auth = authenticationManager.authenticate(authToken);

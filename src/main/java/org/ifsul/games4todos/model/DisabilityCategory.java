@@ -12,4 +12,7 @@ public class DisabilityCategory {
     @Id
     @Column(name = "id_category")
     private Integer id;
+
+    @Column(name = "name")
+    private String name;
 }

@@ -15,7 +15,11 @@ public class DisabilityType {
 
     private String name;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_category")
     private DisabilityCategory category;
+
+    public String getFullName() {
+        return category.getName() + "(" + name + ")";
+    }
 }

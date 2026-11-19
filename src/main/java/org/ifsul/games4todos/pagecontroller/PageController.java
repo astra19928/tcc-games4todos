@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.ifsul.games4todos.model.Comment;
 import org.ifsul.games4todos.model.Mod;
 import org.ifsul.games4todos.model.User;
+import org.ifsul.games4todos.security.G4TUserDetails;
 import org.ifsul.games4todos.service.CommentService;
 import org.ifsul.games4todos.service.ModService;
 import org.springframework.security.core.Authentication;
@@ -87,17 +88,19 @@ public class PageController {
         return "search";
     }
 
-    /*
-    @GetMapping("/users/config")
+    @GetMapping("/users/me/config")
     public String userConfig(Model model, Authentication auth){
         G4TUserDetails g4tUserDetails = (G4TUserDetails) auth.getPrincipal();
         if(g4tUserDetails == null)
-            return "login";
+            return "/login.html";
 
         User user = g4tUserDetails.getUser();
 
         model.addAttribute("username", user.getNickname());
         model.addAttribute("password", user.getPassword());
+        model.addAttribute("disabilities", user.getDisabilityTypes());
+
+        return "user-config";
     }
-    */
+
 }
