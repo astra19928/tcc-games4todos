@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:FILL,wght@0..1,100..700&icon_names=search,comment,star,settings,account_circle&display=block"
+          rel="stylesheet" />
+    <link rel="stylesheet" href="/css/general.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/forms.css">
+    <script src="/js/loadUser.js" type="module"></script>
+    <script src="/js/loadHeader.js" type="module"></script>
+    <script src="/js/cadastro.js" type="module"></script>
+
+</head>
+<body>
+<main class="site-container flex-container-column">
+
+    <header id="header" class="header"></header>
+
+    <div class="site-body">
+
+        <form id="user-form" class="flex-container-column upload-form">
+
+            <h2>Criar Conta</h2>
+
+            <div class="horizontal-form-container flex-container">
+
+                <div class="form-container flex-container-column">
+                    <input
+                            type="text"
+                            id="name-create"
+                            class="text-input"
+                            name="username"
+                            aria-label="Criar nome de usuário"
+                            placeholder="Nome"
+                    />
+
+                    <input
+                            type="email"
+                            id="email-create"
+                            class="text-input"
+                            name="email"
+                            aria-label="Criar email de usuário"
+                            placeholder="E-mail"
+                    />
+
+                    <input
+                            type="password"
+                            id="password-create"
+                            class="text-input"
+                            name="password"
+                            aria-label="Criar senha de usuário"
+                            placeholder="Senha"
+                    />
+
+                    <fieldset class="disability-fieldset">
+                        <legend>Necessidades de acessibilidade (opcional)</legend>
+
+                        <div class="disability-option" th:each="category : ${disabilities}">
+                            <label>
+                                <input
+                                        type="checkbox"
+                                        class="disability-checkbox"
+                                        th:id="${category.name} + '-check'"
+                                        th:data-category="${category.id}"
+                                        th:data-target="${category.name} + '-select'"
+                                        th:aria-controls="${category.name} + '-select'"
+                                        aria-expanded="false"
+                                >
+                                <span th:text="${category.name}"></span>
+                            </label>
+
+                            <select
+                                    th:id="${category.name} + '-select'"
+                                    class="text-input disability-select"
+                                    th:aria-label="'Tipo de ' + ${category.name}"
+                            >
+                                <option value="" selected disabled>Selecione o tipo</option>
+                                <div
+                                        class="display-contents"
+                                        th:each="type : ${category.getTypes()}">
+                                    <option
+                                            th:value="${type.id}"
+                                            th:text="${type.name}"></option>
+                                </div>
+
+                            </select>
+                        </div>
+
+                    </fieldset>
+
+                    <button type="submit" id="user-submit">Realizar Cadastro</button>
+                </div>
+
+                <div class="form-container flex-container-column">
+                    <img src="#" class="uploaded-form-image" id="uploaded-user-image" alt="Pré-visualização do icone do usuário">
+
+                    <div class="label-input-container flex-container-column">
+                        <label for="form-image-submit">Insira o seu ícone de usuário</label>
+                        <input
+                                type="file"
+                                id="form-image-submit"
+                                accept="image/png, image/jpeg, image/jpg, image/webp"
+                        >
+                    </div>
+
+                </div>
+
+            </div>
+
+            <p role="alert" id="responseMessage"></p>
+        </form>
+
+    </div>
+</main>
+</body>
+</html>

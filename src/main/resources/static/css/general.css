@@ -27,7 +27,7 @@ header a:hover, header a:visited, header a:link, header a:active {
 
 body, html {
     min-height: 100dvh;
-    width: 100dvw;
+    width: 100%;
     min-width: 320px;
     background-color: var(--secondary-color);
     margin: 0;

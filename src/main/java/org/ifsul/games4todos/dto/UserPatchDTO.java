@@ -6,6 +6,7 @@ import java.util.List;
 
 public record UserPatchDTO(
         String nickname,
+        String oldPassword,
         String password,
         MultipartFile image,
         List<Integer> disabilityTypeIds

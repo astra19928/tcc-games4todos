@@ -7,7 +7,7 @@ const disabilityCheckboxes = document.querySelectorAll('.disability-checkbox');
 const toggleDisabilitySelect = (checkbox) => {
     const select = document.getElementById(checkbox.dataset.target);
  
-    select.hidden = !checkbox.checked;
+    select.style.visibility = checkbox.checked ? "visible" : "hidden";
     checkbox.setAttribute('aria-expanded', String(checkbox.checked));
  
     if (!checkbox.checked) {

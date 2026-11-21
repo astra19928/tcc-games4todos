@@ -2,7 +2,6 @@ package org.ifsul.games4todos.pagecontroller;
 
 import lombok.AllArgsConstructor;
 import org.ifsul.games4todos.model.*;
-import org.ifsul.games4todos.repository.UserRepository;
 import org.ifsul.games4todos.security.G4TUserDetails;
 import org.ifsul.games4todos.service.CommentService;
 import org.ifsul.games4todos.service.DisabilityService;
@@ -90,6 +89,14 @@ public class PageController {
         model.addAttribute("mods", mods);
 
         return "search";
+    }
+
+    @GetMapping("/cadastro")
+    public String cadastro(Model model){
+        List<DisabilityCategory> allDisabilities = disabilityService.findALlCategories();
+        model.addAttribute("disabilities", allDisabilities);
+
+        return "cadastro";
     }
 
     @GetMapping("/users/me/config")

@@ -12,7 +12,7 @@ public enum AuthorityPermissions {
             "/index.html",
             "/login.html",
             "/header.html",
-            "/cadastro.html",
+            "/cadastro",
             "/search",
             "/search.html",
             "/api/mods/{id}",
@@ -35,7 +35,7 @@ public enum AuthorityPermissions {
 
     private final String[] urls;
 
-    private AuthorityPermissions(String[] urls){
+    AuthorityPermissions(String[] urls){
         this.urls = urls;
     }
 

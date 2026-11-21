@@ -22,98 +22,103 @@
 
     <article class="site-body flex-container-column">
 
-        <form id="user-form">
+        <form id="user-form" class="flex-container-column upload-form">
 
-            <div class="form-container flex-container-column">
+            <h2>Alterar conta</h2>
 
-                <h2>Criar Conta</h2>
+            <div class="horizontal-form-container flex-container">
+                <div class="form-container flex-container-column">
+                    <input
+                            type="text"
+                            id="name-create"
+                            class="text-input"
+                            name="username"
+                            aria-label="Criar nome de usuário"
+                            placeholder="Nome"
+                            th:value="${user.getNickname()}"
+                    />
 
-                <input
-                        type="text"
-                        id="name-create"
-                        class="text-input"
-                        name="username"
-                        aria-label="Criar nome de usuário"
-                        placeholder="Nome"
-                        th:value="${user.getNickname()}"
-                />
+                    <input
+                            type="password"
+                            id="old-password-create"
+                            class="text-input"
+                            name="old-password"
+                            aria-label="Inserir senha antiga"
+                            placeholder="Confirmar Senha Antiga"
+                    />
+                    <input
+                            type="password"
+                            id="password-create"
+                            class="text-input"
+                            name="password"
+                            aria-label="Criar senha de usuário"
+                            placeholder="Nova Senha"
+                    />
 
-                <input
-                        type="password"
-                        id="old-password"
-                        class="text-input"
-                        name="password"
-                        aria-label="Inserir senha antiga"
-                        placeholder="Confirmar Senha Antiga"
-                />
-                <input
-                        type="password"
-                        id="password-create"
-                        class="text-input"
-                        name="password"
-                        aria-label="Criar senha de usuário"
-                        placeholder="Nova Senha"
-                />
+                    <input
+                            type="password"
+                            id="password-confirm"
+                            class="text-input"
+                            name="password"
+                            aria-label="Confirmar nova senha de usuário"
+                            placeholder="Confirmar senha nova"
+                    />
 
-                <input
-                        type="password"
-                        id="password-confirm"
-                        class="text-input"
-                        name="password"
-                        aria-label="Confirmar nova senha de usuário"
-                        placeholder="Confirmar senha nova"
-                />
+                    <fieldset class="disability-fieldset flex-container-column">
+                        <legend>Necessidades de acessibilidade (opcional)</legend>
 
-                <fieldset class="disability-fieldset flex-container-column">
-                    <legend>Necessidades de acessibilidade (opcional)</legend>
-
-                    <div class="disability-option" th:each="category, iStat : ${disabilities}">
-                        <label>
-                            <input
-                                    type="checkbox"
-                                    class="disability-checkbox"
-                                    th:id="${category.name} + '-check'"
-                                    th:data-category="${iStat.index} + 1"
-                                    th:data-target="${category.name} + '-select'"
-                                    th:aria-controls="${category.name} + '-select'"
-                                    th:checked="${#maps.containsKey(userDisabilitiesMap, category.id)}"
-                            >
-                            <span th:text="${category.name}"></span>
-                        </label>
-
-                        <select
-                                th:id="${category.name} + '-select'"
-                                class="text-input disability-select"
-                                th:aria-label="'Tipo de ' + ${category.name}"
+                        <div class="disability-option" th:each="category : ${disabilities}">
+                            <label>
+                                <input
+                                        type="checkbox"
+                                        class="disability-checkbox"
+                                        th:id="${category.name} + '-check'"
+                                        th:data-category="${category.id} + 1"
+                                        th:data-target="${category.name} + '-select'"
+                                        th:aria-controls="${category.name} + '-select'"
+                                        th:checked="${#maps.containsKey(userDisabilitiesMap, category.id)}"
+                                        aria-expanded="false"
                                 >
-                            <option value="" selected disabled>Selecione o tipo</option>
-                            <div
-                                class="display-contents"
-                                th:each="type, tStat : ${category.getTypes()}">
-                                <option
-                                        th:value="${type.id}"
-                                        th:text="${type.name}"
-                                        th:selected="${type.id == userDisabilitiesMap[category.id]}"></option>
-                            </div>
+                                <span th:text="${category.name}"></span>
+                            </label>
 
-                        </select>
+                            <select
+                                    th:id="${category.name} + '-select'"
+                                    class="text-input disability-select"
+                                    th:aria-label="'Tipo de ' + ${category.name}"
+                            >
+                                <option value="" selected disabled>Selecione o tipo</option>
+                                <div
+                                        class="display-contents"
+                                        th:each="type : ${category.getTypes()}">
+                                    <option
+                                            th:value="${type.id}"
+                                            th:text="${type.name}"
+                                            th:selected="${type.id == userDisabilitiesMap[category.id]}"></option>
+                                </div>
+
+                            </select>
+                        </div>
+
+                    </fieldset>
+
+                    <button type="submit" id="user-submit">Realizar Alterações</button>
+
+                </div>
+
+                <div class="form-container flex-container-column">
+                    <img src="#" th:src="${user.getIconSrc()}" class="uploaded-form-image" id="uploaded-user-image"
+                         alt="Pré-visualização do icone do usuário">
+
+                    <div class="label-input-container flex-container-column">
+                        <label for="form-image-submit">Insira o seu ícone de usuário</label>
+                        <input
+                                type="file"
+                                id="form-image-submit"
+                                accept="image/png, image/jpeg, image/jpg, image/webp"
+                        >
                     </div>
 
-                </fieldset>
-
-                <button type="submit" id="user-submit">Realizar Cadastro</button>
-            </div>
-
-            <div class="form-container flex-container-column">
-                <img src="#" th:src="${user.getIconSrc()}" class="uploaded-form-image" id="uploaded-user-image" alt="Pré-visualização do icone do usuário">
-
-                <div class="label-input-container flex-container-column">
-                    <label for="form-image-submit">Insira o seu ícone de usuário</label>
-                    <input
-                            type="file"
-                            id="form-image-submit"
-                            accept="image/png, image/jpeg, image/jpg, image/webp"
-                    >
                 </div>
 
             </div>

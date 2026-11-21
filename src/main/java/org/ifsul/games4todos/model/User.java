@@ -39,6 +39,6 @@ public class User {
     private List<DisabilityType> disabilityTypes;
 
     public String getIconSrc(){
-        return "/users" + id + "/image";
+        return "/api/users/" + id + "/image";
     }
 }

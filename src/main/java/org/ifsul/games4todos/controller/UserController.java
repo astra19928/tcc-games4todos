@@ -3,11 +3,15 @@ package org.ifsul.games4todos.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.ifsul.games4todos.dto.UserDTO;
+import org.ifsul.games4todos.dto.UserPatchDTO;
 import org.ifsul.games4todos.model.User;
 import org.ifsul.games4todos.service.UserService;
 import org.ifsul.games4todos.storage.FileSystemStorageService;
 import org.springframework.core.io.Resource;
-import org.springframework.http.*;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.MediaTypeFactory;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -18,7 +22,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.Optional;
-import java.util.concurrent.TimeUnit;
 
 @RestController
 @RequestMapping("/users")
@@ -44,15 +47,6 @@ public class UserController {
 
         User savedUser = userService.create(dto);
 
-        if(!dto.image().isEmpty()){
-            try{
-                String newFileDir = fileDir + savedUser.getId();
-                fileService.store(dto.image(), newFileDir, "icon");
-            } catch(Exception e){
-                userService.delete(savedUser);
-                return ResponseEntity.internalServerError().build();
-            }
-        }
 
         UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                 dto.email(), dto.password());
@@ -69,14 +63,13 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.FOUND).location(URI.create("/index.html")).build();
     }
 
+    @PatchMapping("/{id}")
+    public void alterar(@ModelAttribute UserPatchDTO dto, Authentication authentication, @PathVariable Integer id){
+        userService.patch(dto, authentication, id);
+    }
+
     @GetMapping("/{id}/image")
-    public ResponseEntity<Resource> getModIcon(@PathVariable("id") String userId){
-        Integer id;
-        try {
-            id = Integer.parseInt(userId);
-        } catch (NumberFormatException e) {
-            return ResponseEntity.badRequest().build();
-        }
+    public ResponseEntity<Resource> getModIcon(@PathVariable("id") Integer id){
 
         Optional<User> foundUser = userService.findById(id);
         if (foundUser.isEmpty())
@@ -97,7 +90,6 @@ public class UserController {
 
         return ResponseEntity.ok()
                 .contentType(type)
-                .cacheControl(CacheControl.maxAge(1, TimeUnit.HOURS).cachePublic()) // MUDAR PARA HOUR DEPOIS
                 .body(image);
     }
 

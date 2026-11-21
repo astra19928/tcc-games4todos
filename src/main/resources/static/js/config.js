@@ -1,3 +1,4 @@
+import {getUser} from "./loadUser.js";
 
 const form = document.getElementById('user-form');
 const preview = document.getElementById('uploaded-user-image');
@@ -7,7 +8,8 @@ const disabilityCheckboxes = document.querySelectorAll('.disability-checkbox');
 const toggleDisabilitySelect = (checkbox) => {
     const select = document.getElementById(checkbox.dataset.target);
 
-    select.hidden = !checkbox.checked;
+    select.style.visibility = checkbox.checked ? "visible" : "hidden";
+
     checkbox.setAttribute('aria-expanded', String(checkbox.checked));
 
     if (!checkbox.checked) {
@@ -16,6 +18,8 @@ const toggleDisabilitySelect = (checkbox) => {
 };
 
 disabilityCheckboxes.forEach((checkbox) => {
+    toggleDisabilitySelect(checkbox);
+
     checkbox.addEventListener('change', () => {
         toggleDisabilitySelect(checkbox);
         if (checkbox.checked) {
@@ -61,11 +65,19 @@ form.addEventListener('submit', async (event) => {
         return;
     }
 
+    const password = document.getElementById('password-create').value
+    const confirmPassword = document.getElementById('password-confirm').value
+
+    if(password != confirmPassword){
+        responseMessage.textContent = 'As senhas não são iguais!';
+        return;
+    }
+
     const formData = new FormData();
 
     formData.append("nickname", document.getElementById('name-create').value);
-    formData.append("email", document.getElementById('email-create').value);
-    formData.append("password", document.getElementById('password-create').value);
+    formData.append("oldPassword", document.getElementById('old-password-create').value);
+    formData.append("password", password);
     disabilities.forEach(d => formData.append("disabilityTypeIds", d.type));
 
     const imageFile = document.getElementById('form-image-submit').files[0];
@@ -73,8 +85,9 @@ form.addEventListener('submit', async (event) => {
         formData.append("image", imageFile);
     }
 
-    const response = await fetch('/api/users', {
-        method: 'POST',
+    const user = await getUser();
+    const response = await fetch('/api/users/' + user.id, {
+        method: 'PATCH',
         body: formData
     });
 
@@ -83,7 +96,7 @@ form.addEventListener('submit', async (event) => {
     }
 
     form.reset();
-    window.location = response.url;
+    window.location.reload();
 });
 
 const input = document.getElementById('form-image-submit');

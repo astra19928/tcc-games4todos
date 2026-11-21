@@ -1,10 +1,16 @@
-#upload-form {
+.upload-form {
     gap: 10px;
     align-items: flex-start;
 }
 
+.horizontal-form-container {
+    gap: 20px;
+    align-items: stretch;
+    flex-wrap: wrap-reverse;
+}
+
 .form-container {
-    align-items: flex-start;
+    align-items: stretch;
     justify-content: space-between;
     gap: 15px;
 }
@@ -28,12 +34,24 @@
 }
 
 .disability-fieldset {
-    align-items: stretch;
+    display: grid;
+    grid-template-columns: max-content 1fr;
     gap: 10px;
 }
 
 .disability-option {
-    display: flex;
-    justify-content: space-between;
-    gap: 10px;
+    display: contents;
+}
+
+.disability-option label {
+    place-self: center start;
+}
+
+.disability-select {
+    width: unset;
+    visibility: hidden;
+}
+
+.label-input-container {
+    align-items: flex-start;
 }
