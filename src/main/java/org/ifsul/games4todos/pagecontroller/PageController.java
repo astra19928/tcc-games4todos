@@ -1,6 +1,7 @@
 package org.ifsul.games4todos.pagecontroller;
 
 import lombok.AllArgsConstructor;
+import org.ifsul.games4todos.mapper.ModMapper;
 import org.ifsul.games4todos.model.*;
 import org.ifsul.games4todos.security.G4TUserDetails;
 import org.ifsul.games4todos.service.CommentService;
@@ -82,8 +83,12 @@ public class PageController {
     @GetMapping("/search")
     public String searchPage(@RequestParam String query, Model model){
 
-
         List<Mod> mods = modService.findAllByQuery(query);
+        mods.stream().forEach((mod) -> {
+            String newDesc = ModMapper.shortenDescription(mod.getDescription());
+
+            mod.setDescription(newDesc);
+        });
 
         model.addAttribute("query", query);
         model.addAttribute("mods", mods);

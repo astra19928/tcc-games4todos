@@ -24,7 +24,7 @@
 
         <form id="user-form" class="flex-container-column upload-form">
 
-            <h2>Alterar conta</h2>
+            <h2>Informações de conta</h2>
 
             <div class="horizontal-form-container flex-container">
                 <div class="form-container flex-container-column">
@@ -35,9 +35,13 @@
                             name="username"
                             aria-label="Criar nome de usuário"
                             placeholder="Nome"
-                            th:value="${user.getNickname()}"
+                            th:value="${user.nickname}"
                     />
 
+                    <div
+                            class="text-input email-container"
+                            th:text="${user.email}"
+                    ></div>
                     <input
                             type="password"
                             id="old-password-create"
@@ -61,7 +65,7 @@
                             class="text-input"
                             name="password"
                             aria-label="Confirmar nova senha de usuário"
-                            placeholder="Confirmar senha nova"
+                            placeholder="Confirmar Senha Nova"
                     />
 
                     <fieldset class="disability-fieldset flex-container-column">
@@ -103,6 +107,9 @@
                     </fieldset>
 
                     <button type="submit" id="user-submit">Realizar Alterações</button>
+
+                    <button type="submit" class="user-delete" id="user-delete">EXCLUIR CONTA</button>
+
 
                 </div>
 
