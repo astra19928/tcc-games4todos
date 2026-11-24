@@ -136,4 +136,16 @@ public class UserService {
 
         userRepository.save(user);
     }
+
+    public void delete(Integer id, Authentication authentication) {
+        G4TUserDetails details = (G4TUserDetails) authentication.getPrincipal();
+        if(details == null)
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Você deve estar autenticado para deletar sua conta!");
+
+        User user = details.getUser();
+        if(!user.getId().equals(id))
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Você não pode deletar a conta de outros usuários!");
+
+        userRepository.delete(user);
+    }
 }

@@ -164,7 +164,9 @@
 .tag-container {
     max-width: 100%;
     flex-wrap: wrap;
+    gap: 10px 20px;
 }
+
 .tag-box {
     width: fit-content;
     min-width: fit-content;

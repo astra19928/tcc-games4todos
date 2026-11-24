@@ -68,6 +68,11 @@ public class UserController {
         userService.patch(dto, authentication, id);
     }
 
+    @DeleteMapping("/{id}")
+    public void alterar(@PathVariable Integer id, Authentication authentication){
+        userService.delete(id, authentication);
+    }
+
     @GetMapping("/{id}/image")
     public ResponseEntity<Resource> getModIcon(@PathVariable("id") Integer id){
 

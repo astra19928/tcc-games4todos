@@ -2,8 +2,10 @@ import {getUser} from "./loadUser.js";
 
 const form = document.getElementById('user-form');
 const preview = document.getElementById('uploaded-user-image');
-const responseMessage = document.getElementById('responseMessage');
+const responseMessage = document.getElementById('response-message');
 const disabilityCheckboxes = document.querySelectorAll('.disability-checkbox');
+const deleteButton = document.getElementById('user-delete');
+const logoutButton = document.getElementById('user-logout');
 
 const toggleDisabilitySelect = (checkbox) => {
     const select = document.getElementById(checkbox.dataset.target);
@@ -28,12 +30,10 @@ disabilityCheckboxes.forEach((checkbox) => {
     });
 });
 
-// form.reset() desmarca os checkboxes, então os selects precisam ser escondidos de novo
 form.addEventListener('reset', () => {
     setTimeout(() => disabilityCheckboxes.forEach(toggleDisabilitySelect), 0);
 });
 
-// Retorna [{ category, type }, ...] ou null se algum subtipo marcado não foi escolhido
 const collectDisabilities = () => {
     const disabilities = [];
 
@@ -99,9 +99,68 @@ form.addEventListener('submit', async (event) => {
     window.location.reload();
 });
 
+let deleteReady = false;
+let waiting = false;
+
+deleteButton.addEventListener('click', async () => {
+    responseMessage.textContent = 'VOCÊ TEM CERTEZA QUE QUER APAGAR SEU USUÁRIO?';
+
+    if(waiting) {
+        responseMessage.textContent = "VOCÊ DEVE ESPERAR 5 SEGUNDOS PARA PODER APAGAR SEU USUÁRIO!";
+        return;
+    }
+
+    if(!deleteReady) {
+        waiting = true;
+        setTimeout(() => {
+            deleteReady = true;
+            waiting = false;
+        }, 5000);
+        return;
+    }
+
+    const isConfirmed = confirm("VOCÊ TEM CERTEZA ABSOLUTA QUE QUER APAGAR SEU USUÁRIO?");
+
+    if(!isConfirmed){
+        waiting = false;
+        deleteReady = false;
+        responseMessage.textContent = '';
+        return;
+
+    }
+
+    const user = await getUser();
+    const response = await fetch('/api/users/' + user.id, {
+        method: 'DELETE'
+    });
+
+    if (!response.ok) {
+        throw new Error('Houve um problema com a requisição!');
+    }
+
+    form.reset();
+    window.location.assign('/');
+});
+
+logoutButton.addEventListener('click', async () => {
+    responseMessage.textContent = '';
+
+    const response = await fetch('/api/login/logout', {
+        method: 'POST'
+    });
+
+    if (!response.ok) {
+        responseMessage.textContent = 'Houve um problema com a requisição!';
+        return;
+    }
+
+    form.reset();
+    window.location.reload();
+});
+
 const input = document.getElementById('form-image-submit');
 
-const displayImage = () =>{
+const displayImage = () => {
     const file = input.files;
     if (file && file[0]) {
         const fileReader = new FileReader();

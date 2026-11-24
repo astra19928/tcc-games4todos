@@ -199,4 +199,19 @@ public class ModService {
     public List<Mod> findAllByQuery(String query){
         return this.modRepository.findAllByQuery(query);
     }
+
+    public void delete(Integer id, Authentication auth) {
+        G4TUserDetails details = (G4TUserDetails) auth.getPrincipal();
+        if(details == null)
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Você deve estar autenticado para deletar uma modificação!");
+
+        Mod mod = findById(id).orElseThrow(() ->
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "Mod não encontrado!"));
+
+        User user = details.getUser();
+        if(!user.getId().equals(mod.getUploader().getId()))
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Você não pode deletar a modificação de outros usuários!");
+
+        modRepository.delete(mod);
+    }
 }

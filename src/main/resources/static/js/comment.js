@@ -3,13 +3,8 @@ import {getUser} from "./loadUser.js";
 const user = await getUser();
 const urls = window.location.pathname.split('/');
 const id = urls[2];
-const commentIcon = document.getElementById('comment-icon');
 const submitButton = document.getElementById('comment-submit');
 const commentText = document.getElementById('comment');
-
-async function loadCommentIcon(){
-    commentIcon.src = user.iconUrl;
-}
 
 async function submitComment() {
     const text = commentText.value;
@@ -22,14 +17,13 @@ async function submitComment() {
         body: text
     })
 
-    if(response.status === 400) return console.log('fez ruim :(');
-    if(response.status === 404) return console.log('nao eh isso nao...');
-    if(!response.ok)            return console.log("coisas boas nao aconteceram...");
+    if(response.status === 400) return console.log('BAD REQUEST');
+    if(response.status === 404) return console.log('MOD NOT FOUND');
+    if(!response.ok)            return console.log("ERRO INESPERADO");
 
     window.location.reload();
 }
 
 if(user.loggedIn){
-    document.addEventListener("DOMContentLoaded", loadCommentIcon);
     submitButton.addEventListener("click", submitComment);
 }

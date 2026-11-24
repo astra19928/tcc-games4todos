@@ -56,15 +56,15 @@ public class PageController {
         if(authenticated){
             G4TUserDetails details = (G4TUserDetails) auth.getPrincipal();
             User user = details.getUser();
-            if(user.getId().equals(uploader.getId()))
+            if(uploader != null && user.getId().equals(uploader.getId()))
                 model.addAttribute("isUploader", true);
 
             Optional<Favorite> favorite = favoriteRepository.findById_IdUserAndId_IdMod(user.getId(), id);
             boolean isFavorited = favorite.isPresent();
 
             model.addAttribute("isFavorite", isFavorited);
+            model.addAttribute("userIcon", user.getIconSrc());
         }
-
 
         List<Comment> commentSection = commentService.findByModId(id);
         Collections.reverse(commentSection);

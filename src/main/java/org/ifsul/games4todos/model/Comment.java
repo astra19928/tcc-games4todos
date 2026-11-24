@@ -42,7 +42,7 @@ public class Comment {
     private LocalDate sendDate;
 
     public String getUserIconSrc() {
-        if(user == null)
+        if(getUser() == null)
             return "#";
 
         int userID = user.getId();

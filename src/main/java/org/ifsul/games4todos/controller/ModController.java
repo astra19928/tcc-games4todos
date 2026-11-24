@@ -89,6 +89,11 @@ public class ModController {
         );
     }
 
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Integer id, Authentication auth){
+        modService.delete(id, auth);
+    }
+
     @GetMapping("/{id}/image")
     public ResponseEntity<Resource> getModIcon(@PathVariable("id") Integer id){
         Optional<Mod> foundMod = modService.findById(id);
