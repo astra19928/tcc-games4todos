@@ -127,7 +127,17 @@
                         </div>
 
                         <div class="text-input comment" th:text="${comment.content}"></div>
+
+                        <button
+                                th:if="${comment.getUser() != null and comment.getUser().id == userId}"
+                                th:data-id="${comment.id}"
+                                class="delete-comment"
+                        >
+                            EXCLUIR COMENTÁRIO
+                        </button>
                     </div>
+
+
                 </div>
 
             </section>

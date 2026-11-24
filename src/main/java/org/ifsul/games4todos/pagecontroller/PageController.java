@@ -62,6 +62,7 @@ public class PageController {
             Optional<Favorite> favorite = favoriteRepository.findById_IdUserAndId_IdMod(user.getId(), id);
             boolean isFavorited = favorite.isPresent();
 
+            model.addAttribute("userId", user.getId());
             model.addAttribute("isFavorite", isFavorited);
             model.addAttribute("userIcon", user.getIconSrc());
         }

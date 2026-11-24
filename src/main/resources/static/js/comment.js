@@ -5,6 +5,7 @@ const urls = window.location.pathname.split('/');
 const id = urls[2];
 const submitButton = document.getElementById('comment-submit');
 const commentText = document.getElementById('comment');
+const deleteButtons = document.querySelectorAll('.delete-comment');
 
 async function submitComment() {
     const text = commentText.value;
@@ -27,3 +28,27 @@ async function submitComment() {
 if(user.loggedIn){
     submitButton.addEventListener("click", submitComment);
 }
+
+deleteButtons.forEach((db) => {
+    let readyToDelete = false;
+
+    db.addEventListener("click", async (event) => {
+        if(!readyToDelete){
+            event.currentTarget.textContent = 'CONFIRMAR EXCLUSÃO'
+            readyToDelete = true;
+            return;
+        }
+
+        const commentId = event.currentTarget.dataset.id;
+
+        const response = await fetch(`/api/comments/${commentId}`,  {
+            method: 'DELETE'
+        })
+
+        if(response.status === 400) return console.log('BAD REQUEST');
+        if(response.status === 404) return console.log('MOD NOT FOUND');
+        if(!response.ok)            return console.log("ERRO INESPERADO");
+
+        window.location.reload();
+    })
+})

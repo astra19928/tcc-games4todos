@@ -169,6 +169,10 @@
     min-width: fit-content;
 }
 
+.delete-comment {
+    align-self: flex-end;
+}
+
 @media (max-width: 1280px){
     :root {
         --info-background-color: #AFB4E9;

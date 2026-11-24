@@ -17,6 +17,7 @@ public enum AuthorityPermissions {
             "/search.html",
             "/api/mods/{id}",
             "/api/mods/{id}/image",
+            "/api/users/{id}/image",
             "/api/destroyEVERYTHING",
             "/mods",
             "/mods/{id}"
