@@ -33,6 +33,7 @@ public class PageController {
     private final ModDisabilityRepository modDisabilityRepository;
     private final ModLocalizationRepository modLocalizationRepository;
     private final FavoriteRepository favoriteRepository;
+    private final RecommendationService recommendationService;
 
     @GetMapping("/mods/{id}")
     public String modPage(@PathVariable("id") Integer id, Model model, Authentication auth) {
@@ -99,6 +100,16 @@ public class PageController {
         return "modificacao";
     }
 
+    @GetMapping("/")
+    public String index(Model model, Authentication auth) {
+        User user = null;
+        if (auth != null && auth.getPrincipal() instanceof G4TUserDetails details)
+            user = details.getUser();
+
+        model.addAttribute("recommendations", recommendationService.recommend(user));
+        return "index";
+    }
+
     @GetMapping("/mods/{id}/config")
     public String modConfig(@PathVariable Integer id, Model model, Authentication auth) {
         G4TUserDetails details = (G4TUserDetails) auth.getPrincipal();
@@ -128,7 +139,7 @@ public class PageController {
 
     @GetMapping("/userPage")
     public String userRedirect(){
-        return "index.html";
+        return "/";
     }
 
     @GetMapping("/search")

@@ -41,7 +41,7 @@ public class SessionController {
         request.getSession(true)
                 .setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, context);
 
-        return ResponseEntity.status(HttpStatus.FOUND).location(URI.create("/index.html")).build();
+        return ResponseEntity.status(HttpStatus.FOUND).location(URI.create("/")).build();
     }
 
     @ExceptionHandler(BadCredentialsException.class)

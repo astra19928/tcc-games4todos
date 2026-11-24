@@ -14,4 +14,13 @@ public interface ModDisabilityRepository extends JpaRepository<ModDisability, In
 
     @Query("select md.type.id from ModDisability md where md.mod.id = :modId")
     List<Integer> findTypeIdsByModId(@Param("modId") Integer modId);
+
+    @Query("""
+        select md from ModDisability md
+        join fetch md.type t
+        join fetch t.category
+        where md.mod.id in :modIds and t.id in :typeIds
+        """)
+    List<ModDisability> findMatches(@Param("modIds") List<Integer> modIds,
+                                    @Param("typeIds") List<Integer> typeIds);
 }

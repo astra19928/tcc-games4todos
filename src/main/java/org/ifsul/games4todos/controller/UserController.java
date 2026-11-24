@@ -60,7 +60,7 @@ public class UserController {
                 .setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, context);
         SecurityContextHolder.getContext().setAuthentication(auth);
 
-        return ResponseEntity.status(HttpStatus.FOUND).location(URI.create("/index.html")).build();
+        return ResponseEntity.status(HttpStatus.FOUND).location(URI.create("/")).build();
     }
 
     @PatchMapping("/{id}")
