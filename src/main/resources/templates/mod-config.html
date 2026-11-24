@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configurar mod</title>
+    <link
+            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:FILL,wght@0..1,100..700&icon_names=search,comment,star,settings,account_circle&display=block"
+            rel="stylesheet" />
+    <link rel="stylesheet" href="/css/general.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/forms.css">
+    <link rel="stylesheet" href="/css/upload.css">
+    <script type="module" src="/js/loadUser.js"></script>
+    <script type="module" src="/js/loadHeader.js"></script>
+</head>
+
+<body>
+<main class="site-container flex-container-column">
+    <header id="header" class="header"></header>
+
+    <div class="site-body">
+
+        <form id="mod-config-form"
+              class="flex-container-column upload-form"
+              enctype="multipart/form-data"
+              th:data-mod-id="${mod.id}">
+
+            <h2>Configurar mod</h2>
+            <!-- Game name is shown for context only; it cannot be edited -->
+            <p class="mod-config-game" th:text="${mod.gameName}"></p>
+
+            <div class="horizontal-form-container flex-container">
+
+                <div class="form-container flex-container-column">
+
+                    <input
+                            type="text"
+                            id="mod-name"
+                            class="text-input"
+                            aria-label="Inserir o titulo do Mod"
+                            placeholder="Titulo do mod"
+                            th:value="${mod.modName}"
+                    />
+
+                    <input
+                            type="text"
+                            id="mod-developers"
+                            class="text-input"
+                            aria-label="Inserir os nomes dos desenvolvedores aqui"
+                            placeholder="Desenvolvedores"
+                            th:value="${mod.developers}"
+                    />
+
+                    <input
+                            type="date"
+                            id="mod-release-date"
+                            class="text-input"
+                            aria-label="Inserir a data de lançamento do mod"
+                            placeholder="Data de lançamento"
+                            th:value="${mod.releaseDate}"
+                    />
+
+                    <textarea
+                            form="mod-config-form"
+                            id="description"
+                            class="text-input"
+                            aria-label="Inserir uma descrição para o mod"
+                            placeholder="Descrição"
+                            th:text="${mod.description}"
+                    ></textarea>
+
+                    <div>
+                        <label for="localization-type-select">
+                            Recursos de localização utilizados
+                        </label>
+
+                        <select id="localization-type-select"
+                                class="text-input"
+                                th:data-initial="${#strings.listJoin(selectedLocalizationIds, ',')}">
+                            <option value="" disabled selected>Selecione o tipo...</option>
+
+                            <th:block th:each="localization : ${localizations}">
+                                <option
+                                        th:value="${localization.id}"
+                                        th:text="${localization.name}"
+                                ></option>
+                            </th:block>
+                        </select>
+
+                        <ul id="localization-selected" class="selected-list"></ul>
+                    </div>
+
+                    <div>
+                        <label for="disability-type-select">
+                            Necessidades de acessibilidade atendidas
+                        </label>
+
+                        <select id="disability-type-select"
+                                class="text-input"
+                                th:data-initial="${#strings.listJoin(selectedDisabilityIds, ',')}">
+                            <option value="" disabled selected>Selecione os tipos...</option>
+
+                            <th:block th:each="category : ${disabilities}">
+                                <th:block th:each="type : ${category.getTypes()}">
+                                    <option
+                                            th:value="${type.id}"
+                                            th:text="${type.getFullName()}"
+                                    ></option>
+                                </th:block>
+                            </th:block>
+                        </select>
+
+                        <ul id="disability-selected" class="selected-list"></ul>
+                    </div>
+
+                    <div class="label-input-container flex-container-column">
+                        <label for="mod-file">Substituir o arquivo do mod (opcional)</label>
+                        <input
+                                type="file"
+                                id="mod-file"
+                                aria-label="Inserir o novo arquivo do mod"
+                        >
+                    </div>
+
+                    <button type="submit" id="user-submit">Salvar alterações</button>
+
+                </div>
+
+                <div class="form-container flex-container-column">
+                    <img th:src="${mod.getModIconSrc()}"
+                         class="uploaded-form-image uploaded-mod-image"
+                         id="uploaded-mod-image"
+                         alt="Capa atual do mod">
+
+                    <div class="label-input-container flex-container-column">
+                        <label for="mod-image-submit">Substituir a capa do mod (opcional)</label>
+                        <input
+                                type="file"
+                                id="mod-image-submit"
+                                accept="image/png, image/jpeg, image/jpg, image/webp"
+                        >
+                    </div>
+                </div>
+
+            </div>
+
+            <p id="responseMessage"></p>
+
+        </form>
+
+        <script type="module" src="/js/mod-config.js"></script>
+
+    </div>
+</main>
+
+</body>
+
+</html>

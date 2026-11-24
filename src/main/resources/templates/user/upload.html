@@ -69,45 +69,43 @@
                     ></textarea>
 
                     <div>
-                        <label>
+                        <label for="localization-type-select">
                             Recursos de localização utilizados
                         </label>
 
-                        <select
-                            id="localization-type-select"
-                            class="text-input">
-
+                        <select id="localization-type-select" class="text-input">
                             <option value="" disabled selected>Selecione o tipo...</option>
 
                             <th:block th:each="localization : ${localizations}">
                                 <option
-                                    th:value="${localization.id}"
-                                    th:text="${localization.name}"
+                                        th:value="${localization.id}"
+                                        th:text="${localization.name}"
                                 ></option>
                             </th:block>
                         </select>
+
+                        <ul id="localization-selected" class="selected-list"></ul>
                     </div>
+
                     <div>
-                        <label>
+                        <label for="disability-type-select">
                             Necessidades de acessibilidade atendidas
                         </label>
 
-                        <select
-                            class="text-input"
-                            id="disability-type-select"
-                        >
+                        <select id="disability-type-select" class="text-input">
                             <option value="" disabled selected>Selecione os tipos...</option>
 
                             <th:block th:each="category : ${disabilities}">
                                 <th:block th:each="type : ${category.getTypes()}">
                                     <option
                                             th:value="${type.id}"
-                                            th:text="${type.getFullName()}"></option>
+                                            th:text="${type.getFullName()}"
+                                    ></option>
                                 </th:block>
                             </th:block>
-
                         </select>
 
+                        <ul id="disability-selected" class="selected-list"></ul>
                     </div>
 
                     <div class="label-input-container flex-container-column">

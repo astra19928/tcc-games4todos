@@ -3,6 +3,7 @@ package org.ifsul.games4todos.controller;
 import lombok.AllArgsConstructor;
 import org.ifsul.games4todos.dto.ModDTO;
 import org.ifsul.games4todos.dto.ModResponseDTO;
+import org.ifsul.games4todos.dto.ModUpdateDTO;
 import org.ifsul.games4todos.model.Comment;
 import org.ifsul.games4todos.model.Mod;
 import org.ifsul.games4todos.model.User;
@@ -36,6 +37,13 @@ public class ModController {
             Authentication auth
     ){
         return ResponseEntity.ok(modService.upload(mod, auth));
+    }
+
+    @PutMapping(value = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public String update(@PathVariable Integer id,
+                         @ModelAttribute ModUpdateDTO dto,
+                         Authentication auth) {
+        return modService.update(id, dto, auth);
     }
 
     @GetMapping("/{id}")

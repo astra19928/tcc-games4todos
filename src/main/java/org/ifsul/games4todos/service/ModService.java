@@ -2,6 +2,7 @@ package org.ifsul.games4todos.service;
 
 import lombok.RequiredArgsConstructor;
 import org.ifsul.games4todos.dto.ModDTO;
+import org.ifsul.games4todos.dto.ModUpdateDTO;
 import org.ifsul.games4todos.model.*;
 import org.ifsul.games4todos.repository.*;
 import org.ifsul.games4todos.security.G4TUserDetails;
@@ -59,7 +60,7 @@ public class ModService {
         Mod newMod = save(convertedMod);
         Integer id = newMod.getId();
 
-        List<Integer> localizationIds = Optional.ofNullable(dto.localizationTypeIds()).orElse(List.of());
+        List<Integer> localizationIds = Optional.ofNullable(dto.localizationTypes()).orElse(List.of());
 
         List<LocalizationType> localizationTypes = localizationTypeRepository.findAllById(localizationIds);
 
@@ -67,24 +68,18 @@ public class ModService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Tipo de Localização desconhecido");
         }
 
-        List<Integer> disabilityIds = Optional.ofNullable(dto.disabilityTypeIds()).orElse(List.of());
+        List<Integer> disabilityIds = Optional.ofNullable(dto.disabilityTypes()).orElse(List.of());
 
         List<DisabilityType> disabilityTypes = disabilityTypeRepository.findAllById(disabilityIds);
 
         if (disabilityTypes.size() != new HashSet<>(disabilityIds).size()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Tipo de deficiência desconhecido");
         }
-        long distinctCategories = disabilityTypes.stream()
-                .map(t -> t.getCategory().getId()).distinct().count();
-        if (distinctCategories != disabilityTypes.size()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Apenas um tipo de deficiência por categoria");
-        }
 
-        localizationTypes.forEach(t -> modLocalizationRepository.save(
-                new ModLocalization(id, t.getId())));
-
-        disabilityTypes.forEach(t -> modDisabilityRepository.save(
-                new ModDisability(id, t.getId())));
+        modLocalizationRepository.saveAll(
+                localizationTypes.stream().map(t -> new ModLocalization(newMod, t)).toList());
+        modDisabilityRepository.saveAll(
+                disabilityTypes.stream().map(t -> new ModDisability(newMod, t)).toList());
 
         try{
             fileService.store(dto.file(), fileDir + id, "content");
@@ -94,6 +89,38 @@ public class ModService {
         }
 
         return "Mod criado com sucesso!";
+    }
+
+    @Transactional
+    public String update(Integer id, ModUpdateDTO dto, Authentication auth) {
+        G4TUserDetails details = (G4TUserDetails) auth.getPrincipal();
+        Mod mod = findById(id).orElseThrow(() ->
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "Mod não encontrado!"));
+
+        if (mod.getUploader() == null || !mod.getUploader().getId().equals(details.getUser().getId()))
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Você não é o autor deste mod!");
+
+        mod.setModName(dto.modName());
+        mod.setNameDevelopers(dto.developers());
+        mod.setDescription(dto.description());
+        mod.setReleaseDate(dto.releaseDate());
+
+        if (dto.file() != null && !dto.file().isEmpty())
+            mod.setFileSize((float) dto.file().getSize() / (1024f * 1024f));
+
+        modLocalizationRepository.deleteAllByModId(id);
+        modDisabilityRepository.deleteAllByModId(id);
+
+        if (dto.image() != null && !dto.image().isEmpty()) {
+            if (!fileService.validateImage(dto.image()))
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Imagem inválida!");
+            fileService.store(dto.image(), fileDir + id, "icon");
+        }
+
+        if (dto.file() != null && !dto.file().isEmpty())
+            fileService.store(dto.file(), fileDir + id, "content");
+
+        return "Mod atualizado com sucesso!";
     }
 
     public Mod save(Mod mod){

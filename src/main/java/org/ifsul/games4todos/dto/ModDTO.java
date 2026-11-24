@@ -15,6 +15,6 @@ public record ModDTO (
     MultipartFile image,
     MultipartFile permImage,
     MultipartFile file,
-    List<Integer> localizationTypeIds,
-    List<Integer> disabilityTypeIds
+    List<Integer> localizationTypes,
+    List<Integer> disabilityTypes
 ){}

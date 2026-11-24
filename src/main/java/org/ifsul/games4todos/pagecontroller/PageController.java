@@ -5,12 +5,14 @@ import org.ifsul.games4todos.mapper.ModMapper;
 import org.ifsul.games4todos.model.*;
 import org.ifsul.games4todos.security.G4TUserDetails;
 import org.ifsul.games4todos.service.*;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -27,14 +29,7 @@ public class PageController {
     private final LocalizationService localizationService;
 
     @GetMapping("/mods/{id}")
-    public String modPage(@PathVariable("id") String modId, Model model, Authentication auth) {
-        Integer id;
-        try {
-            id = Integer.parseInt(modId);
-        } catch (NumberFormatException e) {
-            model.addAttribute("responseMessage", "Apenas IDs numéricos permitidos");
-            return "modificacao";
-        }
+    public String modPage(@PathVariable("id") Integer id, Model model, Authentication auth) {
 
         Optional<Mod> foundMod = modService.findById(id);
         if (foundMod.isEmpty()){
@@ -46,16 +41,37 @@ public class PageController {
 
         String uploaderName = "Usuário deletado";
 
-        boolean authenticated = auth != null && auth.isAuthenticated();
 
-        User user = mod.getUploader();
-        if(user != null)
-            uploaderName = user.getNickname();
+        User uploader = mod.getUploader();
+        if(uploader != null)
+            uploaderName = uploader.getNickname();
+
+        boolean authenticated = auth != null && auth.isAuthenticated();
+        if(authenticated){
+            G4TUserDetails details = (G4TUserDetails) auth.getPrincipal();
+            User user = details.getUser();
+            if(user.getId().equals(uploader.getId())){
+                model.addAttribute("isUploader", true);
+            }
+        }
 
         List<Comment> commentSection = commentService.findByModId(id);
         Collections.reverse(commentSection);
         int length = commentSection.size();
 
+
+
+        List<ModLocalization> modLocalizations = localizationService.getAllTypesByModId(id);
+        List<LocalizationType> localizationTypes = modLocalizations.stream()
+                .map(ModLocalization::getType)
+                .toList();
+
+        List<ModDisability> modDisabilities = disabilityService.findAllByModId(id);
+        List<DisabilityType> disabilityTypes = modDisabilities.stream()
+                        .map(ModDisability::getType)
+                        .toList();
+
+        model.addAttribute("id", id);
         model.addAttribute("gameName", mod.getFullTitle());
         model.addAttribute("modName", mod.getModName());
         model.addAttribute("uploaderName", uploaderName);
@@ -69,8 +85,37 @@ public class PageController {
         model.addAttribute("authenticated", authenticated);
         model.addAttribute("commentSize", length);
         model.addAttribute("comments", commentSection);
+        model.addAttribute("disabilityTypes", disabilityTypes);
+        model.addAttribute("localizationTypes", localizationTypes);
 
         return "modificacao";
+    }
+
+    @GetMapping("/mods/{id}/config")
+    public String modConfig(@PathVariable Integer id, Model model, Authentication auth) {
+        G4TUserDetails details = (G4TUserDetails) auth.getPrincipal();
+
+        Mod mod = modService.findById(id).orElseThrow(() ->
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "Mod não encontrado!"));
+
+        // Only the uploader can open the config page
+        if (mod.getUploader() == null
+                || !mod.getUploader().getId().equals(details.getUser().getId()))
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Você não é o autor deste mod!");
+
+        model.addAttribute("mod", mod);
+
+        // Same data the upload page uses for the dropdowns
+        model.addAttribute("localizations", localizationTypeRepository.findAll());
+        model.addAttribute("disabilities", disabilityCategoryRepository.findAll());
+
+        // Ids already saved for this mod, used to pre-select the chips
+        model.addAttribute("selectedLocalizationIds",
+                modLocalizationRepository.findTypeIdsByModId(id));
+        model.addAttribute("selectedDisabilityIds",
+                modDisabilityRepository.findTypeIdsByModId(id));
+
+        return "mod-config";
     }
 
     @GetMapping("/userPage")

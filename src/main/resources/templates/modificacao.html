@@ -42,6 +42,10 @@
                             <span class="material-symbols-outlined favorite-icon">star</span>
                         </div>
 
+                        <a th:href="${'/mods/' + id + '/config'}" th:if="${isUploader}" class="button">
+                            <span class="material-symbols-outlined favorite-icon">settings</span>
+                        </a>
+
                     </div>
 
                 </div>
@@ -79,21 +83,12 @@
                 Recursos de Localização/Acessibilidade
             </div>
 
-            <section class="site-body flex-container">
-                <div class="tag-box" th:each="localizationTag : ${localizationTypes}">
-                    <span th:text="${localizationTag.name}"></span>
+            <section class="site-body flex-container tag-container">
+                <div class="text-input tag-box" th:each="localizationTag : ${localizationTypes}">
+                    <span th:text="${localizationTag.getFullName()}"></span>
                 </div>
 
-                <!-- REMOVER ESTES PELO AMOR DE DEUS DA POHA FINAL GURIA BURRA -->
-                <div class="text-input tag-box">
-                    Localização (Texto)
-                </div>
-
-                <div class="text-input tag-box">
-                    Daltonismo (Deuteranopia)
-                </div>
-
-                <div class="tag-box" th:each="disabilityTag : ${disabilityTypes}">
+                <div class="text-input tag-box" th:each="disabilityTag : ${disabilityTypes}">
                     <span th:text="${disabilityTag.getFullName()}"></span>
                 </div>
             </section>

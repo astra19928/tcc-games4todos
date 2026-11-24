@@ -16,12 +16,19 @@ public class ModDisability {
     @EmbeddedId
     private ModDisabilityId id;
 
+    @MapsId("idMod")
+    @ManyToOne
+    @JoinColumn(name = "id_mod")
+    private Mod mod;
+
     @MapsId("idType")
     @ManyToOne
     @JoinColumn(name = "id_type")
-    private LocalizationType type;
+    private DisabilityType type;
 
-    public ModDisability(Integer idMod, Integer idType){
-        this.id = new ModDisabilityId(idMod, idType);
+    public ModDisability(Mod mod, DisabilityType type){
+        this.id = new ModDisabilityId(mod.getId(), type.getId());
+        this.mod = mod;
+        this.type = type;
     }
 }

@@ -14,4 +14,30 @@
     gap: 5px;
     align-items: flex-start;
 }
+.selected-list {
+    max-width: 460px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    list-style: none;
+    padding: 0;
+    margin: 6px 0 0;
+}
 
+.selected-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 8px;
+    border-radius: 999px;
+    background: #e8e8e8;
+    font-size: 0.9rem;
+}
+
+.selected-item-remove {
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 1rem;
+    line-height: 1;
+}

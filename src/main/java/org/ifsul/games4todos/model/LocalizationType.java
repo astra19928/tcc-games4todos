@@ -15,4 +15,8 @@ public class LocalizationType {
     private Integer id;
 
     private String name;
+
+    public String getFullName(){
+        return "Localização (" + name + ")";
+    }
 }

@@ -140,6 +140,10 @@
     align-self: flex-end;
 }
 
+.tag-container {
+    max-width: 100%;
+    flex-wrap: wrap;
+}
 .tag-box {
     width: fit-content;
     min-width: fit-content;

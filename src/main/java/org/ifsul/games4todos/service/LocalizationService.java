@@ -2,6 +2,8 @@ package org.ifsul.games4todos.service;
 
 import lombok.RequiredArgsConstructor;
 import org.ifsul.games4todos.model.LocalizationType;
+import org.ifsul.games4todos.model.Mod;
+import org.ifsul.games4todos.model.ModLocalization;
 import org.ifsul.games4todos.repository.LocalizationTypeRepository;
 import org.ifsul.games4todos.repository.ModLocalizationRepository;
 import org.springframework.stereotype.Service;
@@ -18,7 +20,7 @@ public class LocalizationService {
         return localizationTypeRepository.findAll();
     }
 
-    public List<LocalizationType> getAllTypesByModId(Integer modId) {
+    public List<ModLocalization> getAllTypesByModId(Integer modId) {
         return modLocalizationRepository.findAllById_IdMod(modId);
     }
 

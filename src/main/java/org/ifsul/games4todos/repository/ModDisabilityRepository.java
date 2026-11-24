@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface ModDisabilityRepository extends JpaRepository<ModDisability, Integer> {
     List<ModDisability> findAllById_IdMod(Integer modId);
+
+    void deleteAllByModId(Integer id);
 }

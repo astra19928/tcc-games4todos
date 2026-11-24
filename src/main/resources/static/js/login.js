@@ -15,7 +15,8 @@ document.getElementById('login-form').addEventListener('submit', async (event) =
     });
 
     if (!response.ok) {
-        showError(response.statusText || response.body || "Houve um erro interno");
+        const errorBody = await response.json();
+        showError(errorBody.erro || 'Houve um erro interno!');
         return;
     }
 
@@ -24,6 +25,5 @@ document.getElementById('login-form').addEventListener('submit', async (event) =
 });
 
 function showError(string){
-    document.getElementById('responseMessage').innerText = "Erro enviando formulário: " + error.message;
-    console.error('Error:', error);
+    document.getElementById('responseMessage').innerText = "Erro enviando formulário: " + string;
 }
