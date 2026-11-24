@@ -15,8 +15,7 @@ async function load(){
     }
 
     favoriteButton.addEventListener("click", async () => {
-        responseMsg.hidden = true;
-
+        responseMsg.textContent = ' ';
         const response = await fetch(`/api/mods/${id}/favorite`,  {
             method: 'POST'
         })

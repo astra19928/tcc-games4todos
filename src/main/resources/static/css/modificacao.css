@@ -125,6 +125,7 @@
     aspect-ratio: 1 / 1;
     object-fit: cover;
     object-position: center;
+    text-align: center;
 }
 
 .comment-top {
@@ -132,10 +133,6 @@
 }
 .comment-icon-not-user {
     width: 100px;
-}
-
-.comment-icon::before {
-    text-align: center;
 }
 
 .comment-submit-container {

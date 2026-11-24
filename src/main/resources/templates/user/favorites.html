@@ -20,8 +20,9 @@
 
     <article class="site-body flex-container-column">
 
+        <h2>Favoritos</h2>
         <p th:if="${responseMessage != null}" th:text="${responseMessage}"></p>
-        <p th:if="${mods == null or mods.isEmpty()}">Nenhum mod favoritado!</p>
+        <h3 th:if="${mods == null or mods.isEmpty()}">Nenhum mod favoritado!</h3>
 
         <section th:if="${mods != null and !mods.isEmpty()}" class="flex-container-column search-results">
 
