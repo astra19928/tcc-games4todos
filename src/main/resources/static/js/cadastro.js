@@ -24,12 +24,10 @@ disabilityCheckboxes.forEach((checkbox) => {
     });
 });
  
-// form.reset() desmarca os checkboxes, então os selects precisam ser escondidos de novo
 form.addEventListener('reset', () => {
     setTimeout(() => disabilityCheckboxes.forEach(toggleDisabilitySelect), 0);
 });
  
-// Retorna [{ category, type }, ...] ou null se algum subtipo marcado não foi escolhido
 const collectDisabilities = () => {
     const disabilities = [];
  

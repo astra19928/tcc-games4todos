@@ -72,11 +72,30 @@
             </div>
 
             <section th:text="${description}" class="site-body description">
-                Monstie huntie freedom unitey. freedom unityeh monsteri huntie! hointoe monsters i loive the nagacgua i love
-                moinstie huntie reheheh !@ nagacguga and the girexa nd the rajang are so awesom ei freaking love raganjg
-                actually maye not that much as NARGACGUA MY BELOVED what the heck do you mean my brother said "tigrex is like a
-                cooler version of nargacuga" im going to beat him up i hatre my stupid chud brother for not liking monargacuga as
-                much as me
+                Descrição vazia
+            </section>
+
+            <div class="section-divider flex-container">
+                Recursos de Localização/Acessibilidade
+            </div>
+
+            <section class="site-body flex-container">
+                <div class="tag-box" th:each="localizationTag : ${localizationTypes}">
+                    <span th:text="${localizationTag.name}"></span>
+                </div>
+
+                <!-- REMOVER ESTES PELO AMOR DE DEUS DA POHA FINAL GURIA BURRA -->
+                <div class="text-input tag-box">
+                    Localização (Texto)
+                </div>
+
+                <div class="text-input tag-box">
+                    Daltonismo (Deuteranopia)
+                </div>
+
+                <div class="tag-box" th:each="disabilityTag : ${disabilityTypes}">
+                    <span th:text="${disabilityTag.getFullName()}"></span>
+                </div>
             </section>
 
             <div class="section-divider flex-container" hidden>

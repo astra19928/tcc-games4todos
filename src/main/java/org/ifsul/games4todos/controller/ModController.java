@@ -35,30 +35,7 @@ public class ModController {
             @ModelAttribute ModDTO mod,
             Authentication auth
     ){
-        G4TUserDetails details = (G4TUserDetails) auth.getPrincipal();
-        if(details == null) return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-
-        User user = details.getUser();
-
-        boolean imgValida = fileService.validateImage(mod.image());
-        if(!imgValida)
-            return ResponseEntity.badRequest().build();
-
-        Mod convertedMod = modService.mapToEntity(mod, user);
-        Mod newMod = modService.save(convertedMod);
-        Integer id = newMod.getId();
-
-        try{
-            fileService.store(mod.file(), fileDir + id, "content");
-            fileService.store(mod.image(), fileDir + id, "icon");
-            //fileService.store(mod.getPermissionImage(), fileDir);
-
-        }catch(Exception e){
-            modService.delete(convertedMod);
-            return ResponseEntity.internalServerError().build();
-        }
-
-        return ResponseEntity.ok("O mod foi enviado com sucesso e está sendo verificado e processado");
+        return ResponseEntity.ok(modService.upload(mod, auth));
     }
 
     @GetMapping("/{id}")

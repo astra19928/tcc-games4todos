@@ -140,6 +140,11 @@
     align-self: flex-end;
 }
 
+.tag-box {
+    width: fit-content;
+    min-width: fit-content;
+}
+
 @media (max-width: 1280px){
     :root {
         --info-background-color: #AFB4E9;

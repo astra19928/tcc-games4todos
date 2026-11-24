@@ -1,5 +1,7 @@
 const form = document.getElementById('upload-form');
 const preview = document.getElementById('uploaded-mod-image');
+const responseMessage = document.getElementById('responseMessage');
+const disabilityCheckboxes = document.querySelectorAll('.disability-select');
 
 form.addEventListener('submit', async (event) => {
     event.preventDefault();

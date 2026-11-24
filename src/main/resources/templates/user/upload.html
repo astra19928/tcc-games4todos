@@ -24,7 +24,7 @@
 
         <form id="upload-form" class="flex-container-column upload-form" enctype="multipart/form-data">
             <h2>Realizar upload de um mod</h2>
-            
+
             <div class="horizontal-form-container flex-container">
 
                 <div class="form-container flex-container-column">
@@ -68,6 +68,48 @@
                             placeholder="Descrição"
                     ></textarea>
 
+                    <div>
+                        <label>
+                            Recursos de localização utilizados
+                        </label>
+
+                        <select
+                            id="localization-type-select"
+                            class="text-input">
+
+                            <option value="" disabled selected>Selecione o tipo...</option>
+
+                            <th:block th:each="localization : ${localizations}">
+                                <option
+                                    th:value="${localization.id}"
+                                    th:text="${localization.name}"
+                                ></option>
+                            </th:block>
+                        </select>
+                    </div>
+                    <div>
+                        <label>
+                            Necessidades de acessibilidade atendidas
+                        </label>
+
+                        <select
+                            class="text-input"
+                            id="disability-type-select"
+                        >
+                            <option value="" disabled selected>Selecione os tipos...</option>
+
+                            <th:block th:each="category : ${disabilities}">
+                                <th:block th:each="type : ${category.getTypes()}">
+                                    <option
+                                            th:value="${type.id}"
+                                            th:text="${type.getFullName()}"></option>
+                                </th:block>
+                            </th:block>
+
+                        </select>
+
+                    </div>
+
                     <div class="label-input-container flex-container-column">
                         <label for="mod-file">Insira o arquivo do mod</label>
                         <input
@@ -77,7 +119,7 @@
                                 placeholder="Arquivo do mod"
                         >
                     </div>
-                    
+
                     <button type="submit" id="user-submit">Realizar Upload</button>
 
                 </div>
@@ -93,7 +135,7 @@
                                 accept="image/png, image/jpeg, image/jpg, image/webp"
                         >
                     </div>
-                    
+
                 </div>
 
             </div>

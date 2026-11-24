@@ -78,13 +78,12 @@
                                     th:aria-label="'Tipo de ' + ${category.name}"
                             >
                                 <option value="" selected disabled>Selecione o tipo</option>
-                                <div
-                                        class="display-contents"
+                                <th:block
                                         th:each="type : ${category.getTypes()}">
                                     <option
                                             th:value="${type.id}"
                                             th:text="${type.name}"></option>
-                                </div>
+                                </th:block>
 
                             </select>
                         </div>

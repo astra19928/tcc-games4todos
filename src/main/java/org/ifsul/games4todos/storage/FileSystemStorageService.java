@@ -172,6 +172,8 @@ public class FileSystemStorageService implements StorageService {
     }
 
     public boolean validateImage(MultipartFile file){
+        if(file == null || file.isEmpty())
+            return false;
         String originalFilename = file.getOriginalFilename();
 
         String extension = (StringUtils.hasText(originalFilename) && originalFilename.contains("."))

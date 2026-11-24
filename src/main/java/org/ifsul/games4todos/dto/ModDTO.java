@@ -1,12 +1,9 @@
 package org.ifsul.games4todos.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public record ModDTO (
     String gameName,
@@ -17,5 +14,7 @@ public record ModDTO (
     LocalDate releaseDate,
     MultipartFile image,
     MultipartFile permImage,
-    MultipartFile file
+    MultipartFile file,
+    List<Integer> localizationTypeIds,
+    List<Integer> disabilityTypeIds
 ){}

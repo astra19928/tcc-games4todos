@@ -4,10 +4,7 @@ import lombok.AllArgsConstructor;
 import org.ifsul.games4todos.mapper.ModMapper;
 import org.ifsul.games4todos.model.*;
 import org.ifsul.games4todos.security.G4TUserDetails;
-import org.ifsul.games4todos.service.CommentService;
-import org.ifsul.games4todos.service.DisabilityService;
-import org.ifsul.games4todos.service.ModService;
-import org.ifsul.games4todos.service.UserService;
+import org.ifsul.games4todos.service.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,6 +24,7 @@ public class PageController {
     private final CommentService commentService;
     private final UserService userService;
     private final DisabilityService disabilityService;
+    private final LocalizationService localizationService;
 
     @GetMapping("/mods/{id}")
     public String modPage(@PathVariable("id") String modId, Model model, Authentication auth) {
@@ -84,7 +82,7 @@ public class PageController {
     public String searchPage(@RequestParam String query, Model model){
 
         List<Mod> mods = modService.findAllByQuery(query);
-        mods.stream().forEach((mod) -> {
+        mods.forEach((mod) -> {
             String newDesc = ModMapper.shortenDescription(mod.getDescription());
 
             mod.setDescription(newDesc);
@@ -98,7 +96,7 @@ public class PageController {
 
     @GetMapping("/cadastro")
     public String cadastro(Model model){
-        List<DisabilityCategory> allDisabilities = disabilityService.findALlCategories();
+        List<DisabilityCategory> allDisabilities = disabilityService.findAllCategories();
         model.addAttribute("disabilities", allDisabilities);
 
         return "cadastro";
@@ -113,7 +111,7 @@ public class PageController {
         User detailsUser = g4tUserDetails.getUser();
         User user = userService.fetch(detailsUser);
         List<DisabilityType> disabilities = user.getDisabilityTypes();
-        List<DisabilityCategory> allDisabilities = disabilityService.findALlCategories();
+        List<DisabilityCategory> allDisabilities = disabilityService.findAllCategories();
 
         HashMap<Integer, Integer> categoryTypeMap = new HashMap<>();
 
@@ -129,4 +127,20 @@ public class PageController {
         return "user-config";
     }
 
+    @GetMapping("user/upload")
+    public String modUpload(Model model, Authentication auth){
+        G4TUserDetails g4tUserDetails = (G4TUserDetails) auth.getPrincipal();
+        if(g4tUserDetails == null)
+            return "/login.html";
+
+        System.out.println("MAPPED");
+
+        List<LocalizationType> localizationTypes = localizationService.getAllTypes();
+        List<DisabilityCategory> allDisabilities = disabilityService.findAllCategories();
+
+        model.addAttribute("disabilities", allDisabilities);
+        model.addAttribute("localizations", localizationTypes);
+
+        return "user/upload";
+    }
 }

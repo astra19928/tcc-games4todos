@@ -64,6 +64,27 @@ CREATE TABLE user_disability(
     FOREIGN KEY(id_type, id_category) REFERENCES disability_type(id_type, id_category) ON DELETE CASCADE
 );
 
+CREATE TABLE localization_type(
+    id_localization_type INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE mod_localization(
+    id_mod INT NOT NULL,
+    id_type INT NOT NULL,
+    PRIMARY KEY(id_mod, id_type),
+    FOREIGN KEY(id_mod) REFERENCES modification(id_modification) ON DELETE CASCADE,
+    FOREIGN KEY(id_type) REFERENCES localization_type(id_localization_type) ON DELETE CASCADE
+);
+
+CREATE TABLE mod_disability(
+    id_mod INT NOT NULL,
+    id_type INT NOT NULL,
+    PRIMARY KEY(id_mod, id_type),
+    FOREIGN KEY(id_mod) REFERENCES modification(id_modification) ON DELETE CASCADE,
+    FOREIGN KEY(id_type) REFERENCES disability_type(id_type) ON DELETE CASCADE
+);
+
 INSERT INTO disability_category(id_category, name) VALUES
     (1, 'Visão baixa'),
     (2, 'Daltonismo'),
@@ -90,3 +111,10 @@ INSERT INTO disability_type(id_type, id_category, name) VALUES
     (15, 3, 'Perda auditiva moderada'),
     (16, 3, 'Perda auditiva severa'),
     (17, 3, 'Perda auditiva unilateral');
+
+INSERT INTO localization_type(name) VALUES
+('Interface'),
+('Texto'),
+('Legendagem'),
+('Dublagem'),
+('Adaptação Cultural');
