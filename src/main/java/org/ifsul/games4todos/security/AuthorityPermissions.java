@@ -31,6 +31,7 @@ public enum AuthorityPermissions {
             "/api/mods/upload",
             "/api/mods/{id}/download",
             "/api/mods/{id}/comment",
+            "/api/mods/{id}/favorite"
 
     });
 

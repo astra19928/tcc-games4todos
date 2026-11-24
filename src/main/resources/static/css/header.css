@@ -157,7 +157,6 @@
     font-size: 34px;
 }
 
-
 .header-action:hover:not(.search-bar), .search-icon:hover {
     cursor: pointer;
 }
@@ -165,6 +164,11 @@
 .header-action:hover:not(.search-bar) .material-symbols-outlined, .search-icon:hover .material-symbols-outlined{
     --fill: 1;
     --weight: 700;
+}
+
+a.header-action {
+    color: white;
+    text-decoration: none;
 }
 
 .search-form {

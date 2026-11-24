@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pesquisa</title>
+    <link
+            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:FILL,wght@0..1,100..700&icon_names=search,comment,star,settings,account_circle&display=block"
+            rel="stylesheet" />
+    <link rel="stylesheet" href="/css/general.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/search.css">
+    <script src="/js/loadUser.js" type="module"></script>
+    <script src="/js/loadHeader.js" type="module"></script>
+</head>
+
+<body>
+<main class="site-container flex-container-column">
+    <header id="header" class="header"></header>
+
+    <article class="site-body flex-container-column">
+
+        <p th:if="${responseMessage != null}" th:text="${responseMessage}"></p>
+        <p th:if="${mods == null or mods.isEmpty()}">Nenhum mod favoritado!</p>
+
+        <section th:if="${mods != null and !mods.isEmpty()}" class="flex-container-column search-results">
+
+            <a th:href="${modification.getHref()}" th:each="modification : ${mods}" class="search-result-container flex-container">
+                <img th:src="${modification.getModIconSrc()}" class = "card-image" alt="Capa do Mod">
+
+                <div class="search-result-text-container flex-container-column">
+                    <h2 th:text="${modification.getFullTitle()}">MISSING TITLE</h2>
+
+                    <p th:text="${modification.nameDevelopers}">MISSING DEVELOPERS</p>
+                    <p th:text="${modification.formatFileSize() + ' - ' + modification.releaseDate}">MISSING RELEASE DATE</p>
+                    <p th:text="${modification.description}">boo!!! :3</p>
+                </div>
+            </a>
+
+        </section>
+
+    </article>
+</main>
+</body>
+
+</html>

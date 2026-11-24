@@ -14,6 +14,7 @@
     <script src="/js/loadUser.js" type="module"></script>
     <script src="/js/loadHeader.js" type="module"></script>
     <script src="/js/comment.js" type="module"></script>
+    <script src="/js/mod-favorite.js" type="module"></script>
 </head>
 
 <body>
@@ -38,15 +39,17 @@
                             Download
                         </a>
 
-                        <div class="button">
-                            <span class="material-symbols-outlined favorite-icon">star</span>
+                        <div id="mod-favorite-button" class="button">
+                            <span th:classappend ="${isFavorite} ? 'is-favorited'" id="favorite-icon" class="material-symbols-outlined favorite-button">star</span>
                         </div>
 
                         <a th:href="${'/mods/' + id + '/config'}" th:if="${isUploader}" class="button">
-                            <span class="material-symbols-outlined favorite-icon">settings</span>
+                            <span class="material-symbols-outlined">settings</span>
                         </a>
 
                     </div>
+
+                    <p id = "response-message" hidden></p>
 
                 </div>
 

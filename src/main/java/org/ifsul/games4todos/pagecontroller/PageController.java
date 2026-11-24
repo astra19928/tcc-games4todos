@@ -32,6 +32,7 @@ public class PageController {
     private final DisabilityCategoryRepository disabilityCategoryRepository;
     private final ModDisabilityRepository modDisabilityRepository;
     private final ModLocalizationRepository modLocalizationRepository;
+    private final FavoriteRepository favoriteRepository;
 
     @GetMapping("/mods/{id}")
     public String modPage(@PathVariable("id") Integer id, Model model, Authentication auth) {
@@ -46,7 +47,6 @@ public class PageController {
 
         String uploaderName = "Usuário deletado";
 
-
         User uploader = mod.getUploader();
         if(uploader != null)
             uploaderName = uploader.getNickname();
@@ -58,7 +58,12 @@ public class PageController {
             if(user.getId().equals(uploader.getId()))
                 model.addAttribute("isUploader", true);
 
+            Optional<Favorite> favorite = favoriteRepository.findById_IdUserAndId_IdMod(user.getId(), id);
+            boolean isFavorited = favorite.isPresent();
+
+            model.addAttribute("isFavorite", isFavorited);
         }
+
 
         List<Comment> commentSection = commentService.findByModId(id);
         Collections.reverse(commentSection);
@@ -140,6 +145,26 @@ public class PageController {
         model.addAttribute("mods", mods);
 
         return "search";
+    }
+
+    @GetMapping("/favorites")
+    public String favorites(Model model, Authentication auth){
+        if(auth.getPrincipal() == null){
+            model.addAttribute("responseMessage", "Não pode visualizar favoritos sem se autenticar!");
+            return "user/favorites";
+        }
+
+        List<Mod> mods = modService.getFavoritados(auth);
+
+        mods.forEach((mod) -> {
+            String newDesc = ModMapper.shortenDescription(mod.getDescription());
+
+            mod.setDescription(newDesc);
+        });
+
+        model.addAttribute("mods", mods);
+
+        return "user/favorites";
     }
 
     @GetMapping("/cadastro")

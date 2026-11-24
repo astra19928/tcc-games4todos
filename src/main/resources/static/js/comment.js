@@ -1,5 +1,6 @@
 import {getUser} from "./loadUser.js";
 
+const user = await getUser();
 const urls = window.location.pathname.split('/');
 const id = urls[2];
 const commentIcon = document.getElementById('comment-icon');
@@ -7,7 +8,6 @@ const submitButton = document.getElementById('comment-submit');
 const commentText = document.getElementById('comment');
 
 async function loadCommentIcon(){
-    const user = await getUser();
     commentIcon.src = user.iconUrl;
 }
 
@@ -29,5 +29,7 @@ async function submitComment() {
     window.location.reload();
 }
 
-document.addEventListener("DOMContentLoaded", loadCommentIcon);
-submitButton.addEventListener("click", submitComment)
+if(user.loggedIn){
+    document.addEventListener("DOMContentLoaded", loadCommentIcon);
+    submitButton.addEventListener("click", submitComment);
+}

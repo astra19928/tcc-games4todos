@@ -26,6 +26,9 @@ const load = async () => {
         settings.innerText = "settings";
         settings.href = "/users/me/config";
         settings.style.visibility = "visible";
+
+        const favorite = document.getElementById('favorites');
+        favorite.href = "/favorites";
     }
 }
 

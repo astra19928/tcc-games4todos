@@ -26,6 +26,7 @@ public class ModService {
     private final ModLocalizationRepository modLocalizationRepository;
     private final ModDisabilityRepository modDisabilityRepository;
     private final DisabilityTypeRepository disabilityTypeRepository;
+    private final FavoriteRepository favoriteRepository;
     private final String fileDir = "mods/";
 
     public Mod mapToEntity(ModDTO modDTO, User user){
@@ -123,7 +124,7 @@ public class ModService {
         if (disabilityTypes.size() != new HashSet<>(disabilityIds).size()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Tipo de deficiência desconhecido");
         }
-        
+
         modLocalizationRepository.deleteAllByModId(id);
         modDisabilityRepository.deleteAllByModId(id);
 
@@ -142,6 +143,45 @@ public class ModService {
             fileService.store(dto.file(), fileDir + id, "content");
 
         return "Mod atualizado com sucesso!";
+    }
+
+    public String favorite(Integer id, Authentication auth){
+        G4TUserDetails details = (G4TUserDetails) auth.getPrincipal();
+        if(details == null)
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Você não pode favoritar mods sem estar autenticado!");
+
+        User user = details.getUser();
+
+        Mod mod = findById(id).orElseThrow(() ->
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "Mod não encontrado!"));
+
+        Optional<Favorite> modFavorite = favoriteRepository.findById_IdUserAndId_IdMod(user.getId(), mod.getId());
+        boolean favorited = modFavorite.isPresent();
+
+        if(favorited){
+            Favorite fav = modFavorite.get();
+            favoriteRepository.delete(fav);
+
+            return "Mod desfavoritado com sucesso.";
+        }
+
+        Favorite favorite = new Favorite(user, mod);
+        favoriteRepository.save(favorite);
+
+        return "Mod favoritado com sucesso!";
+    }
+
+    public List<Mod> getFavoritados(Authentication auth){
+        G4TUserDetails details = (G4TUserDetails) auth.getPrincipal();
+        if(details == null)
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Você não pode ver favoritos sem estar autenticado!");
+
+        User user = details.getUser();
+
+        List<Favorite> favorites = favoriteRepository.findAllById_IdUser(user.getId());
+        List<Integer> modIds = favorites.stream().map(f -> f.getId().idMod()).toList();
+
+        return modRepository.findAllById(modIds);
     }
 
     public Mod save(Mod mod){

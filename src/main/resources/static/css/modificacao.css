@@ -7,12 +7,28 @@
     font-size: 24px;
 }
 
-.favorite-icon {
-  font-variation-settings:
-  'FILL' 1,
-  'wght' 400,
-  'GRAD' 0,
-  'opsz' 24
+.favorite-button {
+    cursor: pointer;
+
+    --fill: 0;
+    --wght: 400;
+    --GRAD: 0;
+    --opsz: 12;
+
+    font-variation-settings:
+    'FILL' var(--fill),
+    'wght' var(--wght),
+    'GRAD' var(--GRAD),
+    'opsz' var(--opsz);
+}
+
+.favorite-button.no-clicky {
+    cursor: not-allowed;
+}
+
+.favorite-button.is-favorited {
+  --fill: 1;
+  --opsz: 24;
 }
 
 .info-container {

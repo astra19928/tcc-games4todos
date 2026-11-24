@@ -46,6 +46,12 @@ public class ModController {
         return modService.update(id, dto, auth);
     }
 
+    @PostMapping("/{id}/favorite")
+    @ResponseStatus(HttpStatus.OK)
+    public String favorite(@PathVariable Integer id, Authentication auth){
+        return modService.favorite(id, auth);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<ModResponseDTO> viewModById(@PathVariable("id") String modId){
         Integer id;
