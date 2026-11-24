@@ -56,7 +56,7 @@
     align-items: flex-start;
 }
 
-.email-container {
+.uneditable-container {
     color: var(--placeholder-text-color);
     cursor: not-allowed;
 }

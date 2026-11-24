@@ -108,8 +108,29 @@ public class ModService {
         if (dto.file() != null && !dto.file().isEmpty())
             mod.setFileSize((float) dto.file().getSize() / (1024f * 1024f));
 
+        List<Integer> localizationIds = Optional.ofNullable(dto.localizationTypes()).orElse(List.of());
+
+        List<LocalizationType> localizationTypes = localizationTypeRepository.findAllById(localizationIds);
+
+        if (localizationTypes.size() != new HashSet<>(localizationIds).size()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Tipo de Localização desconhecido");
+        }
+
+        List<Integer> disabilityIds = Optional.ofNullable(dto.disabilityTypes()).orElse(List.of());
+
+        List<DisabilityType> disabilityTypes = disabilityTypeRepository.findAllById(disabilityIds);
+
+        if (disabilityTypes.size() != new HashSet<>(disabilityIds).size()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Tipo de deficiência desconhecido");
+        }
+        
         modLocalizationRepository.deleteAllByModId(id);
         modDisabilityRepository.deleteAllByModId(id);
+
+        modLocalizationRepository.saveAll(
+                localizationTypes.stream().map(t -> new ModLocalization(mod, t)).toList());
+        modDisabilityRepository.saveAll(
+                disabilityTypes.stream().map(t -> new ModDisability(mod, t)).toList());
 
         if (dto.image() != null && !dto.image().isEmpty()) {
             if (!fileService.validateImage(dto.image()))

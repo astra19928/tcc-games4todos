@@ -34,10 +34,3 @@ async function loadMod() {
 function showError(error){
     message.textContent = 'Erro! ' + error;
 }
-
-function loadUserIcon(){
-
-}
-
-loadMod();
-loadUserIcon();

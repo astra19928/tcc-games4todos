@@ -3,6 +3,7 @@ package org.ifsul.games4todos.pagecontroller;
 import lombok.AllArgsConstructor;
 import org.ifsul.games4todos.mapper.ModMapper;
 import org.ifsul.games4todos.model.*;
+import org.ifsul.games4todos.repository.*;
 import org.ifsul.games4todos.security.G4TUserDetails;
 import org.ifsul.games4todos.service.*;
 import org.springframework.http.HttpStatus;
@@ -27,6 +28,10 @@ public class PageController {
     private final UserService userService;
     private final DisabilityService disabilityService;
     private final LocalizationService localizationService;
+    private final LocalizationTypeRepository localizationTypeRepository;
+    private final DisabilityCategoryRepository disabilityCategoryRepository;
+    private final ModDisabilityRepository modDisabilityRepository;
+    private final ModLocalizationRepository modLocalizationRepository;
 
     @GetMapping("/mods/{id}")
     public String modPage(@PathVariable("id") Integer id, Model model, Authentication auth) {
@@ -50,16 +55,14 @@ public class PageController {
         if(authenticated){
             G4TUserDetails details = (G4TUserDetails) auth.getPrincipal();
             User user = details.getUser();
-            if(user.getId().equals(uploader.getId())){
+            if(user.getId().equals(uploader.getId()))
                 model.addAttribute("isUploader", true);
-            }
+
         }
 
         List<Comment> commentSection = commentService.findByModId(id);
         Collections.reverse(commentSection);
         int length = commentSection.size();
-
-
 
         List<ModLocalization> modLocalizations = localizationService.getAllTypesByModId(id);
         List<LocalizationType> localizationTypes = modLocalizations.stream()

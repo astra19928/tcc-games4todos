@@ -28,8 +28,8 @@
               th:data-mod-id="${mod.id}">
 
             <h2>Configurar mod</h2>
-            <!-- Game name is shown for context only; it cannot be edited -->
-            <p class="mod-config-game" th:text="${mod.gameName}"></p>
+
+            <p class="text-input uneditable-container" th:text="${mod.gameName}"></p>
 
             <div class="horizontal-form-container flex-container">
 
@@ -50,7 +50,7 @@
                             class="text-input"
                             aria-label="Inserir os nomes dos desenvolvedores aqui"
                             placeholder="Desenvolvedores"
-                            th:value="${mod.developers}"
+                            th:value="${mod.nameDevelopers}"
                     />
 
                     <input
